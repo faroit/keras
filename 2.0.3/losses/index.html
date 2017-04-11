@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Losses - Keras 2.0.3 Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Losses";
+    var mkdocs_page_input_path = "losses.md";
+    var mkdocs_page_url = "/losses/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61785484-1', 'keras.io');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Keras 2.0.3 Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting started</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../getting-started/sequential-model-guide/">Guide to the Sequential model</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../getting-started/functional-api-guide/">Guide to the Functional API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../getting-started/faq/">FAQ</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Models</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../models/about-keras-models/">About Keras models</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../models/sequential/">Sequential</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../models/model/">Model (functional API)</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Layers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../layers/about-keras-layers/">About Keras layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/core/">Core Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/convolutional/">Convolutional Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/pooling/">Pooling Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/local/">Locally-connected Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/recurrent/">Recurrent Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/embeddings/">Embedding Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/merge/">Merge Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/advanced-activations/">Advanced Activations Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/normalization/">Normalization Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/noise/">Noise layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/wrappers/">Layer wrappers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/writing-your-own-keras-layers/">Writing your own Keras layers</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Preprocessing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../preprocessing/sequence/">Sequence Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../preprocessing/text/">Text Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../preprocessing/image/">Image Preprocessing</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Losses</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#usage-of-loss-functions">Usage of loss functions</a></li>
+    
+
+    <li class="toctree-l2"><a href="#available-loss-functions">Available loss functions</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#kullback_leibler_divergence">kullback_leibler_divergence</a></li>
+        
+            <li><a class="toctree-l3" href="#poisson">poisson</a></li>
+        
+            <li><a class="toctree-l3" href="#cosine_proximity">cosine_proximity</a></li>
+        
+            <li><a class="toctree-l3" href="#mean_squared_error">mean_squared_error</a></li>
+        
+            <li><a class="toctree-l3" href="#mean_absolute_error">mean_absolute_error</a></li>
+        
+            <li><a class="toctree-l3" href="#mean_absolute_percentage_error">mean_absolute_percentage_error</a></li>
+        
+            <li><a class="toctree-l3" href="#mean_squared_logarithmic_error">mean_squared_logarithmic_error</a></li>
+        
+            <li><a class="toctree-l3" href="#squared_hinge">squared_hinge</a></li>
+        
+            <li><a class="toctree-l3" href="#hinge">hinge</a></li>
+        
+            <li><a class="toctree-l3" href="#categorical_crossentropy">categorical_crossentropy</a></li>
+        
+            <li><a class="toctree-l3" href="#sparse_categorical_crossentropy">sparse_categorical_crossentropy</a></li>
+        
+            <li><a class="toctree-l3" href="#binary_crossentropy">binary_crossentropy</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../metrics/">Metrics</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../optimizers/">Optimizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../activations/">Activations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../callbacks/">Callbacks</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../datasets/">Datasets</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../applications/">Applications</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../backend/">Backend</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../initializers/">Initializers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../regularizers/">Regularizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../constraints/">Constraints</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../visualization/">Visualization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../scikit-learn-api/">Scikit-learn API</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../utils/">Utils</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Keras 2.0.3 Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Losses</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="http://github.com/fchollet/keras/edit/master/docs/losses.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="usage-of-loss-functions">Usage of loss functions</h2>
+<p>A loss function (or objective function, or optimization score function) is one of the two parameters required to compile a model:</p>
+<pre><code class="python">model.compile(loss='mean_squared_error', optimizer='sgd')
+</code></pre>
+
+<pre><code class="python">from keras import losses
+
+model.compile(loss=losses.mean_squared_error, optimizer='sgd')
+</code></pre>
+
+<p>You can either pass the name of an existing loss function, or pass a TensorFlow/Theano symbolic function that returns a scalar for each data-point and takes the following two arguments:</p>
+<ul>
+<li><strong>y_true</strong>: True labels. TensorFlow/Theano tensor.</li>
+<li><strong>y_pred</strong>: Predictions. TensorFlow/Theano tensor of the same shape as y_true.</li>
+</ul>
+<p>The actual optimized objective is the mean of the output array across all datapoints.</p>
+<p>For a few examples of such functions, check out the <a href="https://github.com/fchollet/keras/blob/master/keras/losses.py">losses source</a>.</p>
+<h2 id="available-loss-functions">Available loss functions</h2>
+<h3 id="kullback_leibler_divergence">kullback_leibler_divergence</h3>
+<pre><code class="python">kullback_leibler_divergence(y_true, y_pred)
+</code></pre>
+
+<hr />
+<h3 id="poisson">poisson</h3>
+<pre><code class="python">poisson(y_true, y_pred)
+</code></pre>
+
+<hr />
+<h3 id="cosine_proximity">cosine_proximity</h3>
+<pre><code class="python">cosine_proximity(y_true, y_pred)
+</code></pre>
+
+<hr />
+<h3 id="mean_squared_error">mean_squared_error</h3>
+<pre><code class="python">mean_squared_error(y_true, y_pred)
+</code></pre>
+
+<hr />
+<h3 id="mean_absolute_error">mean_absolute_error</h3>
+<pre><code class="python">mean_absolute_error(y_true, y_pred)
+</code></pre>
+
+<hr />
+<h3 id="mean_absolute_percentage_error">mean_absolute_percentage_error</h3>
+<pre><code class="python">mean_absolute_percentage_error(y_true, y_pred)
+</code></pre>
+
+<hr />
+<h3 id="mean_squared_logarithmic_error">mean_squared_logarithmic_error</h3>
+<pre><code class="python">mean_squared_logarithmic_error(y_true, y_pred)
+</code></pre>
+
+<hr />
+<h3 id="squared_hinge">squared_hinge</h3>
+<pre><code class="python">squared_hinge(y_true, y_pred)
+</code></pre>
+
+<hr />
+<h3 id="hinge">hinge</h3>
+<pre><code class="python">hinge(y_true, y_pred)
+</code></pre>
+
+<hr />
+<h3 id="categorical_crossentropy">categorical_crossentropy</h3>
+<pre><code class="python">categorical_crossentropy(y_true, y_pred)
+</code></pre>
+
+<hr />
+<h3 id="sparse_categorical_crossentropy">sparse_categorical_crossentropy</h3>
+<pre><code class="python">sparse_categorical_crossentropy(y_true, y_pred)
+</code></pre>
+
+<hr />
+<h3 id="binary_crossentropy">binary_crossentropy</h3>
+<pre><code class="python">binary_crossentropy(y_true, y_pred)
+</code></pre>
+
+<hr />
+<p><strong>Note</strong>: when using the <code>categorical_crossentropy</code> loss, your targets should be in categorical format (e.g. if you have 10 classes, the target for each sample should be a 10-dimensional vector that is all-zeros expect for a 1 at the index corresponding to the class of the sample). In order to convert <em>integer targets</em> into <em>categorical targets</em>, you can use the Keras utility <code>to_categorical</code>:</p>
+<pre><code class="python">from keras.utils.np_utils import to_categorical
+
+categorical_labels = to_categorical(int_labels, num_classes=None)
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../metrics/" class="btn btn-neutral float-right" title="Metrics">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../preprocessing/image/" class="btn btn-neutral" title="Image Preprocessing"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="http://github.com/fchollet/keras" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../preprocessing/image/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../metrics/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>

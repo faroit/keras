@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Convolutional Layers - Keras 1.2.2 Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Convolutional Layers";
+    var mkdocs_page_input_path = "layers/convolutional.md";
+    var mkdocs_page_url = "/layers/convolutional/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61785484-1', 'keras.io');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Keras 1.2.2 Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting started</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../getting-started/sequential-model-guide/">Guide to the Sequential model</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../getting-started/functional-api-guide/">Guide to the Functional API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../getting-started/faq/">FAQ</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Models</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../models/about-keras-models/">About Keras models</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../models/sequential/">Sequential</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../models/model/">Model (functional API)</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Layers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../about-keras-layers/">About Keras layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../core/">Core Layers</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Convolutional Layers</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#convolution1d">Convolution1D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#atrousconvolution1d">AtrousConvolution1D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#convolution2d">Convolution2D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#atrousconvolution2d">AtrousConvolution2D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#separableconvolution2d">SeparableConvolution2D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#deconvolution2d">Deconvolution2D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#convolution3d">Convolution3D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#cropping1d">Cropping1D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#cropping2d">Cropping2D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#cropping3d">Cropping3D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#upsampling1d">UpSampling1D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#upsampling2d">UpSampling2D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#upsampling3d">UpSampling3D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#zeropadding1d">ZeroPadding1D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#zeropadding2d">ZeroPadding2D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#zeropadding3d">ZeroPadding3D</a></li>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../pooling/">Pooling Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../local/">Locally-connected Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../recurrent/">Recurrent Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../embeddings/">Embedding Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../advanced-activations/">Advanced Activations Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../normalization/">Normalization Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../noise/">Noise layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../wrappers/">Layer wrappers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../writing-your-own-keras-layers/">Writing your own Keras layers</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Preprocessing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/sequence/">Sequence Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/text/">Text Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/image/">Image Preprocessing</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../objectives/">Objectives</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../metrics/">Metrics</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../optimizers/">Optimizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../activations/">Activations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../callbacks/">Callbacks</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../datasets/">Datasets</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../applications/">Applications</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../backend/">Backend</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../initializations/">Initializations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../regularizers/">Regularizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../constraints/">Constraints</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../visualization/">Visualization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../scikit-learn-api/">Scikit-learn API</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Utils</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../utils/data_utils/">Data Utils</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../utils/io_utils/">I/O Utils</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../utils/layer_utils/">Layer Utils</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../utils/np_utils/">Numpy Utils</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../utils/generic_utils/">Generic Utils</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Keras 1.2.2 Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Layers &raquo;</li>
+        
+      
+    
+    <li>Convolutional Layers</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="http://github.com/fchollet/keras/edit/master/docs/layers/convolutional.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/convolutional.py#L24">[source]</a></span></p>
+<h3 id="convolution1d">Convolution1D</h3>
+<pre><code class="python">keras.layers.convolutional.Convolution1D(nb_filter, filter_length, init='glorot_uniform', activation=None, weights=None, border_mode='valid', subsample_length=1, W_regularizer=None, b_regularizer=None, activity_regularizer=None, W_constraint=None, b_constraint=None, bias=True, input_dim=None, input_length=None)
+</code></pre>
+
+<p>Convolution operator for filtering neighborhoods of 1-D inputs.</p>
+<p>When using this layer as the first layer in a model,
+either provide the keyword argument <code>input_dim</code>
+(int, e.g. 128 for sequences of 128-dimensional vectors),
+or <code>input_shape</code> (tuple of integers, e.g. (10, 128) for sequences
+of 10 vectors of 128-dimensional vectors).</p>
+<p><strong>Example</strong></p>
+<pre><code class="python"># apply a convolution 1d of length 3 to a sequence with 10 timesteps,
+# with 64 output filters
+model = Sequential()
+model.add(Convolution1D(64, 3, border_mode='same', input_shape=(10, 32)))
+# now model.output_shape == (None, 10, 64)
+
+# add a new conv1d on top
+model.add(Convolution1D(32, 3, border_mode='same'))
+# now model.output_shape == (None, 10, 32)
+</code></pre>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>nb_filter</strong>: Number of convolution kernels to use
+    (dimensionality of the output).</li>
+<li><strong>filter_length</strong>: The extension (spatial or temporal) of each filter.</li>
+<li><strong>init</strong>: name of initialization function for the weights of the layer
+    (see <a href="../../initializations/">initializations</a>), or alternatively,
+    Theano function to use for weights initialization.
+    This parameter is only relevant
+    if you don't pass a <code>weights</code> argument.</li>
+<li><strong>activation</strong>: name of activation function to use
+    (see <a href="../../activations/">activations</a>),
+    or alternatively, elementwise Theano function.
+    If you don't specify anything, no activation is applied
+    (ie. "linear" activation: a(x) = x).</li>
+<li><strong>weights</strong>: list of numpy arrays to set as initial weights.</li>
+<li><strong>border_mode</strong>: 'valid', 'same' or 'full'
+    ('full' requires the Theano backend).</li>
+<li><strong>subsample_length</strong>: factor by which to subsample output.</li>
+<li><strong>W_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>
+    (eg. L1 or L2 regularization), applied to the main weights matrix.</li>
+<li><strong>b_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>,
+    applied to the bias.</li>
+<li><strong>activity_regularizer</strong>: instance of <a href="../../regularizers/">ActivityRegularizer</a>,
+    applied to the network output.</li>
+<li><strong>W_constraint</strong>: instance of the <a href="../../constraints/">constraints</a> module
+    (eg. maxnorm, nonneg), applied to the main weights matrix.</li>
+<li><strong>b_constraint</strong>: instance of the <a href="../../constraints/">constraints</a> module,
+    applied to the bias.</li>
+<li><strong>bias</strong>: whether to include a bias
+    (i.e. make the layer affine rather than linear).</li>
+<li><strong>input_dim</strong>: Number of channels/dimensions in the input.
+    Either this argument or the keyword argument <code>input_shape</code>must be
+    provided when using this layer as the first layer in a model.</li>
+<li><strong>input_length</strong>: Length of input sequences, when it is constant.
+    This argument is required if you are going to connect
+    <code>Flatten</code> then <code>Dense</code> layers upstream
+    (without it, the shape of the dense outputs cannot be computed).</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<p>3D tensor with shape: <code>(samples, steps, input_dim)</code>.</p>
+<p><strong>Output shape</strong></p>
+<p>3D tensor with shape: <code>(samples, new_steps, nb_filter)</code>.
+<code>steps</code> value might have changed due to padding.</p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/convolutional.py#L189">[source]</a></span></p>
+<h3 id="atrousconvolution1d">AtrousConvolution1D</h3>
+<pre><code class="python">keras.layers.convolutional.AtrousConvolution1D(nb_filter, filter_length, init='glorot_uniform', activation=None, weights=None, border_mode='valid', subsample_length=1, atrous_rate=1, W_regularizer=None, b_regularizer=None, activity_regularizer=None, W_constraint=None, b_constraint=None, bias=True)
+</code></pre>
+
+<p>Atrous Convolution operator for filtering neighborhoods of 1-D inputs.</p>
+<p>A.k.a dilated convolution or convolution with holes.
+When using this layer as the first layer in a model,
+either provide the keyword argument <code>input_dim</code>
+(int, e.g. 128 for sequences of 128-dimensional vectors),
+or <code>input_shape</code> (tuples of integers, e.g. (10, 128) for sequences
+of 10 vectors of 128-dimensional vectors).</p>
+<p><strong>Example</strong></p>
+<pre><code class="python"># apply an atrous convolution 1d
+# with atrous rate 2 of length 3 to a sequence with 10 timesteps,
+# with 64 output filters
+model = Sequential()
+model.add(AtrousConvolution1D(64, 3, atrous_rate=2,
+              border_mode='same',
+              input_shape=(10, 32)))
+# now model.output_shape == (None, 10, 64)
+
+# add a new atrous conv1d on top
+model.add(AtrousConvolution1D(32, 3, atrous_rate=2,
+              border_mode='same'))
+# now model.output_shape == (None, 10, 32)
+</code></pre>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>nb_filter</strong>: Number of convolution kernels to use
+    (dimensionality of the output).</li>
+<li><strong>filter_length</strong>: The extension (spatial or temporal) of each filter.</li>
+<li><strong>init</strong>: name of initialization function for the weights of the layer
+    (see <a href="../../initializations/">initializations</a>), or alternatively,
+    Theano function to use for weights initialization.
+    This parameter is only relevant
+    if you don't pass a <code>weights</code> argument.</li>
+<li><strong>activation</strong>: name of activation function to use
+    (see <a href="../../activations/">activations</a>),
+    or alternatively, elementwise Theano function.
+    If you don't specify anything, no activation is applied
+    (ie. "linear" activation: a(x) = x).</li>
+<li><strong>weights</strong>: list of numpy arrays to set as initial weights.</li>
+<li><strong>border_mode</strong>: 'valid', 'same' or 'full'
+    ('full' requires the Theano backend).</li>
+<li><strong>subsample_length</strong>: factor by which to subsample output.</li>
+<li><strong>atrous_rate</strong>: Factor for kernel dilation. Also called filter_dilation
+    elsewhere.</li>
+<li><strong>W_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>
+    (eg. L1 or L2 regularization), applied to the main weights matrix.</li>
+<li><strong>b_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>,
+    applied to the bias.</li>
+<li><strong>activity_regularizer</strong>: instance of <a href="../../regularizers/">ActivityRegularizer</a>,
+    applied to the network output.</li>
+<li><strong>W_constraint</strong>: instance of the <a href="../../constraints/">constraints</a> module
+    (eg. maxnorm, nonneg), applied to the main weights matrix.</li>
+<li><strong>b_constraint</strong>: instance of the <a href="../../constraints/">constraints</a> module,
+    applied to the bias.</li>
+<li><strong>bias</strong>: whether to include a bias
+    (i.e. make the layer affine rather than linear).</li>
+<li><strong>input_dim</strong>: Number of channels/dimensions in the input.
+    Either this argument or the keyword argument <code>input_shape</code>must be
+    provided when using this layer as the first layer in a model.</li>
+<li><strong>input_length</strong>: Length of input sequences, when it is constant.
+    This argument is required if you are going to connect
+    <code>Flatten</code> then <code>Dense</code> layers upstream
+    (without it, the shape of the dense outputs cannot be computed).</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<p>3D tensor with shape: <code>(samples, steps, input_dim)</code>.</p>
+<p><strong>Output shape</strong></p>
+<p>3D tensor with shape: <code>(samples, new_steps, nb_filter)</code>.
+<code>steps</code> value might have changed due to padding.</p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/convolutional.py#L314">[source]</a></span></p>
+<h3 id="convolution2d">Convolution2D</h3>
+<pre><code class="python">keras.layers.convolutional.Convolution2D(nb_filter, nb_row, nb_col, init='glorot_uniform', activation=None, weights=None, border_mode='valid', subsample=(1, 1), dim_ordering='default', W_regularizer=None, b_regularizer=None, activity_regularizer=None, W_constraint=None, b_constraint=None, bias=True)
+</code></pre>
+
+<p>Convolution operator for filtering windows of two-dimensional inputs.</p>
+<p>When using this layer as the first layer in a model,
+provide the keyword argument <code>input_shape</code>
+(tuple of integers, does not include the sample axis),
+e.g. <code>input_shape=(3, 128, 128)</code> for 128x128 RGB pictures.</p>
+<p><strong>Examples</strong></p>
+<pre><code class="python"># apply a 3x3 convolution with 64 output filters on a 256x256 image:
+model = Sequential()
+model.add(Convolution2D(64, 3, 3,
+            border_mode='same',
+            input_shape=(3, 256, 256)))
+# now model.output_shape == (None, 64, 256, 256)
+
+# add a 3x3 convolution on top, with 32 output filters:
+model.add(Convolution2D(32, 3, 3, border_mode='same'))
+# now model.output_shape == (None, 32, 256, 256)
+</code></pre>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>nb_filter</strong>: Number of convolution filters to use.</li>
+<li><strong>nb_row</strong>: Number of rows in the convolution kernel.</li>
+<li><strong>nb_col</strong>: Number of columns in the convolution kernel.</li>
+<li><strong>init</strong>: name of initialization function for the weights of the layer
+    (see <a href="../../initializations/">initializations</a>), or alternatively,
+    Theano function to use for weights initialization.
+    This parameter is only relevant if you don't pass
+    a <code>weights</code> argument.</li>
+<li><strong>activation</strong>: name of activation function to use
+    (see <a href="../../activations/">activations</a>),
+    or alternatively, elementwise Theano function.
+    If you don't specify anything, no activation is applied
+    (ie. "linear" activation: a(x) = x).</li>
+<li><strong>weights</strong>: list of numpy arrays to set as initial weights.</li>
+<li><strong>border_mode</strong>: 'valid', 'same' or 'full'
+    ('full' requires the Theano backend).</li>
+<li><strong>subsample</strong>: tuple of length 2. Factor by which to subsample output.
+    Also called strides elsewhere.</li>
+<li><strong>W_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>
+    (eg. L1 or L2 regularization), applied to the main weights matrix.</li>
+<li><strong>b_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>,
+    applied to the bias.</li>
+<li><strong>activity_regularizer</strong>: instance of <a href="../../regularizers/">ActivityRegularizer</a>,
+    applied to the network output.</li>
+<li><strong>W_constraint</strong>: instance of the <a href="../../constraints/">constraints</a> module
+    (eg. maxnorm, nonneg), applied to the main weights matrix.</li>
+<li><strong>b_constraint</strong>: instance of the <a href="../../constraints/">constraints</a> module,
+    applied to the bias.</li>
+<li><strong>dim_ordering</strong>: 'th' or 'tf'. In 'th' mode, the channels dimension
+    (the depth) is at index 1, in 'tf' mode is it at index 3.
+    It defaults to the <code>image_dim_ordering</code> value found in your
+    Keras config file at <code>~/.keras/keras.json</code>.
+    If you never set it, then it will be "tf".</li>
+<li><strong>bias</strong>: whether to include a bias
+    (i.e. make the layer affine rather than linear).</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<p>4D tensor with shape:
+<code>(samples, channels, rows, cols)</code> if dim_ordering='th'
+or 4D tensor with shape:
+<code>(samples, rows, cols, channels)</code> if dim_ordering='tf'.</p>
+<p><strong>Output shape</strong></p>
+<p>4D tensor with shape:
+<code>(samples, nb_filter, new_rows, new_cols)</code> if dim_ordering='th'
+or 4D tensor with shape:
+<code>(samples, new_rows, new_cols, nb_filter)</code> if dim_ordering='tf'.
+<code>rows</code> and <code>cols</code> values might have changed due to padding.</p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/convolutional.py#L691">[source]</a></span></p>
+<h3 id="atrousconvolution2d">AtrousConvolution2D</h3>
+<pre><code class="python">keras.layers.convolutional.AtrousConvolution2D(nb_filter, nb_row, nb_col, init='glorot_uniform', activation=None, weights=None, border_mode='valid', subsample=(1, 1), atrous_rate=(1, 1), dim_ordering='default', W_regularizer=None, b_regularizer=None, activity_regularizer=None, W_constraint=None, b_constraint=None, bias=True)
+</code></pre>
+
+<p>Atrous Convolution operator for filtering windows of 2-D inputs.</p>
+<p>A.k.a dilated convolution or convolution with holes.
+When using this layer as the first layer in a model,
+provide the keyword argument <code>input_shape</code>
+(tuple of integers, does not include the sample axis),
+e.g. <code>input_shape=(3, 128, 128)</code> for 128x128 RGB pictures.</p>
+<p><strong>Examples</strong></p>
+<pre><code class="python"># apply a 3x3 convolution with atrous rate 2x2
+# and 64 output filters on a 256x256 image:
+model = Sequential()
+model.add(AtrousConvolution2D(64, 3, 3, atrous_rate=(2,2),
+              border_mode='valid',
+              input_shape=(3, 256, 256)))
+# now the actual kernel size is dilated
+# from 3x3 to 5x5 (3+(3-1)*(2-1)=5)
+# thus model.output_shape == (None, 64, 252, 252)
+</code></pre>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>nb_filter</strong>: Number of convolution filters to use.</li>
+<li><strong>nb_row</strong>: Number of rows in the convolution kernel.</li>
+<li><strong>nb_col</strong>: Number of columns in the convolution kernel.</li>
+<li><strong>init</strong>: name of initialization function for the weights of the layer
+    (see <a href="../../initializations/">initializations</a>), or alternatively,
+    Theano function to use for weights initialization.
+    This parameter is only relevant if you don't pass
+    a <code>weights</code> argument.</li>
+<li><strong>activation</strong>: name of activation function to use
+    (see <a href="../../activations/">activations</a>),
+    or alternatively, elementwise Theano function.
+    If you don't specify anything, no activation is applied
+    (ie. "linear" activation: a(x) = x).</li>
+<li><strong>weights</strong>: list of numpy arrays to set as initial weights.</li>
+<li><strong>border_mode</strong>: 'valid', 'same' or 'full'
+    ('full' requires the Theano backend).</li>
+<li><strong>subsample</strong>: tuple of length 2. Factor by which to subsample output.
+    Also called strides elsewhere.</li>
+<li><strong>atrous_rate</strong>: tuple of length 2. Factor for kernel dilation.
+    Also called filter_dilation elsewhere.</li>
+<li><strong>W_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>
+    (eg. L1 or L2 regularization), applied to the main weights matrix.</li>
+<li><strong>b_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>,
+    applied to the bias.</li>
+<li><strong>activity_regularizer</strong>: instance of <a href="../../regularizers/">ActivityRegularizer</a>,
+    applied to the network output.</li>
+<li><strong>W_constraint</strong>: instance of the <a href="../../constraints/">constraints</a> module
+    (eg. maxnorm, nonneg), applied to the main weights matrix.</li>
+<li><strong>b_constraint</strong>: instance of the <a href="../../constraints/">constraints</a> module,
+    applied to the bias.</li>
+<li><strong>dim_ordering</strong>: 'th' or 'tf'. In 'th' mode, the channels dimension
+    (the depth) is at index 1, in 'tf' mode is it at index 3.
+    It defaults to the <code>image_dim_ordering</code> value found in your
+    Keras config file at <code>~/.keras/keras.json</code>.
+    If you never set it, then it will be "tf".</li>
+<li><strong>bias</strong>: whether to include a bias
+    (i.e. make the layer affine rather than linear).</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<p>4D tensor with shape:
+<code>(samples, channels, rows, cols)</code> if dim_ordering='th'
+or 4D tensor with shape:
+<code>(samples, rows, cols, channels)</code> if dim_ordering='tf'.</p>
+<p><strong>Output shape</strong></p>
+<p>4D tensor with shape:
+<code>(samples, nb_filter, new_rows, new_cols)</code> if dim_ordering='th'
+or 4D tensor with shape:
+<code>(samples, new_rows, new_cols, nb_filter)</code> if dim_ordering='tf'.
+<code>rows</code> and <code>cols</code> values might have changed due to padding.</p>
+<p><strong>References</strong></p>
+<ul>
+<li><a href="https://arxiv.org/abs/1511.07122">Multi-Scale Context Aggregation by Dilated Convolutions</a></li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/convolutional.py#L845">[source]</a></span></p>
+<h3 id="separableconvolution2d">SeparableConvolution2D</h3>
+<pre><code class="python">keras.layers.convolutional.SeparableConvolution2D(nb_filter, nb_row, nb_col, init='glorot_uniform', activation=None, weights=None, border_mode='valid', subsample=(1, 1), depth_multiplier=1, dim_ordering='default', depthwise_regularizer=None, pointwise_regularizer=None, b_regularizer=None, activity_regularizer=None, depthwise_constraint=None, pointwise_constraint=None, b_constraint=None, bias=True)
+</code></pre>
+
+<p>Separable convolution operator for 2D inputs.</p>
+<p>Separable convolutions consist in first performing
+a depthwise spatial convolution
+(which acts on each input channel separately)
+followed by a pointwise convolution which mixes together the resulting
+output channels. The <code>depth_multiplier</code> argument controls how many
+output channels are generated per input channel in the depthwise step.</p>
+<p>Intuitively, separable convolutions can be understood as
+a way to factorize a convolution kernel into two smaller kernels,
+or as an extreme version of an Inception block.</p>
+<p>When using this layer as the first layer in a model,
+provide the keyword argument <code>input_shape</code>
+(tuple of integers, does not include the sample axis),
+e.g. <code>input_shape=(3, 128, 128)</code> for 128x128 RGB pictures.</p>
+<p><strong>Theano warning</strong></p>
+<p>This layer is only available with the
+TensorFlow backend for the time being.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>nb_filter</strong>: Number of convolution filters to use.</li>
+<li><strong>nb_row</strong>: Number of rows in the convolution kernel.</li>
+<li><strong>nb_col</strong>: Number of columns in the convolution kernel.</li>
+<li><strong>init</strong>: name of initialization function for the weights of the layer
+    (see <a href="../../initializations/">initializations</a>), or alternatively,
+    Theano function to use for weights initialization.
+    This parameter is only relevant if you don't pass
+    a <code>weights</code> argument.</li>
+<li><strong>activation</strong>: name of activation function to use
+    (see <a href="../../activations/">activations</a>),
+    or alternatively, elementwise Theano function.
+    If you don't specify anything, no activation is applied
+    (ie. "linear" activation: a(x) = x).</li>
+<li><strong>weights</strong>: list of numpy arrays to set as initial weights.</li>
+<li><strong>border_mode</strong>: 'valid' or 'same'.</li>
+<li><strong>subsample</strong>: tuple of length 2. Factor by which to subsample output.
+    Also called strides elsewhere.</li>
+<li><strong>depth_multiplier</strong>: how many output channel to use per input channel
+    for the depthwise convolution step.</li>
+<li><strong>depthwise_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>
+    (eg. L1 or L2 regularization), applied to the depthwise weights matrix.</li>
+<li><strong>pointwise_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>
+    (eg. L1 or L2 regularization), applied to the pointwise weights matrix.</li>
+<li><strong>b_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>,
+    applied to the bias.</li>
+<li><strong>activity_regularizer</strong>: instance of <a href="../../regularizers/">ActivityRegularizer</a>,
+    applied to the network output.</li>
+<li><strong>depthwise_constraint</strong>: instance of the <a href="../../constraints/">constraints</a> module
+    (eg. maxnorm, nonneg), applied to the depthwise weights matrix.</li>
+<li><strong>pointwise_constraint</strong>: instance of the <a href="../../constraints/">constraints</a> module
+    (eg. maxnorm, nonneg), applied to the pointwise weights matrix.</li>
+<li><strong>b_constraint</strong>: instance of the <a href="../../constraints/">constraints</a> module,
+    applied to the bias.</li>
+<li><strong>dim_ordering</strong>: 'th' or 'tf'. In 'th' mode, the channels dimension
+    (the depth) is at index 1, in 'tf' mode is it at index 3.
+    It defaults to the <code>image_dim_ordering</code> value found in your
+    Keras config file at <code>~/.keras/keras.json</code>.
+    If you never set it, then it will be "tf".</li>
+<li><strong>bias</strong>: whether to include a bias
+    (i.e. make the layer affine rather than linear).</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<p>4D tensor with shape:
+<code>(samples, channels, rows, cols)</code> if dim_ordering='th'
+or 4D tensor with shape:
+<code>(samples, rows, cols, channels)</code> if dim_ordering='tf'.</p>
+<p><strong>Output shape</strong></p>
+<p>4D tensor with shape:
+<code>(samples, nb_filter, new_rows, new_cols)</code> if dim_ordering='th'
+or 4D tensor with shape:
+<code>(samples, new_rows, new_cols, nb_filter)</code> if dim_ordering='tf'.
+<code>rows</code> and <code>cols</code> values might have changed due to padding.</p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/convolutional.py#L505">[source]</a></span></p>
+<h3 id="deconvolution2d">Deconvolution2D</h3>
+<pre><code class="python">keras.layers.convolutional.Deconvolution2D(nb_filter, nb_row, nb_col, output_shape, init='glorot_uniform', activation=None, weights=None, border_mode='valid', subsample=(1, 1), dim_ordering='default', W_regularizer=None, b_regularizer=None, activity_regularizer=None, W_constraint=None, b_constraint=None, bias=True)
+</code></pre>
+
+<p>Transposed convolution operator for filtering windows of 2-D inputs.</p>
+<p>The need for transposed convolutions generally arises from the desire to
+use a transformation going in the opposite direction
+of a normal convolution, i.e., from something that has the shape
+of the output of some convolution to something that has the shape
+of its input while maintaining a connectivity pattern
+that is compatible with said convolution.</p>
+<p>When using this layer as the first layer in a model,
+provide the keyword argument <code>input_shape</code>
+(tuple of integers, does not include the sample axis),
+e.g. <code>input_shape=(3, 128, 128)</code> for 128x128 RGB pictures.</p>
+<p>To pass the correct <code>output_shape</code> to this layer,
+one could use a test model to predict and observe the actual output shape.</p>
+<p><strong>Examples</strong></p>
+<pre><code class="python"># apply a 3x3 transposed convolution
+# with stride 1x1 and 3 output filters on a 12x12 image:
+model = Sequential()
+model.add(Deconvolution2D(3, 3, 3, output_shape=(None, 3, 14, 14),
+              border_mode='valid',
+              input_shape=(3, 12, 12)))
+# Note that you will have to change
+# the output_shape depending on the backend used.
+
+# we can predict with the model and print the shape of the array.
+dummy_input = np.ones((32, 3, 12, 12))
+# For TensorFlow dummy_input = np.ones((32, 12, 12, 3))
+preds = model.predict(dummy_input)
+print(preds.shape)
+# Theano GPU: (None, 3, 13, 13)
+# Theano CPU: (None, 3, 14, 14)
+# TensorFlow: (None, 14, 14, 3)
+
+# apply a 3x3 transposed convolution
+# with stride 2x2 and 3 output filters on a 12x12 image:
+model = Sequential()
+model.add(Deconvolution2D(3, 3, 3, output_shape=(None, 3, 25, 25),
+              subsample=(2, 2),
+              border_mode='valid',
+              input_shape=(3, 12, 12)))
+model.summary()
+
+# we can predict with the model and print the shape of the array.
+dummy_input = np.ones((32, 3, 12, 12))
+# For TensorFlow dummy_input = np.ones((32, 12, 12, 3))
+preds = model.predict(dummy_input)
+print(preds.shape)
+# Theano GPU: (None, 3, 25, 25)
+# Theano CPU: (None, 3, 25, 25)
+# TensorFlow: (None, 25, 25, 3)
+</code></pre>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>nb_filter</strong>: Number of transposed convolution filters to use.</li>
+<li><strong>nb_row</strong>: Number of rows in the transposed convolution kernel.</li>
+<li><strong>nb_col</strong>: Number of columns in the transposed convolution kernel.</li>
+<li><strong>output_shape</strong>: Output shape of the transposed convolution operation.
+    tuple of integers
+    <code>(nb_samples, nb_filter, nb_output_rows, nb_output_cols)</code>.
+     It is better to use
+     a dummy input and observe the actual output shape of
+     a layer, as specified in the examples.</li>
+<li><strong>init</strong>: name of initialization function for the weights of the layer
+    (see <a href="../../initializations/">initializations</a>), or alternatively,
+    Theano function to use for weights initialization.
+    This parameter is only relevant if you don't pass
+    a <code>weights</code> argument.</li>
+<li><strong>activation</strong>: name of activation function to use
+    (see <a href="../../activations/">activations</a>),
+    or alternatively, elementwise Theano/TensorFlow function.
+    If you don't specify anything, no activation is applied
+    (ie. "linear" activation: a(x) = x).</li>
+<li><strong>weights</strong>: list of numpy arrays to set as initial weights.</li>
+<li><strong>border_mode</strong>: 'valid', 'same' or 'full'
+    ('full' requires the Theano backend).</li>
+<li><strong>subsample</strong>: tuple of length 2. Factor by which to oversample output.
+    Also called strides elsewhere.</li>
+<li><strong>W_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>
+    (eg. L1 or L2 regularization), applied to the main weights matrix.</li>
+<li><strong>b_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>,
+    applied to the bias.</li>
+<li><strong>activity_regularizer</strong>: instance of <a href="../../regularizers/">ActivityRegularizer</a>,
+    applied to the network output.</li>
+<li><strong>W_constraint</strong>: instance of the <a href="../../constraints/">constraints</a> module
+    (eg. maxnorm, nonneg), applied to the main weights matrix.</li>
+<li><strong>b_constraint</strong>: instance of the <a href="../../constraints/">constraints</a> module,
+    applied to the bias.</li>
+<li><strong>dim_ordering</strong>: 'th' or 'tf'. In 'th' mode, the channels dimension
+    (the depth) is at index 1, in 'tf' mode is it at index 3.
+    It defaults to the <code>image_dim_ordering</code> value found in your
+    Keras config file at <code>~/.keras/keras.json</code>.
+    If you never set it, then it will be "tf".</li>
+<li><strong>bias</strong>: whether to include a bias
+    (i.e. make the layer affine rather than linear).</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<p>4D tensor with shape:
+<code>(samples, channels, rows, cols)</code> if dim_ordering='th'
+or 4D tensor with shape:
+<code>(samples, rows, cols, channels)</code> if dim_ordering='tf'.</p>
+<p><strong>Output shape</strong></p>
+<p>4D tensor with shape:
+<code>(samples, nb_filter, new_rows, new_cols)</code> if dim_ordering='th'
+or 4D tensor with shape:
+<code>(samples, new_rows, new_cols, nb_filter)</code> if dim_ordering='tf'.
+<code>rows</code> and <code>cols</code> values might have changed due to padding.</p>
+<p><strong>References</strong></p>
+<ul>
+<li><a href="https://arxiv.org/abs/1603.07285v1">A guide to convolution arithmetic for deep learning</a></li>
+<li><a href="http://deeplearning.net/software/theano_versions/dev/tutorial/conv_arithmetic.html#transposed-convolution-arithmetic">Transposed convolution arithmetic</a></li>
+<li><a href="http://www.matthewzeiler.com/pubs/cvpr2010/cvpr2010.pdf">Deconvolutional Networks</a></li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/convolutional.py#L1073">[source]</a></span></p>
+<h3 id="convolution3d">Convolution3D</h3>
+<pre><code class="python">keras.layers.convolutional.Convolution3D(nb_filter, kernel_dim1, kernel_dim2, kernel_dim3, init='glorot_uniform', activation=None, weights=None, border_mode='valid', subsample=(1, 1, 1), dim_ordering='default', W_regularizer=None, b_regularizer=None, activity_regularizer=None, W_constraint=None, b_constraint=None, bias=True)
+</code></pre>
+
+<p>Convolution operator for filtering windows of three-dimensional inputs.</p>
+<p>When using this layer as the first layer in a model,
+provide the keyword argument <code>input_shape</code>
+(tuple of integers, does not include the sample axis),
+e.g. <code>input_shape=(3, 10, 128, 128)</code> for 10 frames of 128x128 RGB pictures.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>nb_filter</strong>: Number of convolution filters to use.</li>
+<li><strong>kernel_dim1</strong>: Length of the first dimension in the convolution kernel.</li>
+<li><strong>kernel_dim2</strong>: Length of the second dimension in the convolution kernel.</li>
+<li><strong>kernel_dim3</strong>: Length of the third dimension in the convolution kernel.</li>
+<li><strong>init</strong>: name of initialization function for the weights of the layer
+    (see <a href="../../initializations/">initializations</a>), or alternatively,
+    Theano function to use for weights initialization.
+    This parameter is only relevant if you don't pass
+    a <code>weights</code> argument.</li>
+<li><strong>activation</strong>: name of activation function to use
+    (see <a href="../../activations/">activations</a>),
+    or alternatively, elementwise Theano function.
+    If you don't specify anything, no activation is applied
+    (ie. "linear" activation: a(x) = x).</li>
+<li><strong>weights</strong>: list of Numpy arrays to set as initial weights.</li>
+<li><strong>border_mode</strong>: 'valid', 'same' or 'full'
+    ('full' requires the Theano backend).</li>
+<li><strong>subsample</strong>: tuple of length 3. Factor by which to subsample output.
+    Also called strides elsewhere.<ul>
+<li><strong>Note</strong>: 'subsample' is implemented by slicing
+the output of conv3d with strides=(1,1,1).</li>
+</ul>
+</li>
+<li><strong>W_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>
+    (eg. L1 or L2 regularization), applied to the main weights matrix.</li>
+<li><strong>b_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>,
+    applied to the bias.</li>
+<li><strong>activity_regularizer</strong>: instance of <a href="../../regularizers/">ActivityRegularizer</a>,
+    applied to the network output.</li>
+<li><strong>W_constraint</strong>: instance of the <a href="../../constraints/">constraints</a> module
+    (eg. maxnorm, nonneg), applied to the main weights matrix.</li>
+<li><strong>b_constraint</strong>: instance of the <a href="../../constraints/">constraints</a> module,
+    applied to the bias.</li>
+<li><strong>dim_ordering</strong>: 'th' or 'tf'. In 'th' mode, the channels dimension
+    (the depth) is at index 1, in 'tf' mode is it at index 4.
+    It defaults to the <code>image_dim_ordering</code> value found in your
+    Keras config file at <code>~/.keras/keras.json</code>.
+    If you never set it, then it will be "tf".</li>
+<li><strong>bias</strong>: whether to include a bias
+    (i.e. make the layer affine rather than linear).</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<p>5D tensor with shape:
+<code>(samples, channels, conv_dim1, conv_dim2, conv_dim3)</code> if dim_ordering='th'
+or 5D tensor with shape:
+<code>(samples, conv_dim1, conv_dim2, conv_dim3, channels)</code> if dim_ordering='tf'.</p>
+<p><strong>Output shape</strong></p>
+<p>5D tensor with shape:
+<code>(samples, nb_filter, new_conv_dim1, new_conv_dim2, new_conv_dim3)</code> if dim_ordering='th'
+or 5D tensor with shape:
+<code>(samples, new_conv_dim1, new_conv_dim2, new_conv_dim3, nb_filter)</code> if dim_ordering='tf'.
+<code>new_conv_dim1</code>, <code>new_conv_dim2</code> and <code>new_conv_dim3</code> values might have changed due to padding.</p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/convolutional.py#L1673">[source]</a></span></p>
+<h3 id="cropping1d">Cropping1D</h3>
+<pre><code class="python">keras.layers.convolutional.Cropping1D(cropping=(1, 1))
+</code></pre>
+
+<p>Cropping layer for 1D input (e.g. temporal sequence).</p>
+<p>It crops along the time dimension (axis 1).</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>cropping</strong>: tuple of int (length 2)
+    How many units should be trimmed off at the beginning and end of
+    the cropping dimension (axis 1).</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<p>3D tensor with shape <code>(samples, axis_to_crop, features)</code></p>
+<p><strong>Output shape</strong></p>
+<p>3D tensor with shape <code>(samples, cropped_axis, features)</code></p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/convolutional.py#L1722">[source]</a></span></p>
+<h3 id="cropping2d">Cropping2D</h3>
+<pre><code class="python">keras.layers.convolutional.Cropping2D(cropping=((0, 0), (0, 0)), dim_ordering='default')
+</code></pre>
+
+<p>Cropping layer for 2D input (e.g. picture).</p>
+<p>It crops along spatial dimensions, i.e. width and height.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>cropping</strong>: tuple of tuple of int (length 2)
+    How many units should be trimmed off at the beginning and end of
+    the 2 cropping dimensions (width, height).</li>
+<li><strong>dim_ordering</strong>: 'th' or 'tf'.
+    In 'th' mode, the channels dimension (the depth)
+    is at index 1, in 'tf' mode is it at index 3.
+    It defaults to the <code>image_dim_ordering</code> value found in your
+    Keras config file at <code>~/.keras/keras.json</code>.
+    If you never set it, then it will be "tf".</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<p>4D tensor with shape:
+<code>(samples, depth, first_axis_to_crop, second_axis_to_crop)</code></p>
+<p><strong>Output shape</strong></p>
+<p>4D tensor with shape:
+<code>(samples, depth, first_cropped_axis, second_cropped_axis)</code></p>
+<p><strong>Examples</strong></p>
+<pre><code class="python"># Crop the input 2D images or feature maps
+model = Sequential()
+model.add(Cropping2D(cropping=((2, 2), (4, 4)), input_shape=(3, 28, 28)))
+# now model.output_shape == (None, 3, 24, 20)
+model.add(Convolution2D(64, 3, 3, border_mode='same))
+model.add(Cropping2D(cropping=((2, 2), (2, 2))))
+# now model.output_shape == (None, 64, 20, 16)
+
+</code></pre>
+
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/convolutional.py#L1842">[source]</a></span></p>
+<h3 id="cropping3d">Cropping3D</h3>
+<pre><code class="python">keras.layers.convolutional.Cropping3D(cropping=((1, 1), (1, 1), (1, 1)), dim_ordering='default')
+</code></pre>
+
+<p>Cropping layer for 3D data (e.g. spatial or spatio-temporal).</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>cropping</strong>: tuple of tuple of int (length 3)
+    How many units should be trimmed off at the beginning and end of
+    the 3 cropping dimensions (kernel_dim1, kernel_dim2, kernerl_dim3).</li>
+<li><strong>dim_ordering</strong>: 'th' or 'tf'.
+    In 'th' mode, the channels dimension (the depth)
+    is at index 1, in 'tf' mode is it at index 4.
+    It defaults to the <code>image_dim_ordering</code> value found in your
+    Keras config file at <code>~/.keras/keras.json</code>.
+    If you never set it, then it will be "tf".</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<p>5D tensor with shape:
+<code>(samples, depth, first_axis_to_crop, second_axis_to_crop, third_axis_to_crop)</code></p>
+<p><strong>Output shape</strong></p>
+<p>5D tensor with shape:
+<code>(samples, depth, first_cropped_axis, second_cropped_axis, third_cropped_axis)</code></p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/convolutional.py#L1265">[source]</a></span></p>
+<h3 id="upsampling1d">UpSampling1D</h3>
+<pre><code class="python">keras.layers.convolutional.UpSampling1D(length=2)
+</code></pre>
+
+<p>Upsampling layer for 1D inputs.</p>
+<p>Repeats each temporal step <code>length</code> times along the time axis.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>length</strong>: integer. Upsampling factor.</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<p>3D tensor with shape: <code>(samples, steps, features)</code>.</p>
+<p><strong>Output shape</strong></p>
+<p>3D tensor with shape: <code>(samples, upsampled_steps, features)</code>.</p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/convolutional.py#L1299">[source]</a></span></p>
+<h3 id="upsampling2d">UpSampling2D</h3>
+<pre><code class="python">keras.layers.convolutional.UpSampling2D(size=(2, 2), dim_ordering='default')
+</code></pre>
+
+<p>Upsampling layer for 2D inputs.</p>
+<p>Repeats the rows and columns of the data
+by size[0] and size[1] respectively.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>size</strong>: tuple of 2 integers. The upsampling factors for rows and columns.</li>
+<li><strong>dim_ordering</strong>: 'th' or 'tf'.
+    In 'th' mode, the channels dimension (the depth)
+    is at index 1, in 'tf' mode is it at index 3.
+    It defaults to the <code>image_dim_ordering</code> value found in your
+    Keras config file at <code>~/.keras/keras.json</code>.
+    If you never set it, then it will be "tf".</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<p>4D tensor with shape:
+<code>(samples, channels, rows, cols)</code> if dim_ordering='th'
+or 4D tensor with shape:
+<code>(samples, rows, cols, channels)</code> if dim_ordering='tf'.</p>
+<p><strong>Output shape</strong></p>
+<p>4D tensor with shape:
+<code>(samples, channels, upsampled_rows, upsampled_cols)</code> if dim_ordering='th'
+or 4D tensor with shape:
+<code>(samples, upsampled_rows, upsampled_cols, channels)</code> if dim_ordering='tf'.</p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/convolutional.py#L1365">[source]</a></span></p>
+<h3 id="upsampling3d">UpSampling3D</h3>
+<pre><code class="python">keras.layers.convolutional.UpSampling3D(size=(2, 2, 2), dim_ordering='default')
+</code></pre>
+
+<p>Upsampling layer for 3D inputs.</p>
+<p>Repeats the 1st, 2nd and 3rd dimensions
+of the data by size[0], size[1] and size[2] respectively.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>size</strong>: tuple of 3 integers. The upsampling factors for dim1, dim2 and dim3.</li>
+<li><strong>dim_ordering</strong>: 'th' or 'tf'.
+    In 'th' mode, the channels dimension (the depth)
+    is at index 1, in 'tf' mode is it at index 4.
+    It defaults to the <code>image_dim_ordering</code> value found in your
+    Keras config file at <code>~/.keras/keras.json</code>.
+    If you never set it, then it will be "tf".</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<p>5D tensor with shape:
+<code>(samples, channels, dim1, dim2, dim3)</code> if dim_ordering='th'
+or 5D tensor with shape:
+<code>(samples, dim1, dim2, dim3, channels)</code> if dim_ordering='tf'.</p>
+<p><strong>Output shape</strong></p>
+<p>5D tensor with shape:
+<code>(samples, channels, upsampled_dim1, upsampled_dim2, upsampled_dim3)</code> if dim_ordering='th'
+or 5D tensor with shape:
+<code>(samples, upsampled_dim1, upsampled_dim2, upsampled_dim3, channels)</code> if dim_ordering='tf'.</p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/convolutional.py#L1435">[source]</a></span></p>
+<h3 id="zeropadding1d">ZeroPadding1D</h3>
+<pre><code class="python">keras.layers.convolutional.ZeroPadding1D(padding=1)
+</code></pre>
+
+<p>Zero-padding layer for 1D input (e.g. temporal sequence).</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>padding</strong>: int, or tuple of int (length 2), or dictionary.<ul>
+<li>If int:
+How many zeros to add at the beginning and end of
+the padding dimension (axis 1).</li>
+<li>If tuple of int (length 2)
+How many zeros to add at the beginning and at the end of
+the padding dimension, in order '(left_pad, right_pad)'.</li>
+<li>If dictionary: should contain the keys
+{'left_pad', 'right_pad'}.
+If any key is missing, default value of 0 will be used for the missing key.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<p>3D tensor with shape <code>(samples, axis_to_pad, features)</code></p>
+<p><strong>Output shape</strong></p>
+<p>3D tensor with shape <code>(samples, padded_axis, features)</code></p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/convolutional.py#L1498">[source]</a></span></p>
+<h3 id="zeropadding2d">ZeroPadding2D</h3>
+<pre><code class="python">keras.layers.convolutional.ZeroPadding2D(padding=(1, 1), dim_ordering='default')
+</code></pre>
+
+<p>Zero-padding layer for 2D input (e.g. picture).</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>padding</strong>: tuple of int (length 2), or tuple of int (length 4), or dictionary.<ul>
+<li>If tuple of int (length 2):
+How many zeros to add at the beginning and end of
+the 2 padding dimensions (rows and cols).</li>
+<li>If tuple of int (length 4):
+How many zeros to add at the beginning and at the end of
+the 2 padding dimensions (rows and cols), in the order
+'(top_pad, bottom_pad, left_pad, right_pad)'.</li>
+<li>If dictionary: should contain the keys
+{'top_pad', 'bottom_pad', 'left_pad', 'right_pad'}.
+If any key is missing, default value of 0 will be used for the missing key.</li>
+</ul>
+</li>
+<li><strong>dim_ordering</strong>: 'th' or 'tf'.
+    In 'th' mode, the channels dimension (the depth)
+    is at index 1, in 'tf' mode is it at index 3.
+    It defaults to the <code>image_dim_ordering</code> value found in your
+    Keras config file at <code>~/.keras/keras.json</code>.
+    If you never set it, then it will be "tf".</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<p>4D tensor with shape:
+<code>(samples, channels, rows, cols)</code> if dim_ordering='th'
+or 4D tensor with shape:
+<code>(samples, rows, cols, channels)</code> if dim_ordering='tf'.</p>
+<p><strong>Output shape</strong></p>
+<p>4D tensor with shape:
+<code>(samples, channels, padded_rows, padded_cols)</code> if dim_ordering='th'
+or 4D tensor with shape:
+<code>(samples, padded_rows, padded_cols, channels)</code> if dim_ordering='tf'.</p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/convolutional.py#L1607">[source]</a></span></p>
+<h3 id="zeropadding3d">ZeroPadding3D</h3>
+<pre><code class="python">keras.layers.convolutional.ZeroPadding3D(padding=(1, 1, 1), dim_ordering='default')
+</code></pre>
+
+<p>Zero-padding layer for 3D data (spatial or spatio-temporal).</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>padding</strong>: tuple of int (length 3)
+    How many zeros to add at the beginning and end of
+    the 3 padding dimensions (axis 3, 4 and 5).
+    Currently only symmetric padding is supported.</li>
+<li><strong>dim_ordering</strong>: 'th' or 'tf'.
+    In 'th' mode, the channels dimension (the depth)
+    is at index 1, in 'tf' mode is it at index 4.
+    It defaults to the <code>image_dim_ordering</code> value found in your
+    Keras config file at <code>~/.keras/keras.json</code>.
+    If you never set it, then it will be "tf".</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<p>5D tensor with shape:
+<code>(samples, depth, first_axis_to_pad, second_axis_to_pad, third_axis_to_pad)</code></p>
+<p><strong>Output shape</strong></p>
+<p>5D tensor with shape:
+<code>(samples, depth, first_padded_axis, second_padded_axis, third_axis_to_pad)</code></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../pooling/" class="btn btn-neutral float-right" title="Pooling Layers">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../core/" class="btn btn-neutral" title="Core Layers"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="http://github.com/fchollet/keras" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../core/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../pooling/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>
