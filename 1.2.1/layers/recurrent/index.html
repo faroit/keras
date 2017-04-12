@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Recurrent Layers - Keras Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Recurrent Layers";
+    var mkdocs_page_input_path = "layers/recurrent.md";
+    var mkdocs_page_url = "/layers/recurrent/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61785484-1', 'keras.io');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Keras Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting started</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../getting-started/sequential-model-guide/">Guide to the Sequential model</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../getting-started/functional-api-guide/">Guide to the Functional API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../getting-started/faq/">FAQ</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Models</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../models/about-keras-models/">About Keras models</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../models/sequential/">Sequential</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../models/model/">Model (functional API)</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Layers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../about-keras-layers/">About Keras layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../core/">Core Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../convolutional/">Convolutional Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../pooling/">Pooling Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../local/">Locally-connected Layers</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Recurrent Layers</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#recurrent">Recurrent</a></li>
+    
+
+    <li class="toctree-l3"><a href="#simplernn">SimpleRNN</a></li>
+    
+
+    <li class="toctree-l3"><a href="#gru">GRU</a></li>
+    
+
+    <li class="toctree-l3"><a href="#lstm">LSTM</a></li>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../embeddings/">Embedding Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../advanced-activations/">Advanced Activations Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../normalization/">Normalization Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../noise/">Noise layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../wrappers/">Layer wrappers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../writing-your-own-keras-layers/">Writing your own Keras layers</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Preprocessing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/sequence/">Sequence Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/text/">Text Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/image/">Image Preprocessing</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../objectives/">Objectives</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../metrics/">Metrics</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../optimizers/">Optimizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../activations/">Activations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../callbacks/">Callbacks</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../datasets/">Datasets</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../applications/">Applications</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../backend/">Backend</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../initializations/">Initializations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../regularizers/">Regularizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../constraints/">Constraints</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../visualization/">Visualization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../scikit-learn-api/">Scikit-learn API</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Utils</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../utils/data_utils/">Data Utils</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../utils/io_utils/">I/O Utils</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../utils/layer_utils/">Layer Utils</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../utils/np_utils/">Numpy Utils</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Keras Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Layers &raquo;</li>
+        
+      
+    
+    <li>Recurrent Layers</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="http://github.com/fchollet/keras/edit/master/docs/layers/recurrent.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/recurrent.py#L58">[source]</a></span></p>
+<h3 id="recurrent">Recurrent</h3>
+<pre><code class="python">keras.layers.recurrent.Recurrent(weights=None, return_sequences=False, go_backwards=False, stateful=False, unroll=False, consume_less='cpu', input_dim=None, input_length=None)
+</code></pre>
+
+<p>Abstract base class for recurrent layers.
+Do not use in a model -- it's not a valid layer!
+Use its children classes <code>LSTM</code>, <code>GRU</code> and <code>SimpleRNN</code> instead.</p>
+<p>All recurrent layers (<code>LSTM</code>, <code>GRU</code>, <code>SimpleRNN</code>) also
+follow the specifications of this class and accept
+the keyword arguments listed below.</p>
+<p><strong>Example</strong></p>
+<pre><code class="python"># as the first layer in a Sequential model
+model = Sequential()
+model.add(LSTM(32, input_shape=(10, 64)))
+# now model.output_shape == (None, 32)
+# note: `None` is the batch dimension.
+
+# the following is identical:
+model = Sequential()
+model.add(LSTM(32, input_dim=64, input_length=10))
+
+# for subsequent layers, not need to specify the input size:
+model.add(LSTM(16))
+</code></pre>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>weights</strong>: list of Numpy arrays to set as initial weights.
+    The list should have 3 elements, of shapes:
+    <code>[(input_dim, output_dim), (output_dim, output_dim), (output_dim,)]</code>.</li>
+<li><strong>return_sequences</strong>: Boolean. Whether to return the last output
+    in the output sequence, or the full sequence.</li>
+<li><strong>go_backwards</strong>: Boolean (default False).
+    If True, process the input sequence backwards.</li>
+<li><strong>stateful</strong>: Boolean (default False). If True, the last state
+    for each sample at index i in a batch will be used as initial
+    state for the sample of index i in the following batch.</li>
+<li><strong>unroll</strong>: Boolean (default False). If True, the network will be unrolled,
+    else a symbolic loop will be used. When using TensorFlow, the network
+    is always unrolled, so this argument does not do anything.
+    Unrolling can speed-up a RNN, although it tends to be more memory-intensive.
+    Unrolling is only suitable for short sequences.</li>
+<li><strong>consume_less</strong>: one of "cpu", "mem", or "gpu" (LSTM/GRU only).
+    If set to "cpu", the RNN will use
+    an implementation that uses fewer, larger matrix products,
+    thus running faster on CPU but consuming more memory.
+    If set to "mem", the RNN will use more matrix products,
+    but smaller ones, thus running slower (may actually be faster on GPU)
+    while consuming less memory.
+    If set to "gpu" (LSTM/GRU only), the RNN will combine the input gate,
+    the forget gate and the output gate into a single matrix,
+    enabling more time-efficient parallelization on the GPU. Note: RNN
+    dropout must be shared for all gates, resulting in a slightly
+    reduced regularization.</li>
+<li><strong>input_dim</strong>: dimensionality of the input (integer).
+    This argument (or alternatively, the keyword argument <code>input_shape</code>)
+    is required when using this layer as the first layer in a model.</li>
+<li><strong>input_length</strong>: Length of input sequences, to be specified
+    when it is constant.
+    This argument is required if you are going to connect
+    <code>Flatten</code> then <code>Dense</code> layers upstream
+    (without it, the shape of the dense outputs cannot be computed).
+    Note that if the recurrent layer is not the first layer
+    in your model, you would need to specify the input length
+    at the level of the first layer
+    (e.g. via the <code>input_shape</code> argument)</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<p>3D tensor with shape <code>(nb_samples, timesteps, input_dim)</code>.</p>
+<p><strong>Output shape</strong></p>
+<ul>
+<li>if <code>return_sequences</code>: 3D tensor with shape
+    <code>(nb_samples, timesteps, output_dim)</code>.</li>
+<li>else, 2D tensor with shape <code>(nb_samples, output_dim)</code>.</li>
+</ul>
+<p><strong>Masking</strong></p>
+<p>This layer supports masking for input data with a variable number
+of timesteps. To introduce masks to your data,
+use an <a href="../embeddings/">Embedding</a> layer with the <code>mask_zero</code> parameter
+set to <code>True</code>.</p>
+<p><strong>Note on performance</strong></p>
+<p>You are likely to see better performance with RNNs in Theano compared
+to TensorFlow. Additionally, when using TensorFlow, it is often
+preferable to set <code>unroll=True</code> for better performance.</p>
+<p><strong>Note on using statefulness in RNNs</strong></p>
+<p>You can set RNN layers to be 'stateful', which means that the states
+computed for the samples in one batch will be reused as initial states
+for the samples in the next batch. This assumes a one-to-one mapping
+between samples in different successive batches.</p>
+<p>To enable statefulness:
+    - specify <code>stateful=True</code> in the layer constructor.
+    - specify a fixed batch size for your model, by passing
+    if sequential model:
+      <code>batch_input_shape=(...)</code> to the first layer in your model.
+    else for functional model with 1 or more Input layers:
+      <code>batch_shape=(...)</code> to all the first layers in your model.
+    This is the expected shape of your inputs <em>including the batch size</em>.
+    It should be a tuple of integers, e.g. <code>(32, 10, 100)</code>.
+    - specify <code>shuffle=False</code> when calling fit().</p>
+<p>To reset the states of your model, call <code>.reset_states()</code> on either
+a specific layer, or on your entire model.</p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/recurrent.py#L272">[source]</a></span></p>
+<h3 id="simplernn">SimpleRNN</h3>
+<pre><code class="python">keras.layers.recurrent.SimpleRNN(output_dim, init='glorot_uniform', inner_init='orthogonal', activation='tanh', W_regularizer=None, U_regularizer=None, b_regularizer=None, dropout_W=0.0, dropout_U=0.0)
+</code></pre>
+
+<p>Fully-connected RNN where the output is to be fed back to input.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>output_dim</strong>: dimension of the internal projections and the final output.</li>
+<li><strong>init</strong>: weight initialization function.
+    Can be the name of an existing function (str),
+    or a Theano function (see: <a href="../../initializations/">initializations</a>).</li>
+<li><strong>inner_init</strong>: initialization function of the inner cells.</li>
+<li><strong>activation</strong>: activation function.
+    Can be the name of an existing function (str),
+    or a Theano function (see: <a href="../../activations/">activations</a>).</li>
+<li><strong>W_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>
+    (eg. L1 or L2 regularization), applied to the input weights matrices.</li>
+<li><strong>U_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>
+    (eg. L1 or L2 regularization), applied to the recurrent weights matrices.</li>
+<li><strong>b_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>,
+    applied to the bias.</li>
+<li><strong>dropout_W</strong>: float between 0 and 1. Fraction of the input units to drop for input gates.</li>
+<li><strong>dropout_U</strong>: float between 0 and 1. Fraction of the input units to drop for recurrent connections.</li>
+</ul>
+<p><strong>References</strong></p>
+<ul>
+<li><a href="http://arxiv.org/abs/1512.05287">A Theoretically Grounded Application of Dropout in Recurrent Neural Networks</a></li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/recurrent.py#L422">[source]</a></span></p>
+<h3 id="gru">GRU</h3>
+<pre><code class="python">keras.layers.recurrent.GRU(output_dim, init='glorot_uniform', inner_init='orthogonal', activation='tanh', inner_activation='hard_sigmoid', W_regularizer=None, U_regularizer=None, b_regularizer=None, dropout_W=0.0, dropout_U=0.0)
+</code></pre>
+
+<p>Gated Recurrent Unit - Cho et al. 2014.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>output_dim</strong>: dimension of the internal projections and the final output.</li>
+<li><strong>init</strong>: weight initialization function.
+    Can be the name of an existing function (str),
+    or a Theano function (see: <a href="../../initializations/">initializations</a>).</li>
+<li><strong>inner_init</strong>: initialization function of the inner cells.</li>
+<li><strong>activation</strong>: activation function.
+    Can be the name of an existing function (str),
+    or a Theano function (see: <a href="../../activations/">activations</a>).</li>
+<li><strong>inner_activation</strong>: activation function for the inner cells.</li>
+<li><strong>W_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>
+    (eg. L1 or L2 regularization), applied to the input weights matrices.</li>
+<li><strong>U_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>
+    (eg. L1 or L2 regularization), applied to the recurrent weights matrices.</li>
+<li><strong>b_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>,
+    applied to the bias.</li>
+<li><strong>dropout_W</strong>: float between 0 and 1. Fraction of the input units to drop for input gates.</li>
+<li><strong>dropout_U</strong>: float between 0 and 1. Fraction of the input units to drop for recurrent connections.</li>
+</ul>
+<p><strong>References</strong></p>
+<ul>
+<li><a href="https://arxiv.org/abs/1409.1259">On the Properties of Neural Machine Translation: Encoder-Decoder Approaches</a></li>
+<li><a href="http://arxiv.org/abs/1412.3555v1">Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling</a></li>
+<li><a href="http://arxiv.org/abs/1512.05287">A Theoretically Grounded Application of Dropout in Recurrent Neural Networks</a></li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/recurrent.py#L643">[source]</a></span></p>
+<h3 id="lstm">LSTM</h3>
+<pre><code class="python">keras.layers.recurrent.LSTM(output_dim, init='glorot_uniform', inner_init='orthogonal', forget_bias_init='one', activation='tanh', inner_activation='hard_sigmoid', W_regularizer=None, U_regularizer=None, b_regularizer=None, dropout_W=0.0, dropout_U=0.0)
+</code></pre>
+
+<p>Long-Short Term Memory unit - Hochreiter 1997.</p>
+<p>For a step-by-step description of the algorithm, see
+<a href="http://deeplearning.net/tutorial/lstm.html">this tutorial</a>.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>output_dim</strong>: dimension of the internal projections and the final output.</li>
+<li><strong>init</strong>: weight initialization function.
+    Can be the name of an existing function (str),
+    or a Theano function (see: <a href="../../initializations/">initializations</a>).</li>
+<li><strong>inner_init</strong>: initialization function of the inner cells.</li>
+<li><strong>forget_bias_init</strong>: initialization function for the bias of the forget gate.
+    <a href="http://www.jmlr.org/proceedings/papers/v37/jozefowicz15.pdf">Jozefowicz et al.</a>
+    recommend initializing with ones.</li>
+<li><strong>activation</strong>: activation function.
+    Can be the name of an existing function (str),
+    or a Theano function (see: <a href="../../activations/">activations</a>).</li>
+<li><strong>inner_activation</strong>: activation function for the inner cells.</li>
+<li><strong>W_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>
+    (eg. L1 or L2 regularization), applied to the input weights matrices.</li>
+<li><strong>U_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>
+    (eg. L1 or L2 regularization), applied to the recurrent weights matrices.</li>
+<li><strong>b_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>,
+    applied to the bias.</li>
+<li><strong>dropout_W</strong>: float between 0 and 1. Fraction of the input units to drop for input gates.</li>
+<li><strong>dropout_U</strong>: float between 0 and 1. Fraction of the input units to drop for recurrent connections.</li>
+</ul>
+<p><strong>References</strong></p>
+<ul>
+<li><a href="http://deeplearning.cs.cmu.edu/pdfs/Hochreiter97_lstm.pdf">Long short-term memory</a> (original 1997 paper)</li>
+<li><a href="http://www.mitpressjournals.org/doi/pdf/10.1162/089976600300015015">Learning to forget: Continual prediction with LSTM</a></li>
+<li><a href="http://www.cs.toronto.edu/~graves/preprint.pdf">Supervised sequence labeling with recurrent neural networks</a></li>
+<li><a href="http://arxiv.org/abs/1512.05287">A Theoretically Grounded Application of Dropout in Recurrent Neural Networks</a></li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../embeddings/" class="btn btn-neutral float-right" title="Embedding Layers">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../local/" class="btn btn-neutral" title="Locally-connected Layers"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="http://github.com/fchollet/keras" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../local/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../embeddings/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

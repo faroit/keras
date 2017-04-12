@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Embedding Layers - Keras Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Embedding Layers";
+    var mkdocs_page_input_path = "layers/embeddings.md";
+    var mkdocs_page_url = "/layers/embeddings/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61785484-1', 'keras.io');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Keras Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting started</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../getting-started/sequential-model-guide/">Guide to the Sequential model</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../getting-started/functional-api-guide/">Guide to the Functional API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../getting-started/faq/">FAQ</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Models</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../models/about-keras-models/">About Keras models</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../models/sequential/">Sequential</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../models/model/">Model (functional API)</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Layers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../about-keras-layers/">About Keras layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../core/">Core Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../convolutional/">Convolutional Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../pooling/">Pooling Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../local/">Locally-connected Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../recurrent/">Recurrent Layers</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Embedding Layers</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#embedding">Embedding</a></li>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../advanced-activations/">Advanced Activations Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../normalization/">Normalization Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../noise/">Noise layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../wrappers/">Layer wrappers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../writing-your-own-keras-layers/">Writing your own Keras layers</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Preprocessing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/sequence/">Sequence Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/text/">Text Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/image/">Image Preprocessing</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../objectives/">Objectives</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../optimizers/">Optimizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../activations/">Activations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../callbacks/">Callbacks</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../datasets/">Datasets</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../applications/">Applications</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../backend/">Backend</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../initializations/">Initializations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../regularizers/">Regularizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../constraints/">Constraints</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../visualization/">Visualization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../scikit-learn-api/">Scikit-learn API</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Keras Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Layers &raquo;</li>
+        
+      
+    
+    <li>Embedding Layers</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="http://github.com/fchollet/keras/edit/master/docs/layers/embeddings.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/embeddings.py#L8">[source]</a></span></p>
+<h3 id="embedding">Embedding</h3>
+<pre><code class="python">keras.layers.embeddings.Embedding(input_dim, output_dim, init='uniform', input_length=None, W_regularizer=None, activity_regularizer=None, W_constraint=None, mask_zero=False, weights=None, dropout=0.0)
+</code></pre>
+
+<p>Turn positive integers (indexes) into dense vectors of fixed size.
+eg. [[4], [20]] -&gt; [[0.25, 0.1], [0.6, -0.2]]</p>
+<p>This layer can only be used as the first layer in a model.</p>
+<p><strong>Example</strong></p>
+<pre><code class="python">  model = Sequential()
+  model.add(Embedding(1000, 64, input_length=10))
+  # the model will take as input an integer matrix of size (batch, input_length).
+  # the largest integer (i.e. word index) in the input should be no larger than 999 (vocabulary size).
+  # now model.output_shape == (None, 10, 64), where None is the batch dimension.
+
+  input_array = np.random.randint(1000, size=(32, 10))
+
+  model.compile('rmsprop', 'mse')
+  output_array = model.predict(input_array)
+  assert output_array.shape == (32, 10, 64)
+</code></pre>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>input_dim</strong>: int &gt; 0. Size of the vocabulary, ie.
+  1 + maximum integer index occurring in the input data.</li>
+<li><strong>output_dim</strong>: int &gt;= 0. Dimension of the dense embedding.</li>
+<li><strong>init</strong>: name of initialization function for the weights
+  of the layer (see: <a href="../../initializations/">initializations</a>),
+  or alternatively, Theano function to use for weights initialization.
+  This parameter is only relevant if you don't pass a <code>weights</code> argument.</li>
+<li><strong>weights</strong>: list of Numpy arrays to set as initial weights.
+  The list should have 1 element, of shape <code>(input_dim, output_dim)</code>.</li>
+<li><strong>W_regularizer</strong>: instance of the <a href="../../regularizers/">regularizers</a> module
+(eg. L1 or L2 regularization), applied to the embedding matrix.</li>
+<li><strong>W_constraint</strong>: instance of the <a href="../../constraints/">constraints</a> module
+  (eg. maxnorm, nonneg), applied to the embedding matrix.</li>
+<li><strong>mask_zero</strong>: Whether or not the input value 0 is a special "padding"
+  value that should be masked out.
+  This is useful for <a href="../recurrent/">recurrent layers</a> which may take
+  variable length input. If this is <code>True</code> then all subsequent layers
+  in the model need to support masking or an exception will be raised.
+  If mask_zero is set to True, as a consequence, index 0 cannot be
+  used in the vocabulary (input_dim should equal |vocabulary| + 2).</li>
+<li><strong>input_length</strong>: Length of input sequences, when it is constant.
+  This argument is required if you are going to connect
+  <code>Flatten</code> then <code>Dense</code> layers upstream
+  (without it, the shape of the dense outputs cannot be computed).</li>
+<li><strong>dropout</strong>: float between 0 and 1. Fraction of the embeddings to drop.</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<p>2D tensor with shape: <code>(nb_samples, sequence_length)</code>.</p>
+<p><strong>Output shape</strong></p>
+<p>3D tensor with shape: <code>(nb_samples, sequence_length, output_dim)</code>.</p>
+<p><strong>References</strong></p>
+<ul>
+<li><a href="http://arxiv.org/abs/1512.05287">A Theoretically Grounded Application of Dropout in Recurrent Neural Networks</a></li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../advanced-activations/" class="btn btn-neutral float-right" title="Advanced Activations Layers">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../recurrent/" class="btn btn-neutral" title="Recurrent Layers"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="http://github.com/fchollet/keras" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../recurrent/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../advanced-activations/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Core Layers - Keras Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Core Layers";
+    var mkdocs_page_input_path = "layers/core.md";
+    var mkdocs_page_url = "/layers/core/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61785484-1', 'keras.io');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Keras Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../documentation/">Index</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../examples/">Examples</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../faq/">FAQ</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../backend/">Backends</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../optimizers/">Optimizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../objectives/">Objectives</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../models/">Models</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../activations/">Activations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../initializations/">Initializations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../regularizers/">Regularizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../constraints/">Constraints</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../callbacks/">Callbacks</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../datasets/">Datasets</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../visualization/">Visualization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Layers</span>
+    <ul class="subnav">
+                <li class=" current">
+                    
+    <a class="current" href="./">Core Layers</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#layer">Layer</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#methods">Methods</a></li>
+        
+        </ul>
+    
+
+    <li class="toctree-l3"><a href="#masking">Masking</a></li>
+    
+
+    <li class="toctree-l3"><a href="#merge">Merge</a></li>
+    
+
+    <li class="toctree-l3"><a href="#timedistributedmerge">TimeDistributedMerge</a></li>
+    
+
+    <li class="toctree-l3"><a href="#dropout">Dropout</a></li>
+    
+
+    <li class="toctree-l3"><a href="#activation">Activation</a></li>
+    
+
+    <li class="toctree-l3"><a href="#reshape">Reshape</a></li>
+    
+
+    <li class="toctree-l3"><a href="#permute">Permute</a></li>
+    
+
+    <li class="toctree-l3"><a href="#flatten">Flatten</a></li>
+    
+
+    <li class="toctree-l3"><a href="#repeatvector">RepeatVector</a></li>
+    
+
+    <li class="toctree-l3"><a href="#dense">Dense</a></li>
+    
+
+    <li class="toctree-l3"><a href="#timedistributeddense">TimeDistributedDense</a></li>
+    
+
+    <li class="toctree-l3"><a href="#activityregularization">ActivityRegularization</a></li>
+    
+
+    <li class="toctree-l3"><a href="#autoencoder">AutoEncoder</a></li>
+    
+
+    <li class="toctree-l3"><a href="#maxoutdense">MaxoutDense</a></li>
+    
+
+    <li class="toctree-l3"><a href="#lambda">Lambda</a></li>
+    
+
+    <li class="toctree-l3"><a href="#lambdamerge">LambdaMerge</a></li>
+    
+
+    <li class="toctree-l3"><a href="#siamese">Siamese</a></li>
+    
+
+    <li class="toctree-l3"><a href="#highway">Highway</a></li>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../convolutional/">Convolutional Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../recurrent/">Recurrent Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../advanced_activations/">Advanced Activations Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../normalization/">Normalization Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../embeddings/">Embedding Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../noise/">Noise layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../containers/">Containers</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Preprocessing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/sequence/">Sequence Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/text/">Text Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/image/">Image Preprocessing</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Keras Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Layers &raquo;</li>
+        
+      
+    
+    <li>Core Layers</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="http://github.com/fchollet/keras/edit/master/docs/layers/core.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L18">[source]</a></span></p>
+<h1 id="layer">Layer</h1>
+<pre><code class="python">keras.layers.core.Layer()
+</code></pre>
+
+<p>Abstract base layer class.</p>
+<p>All Keras layers accept certain keyword arguments:</p>
+<ul>
+<li><strong>trainable</strong>: boolean. Set to "False" before model compilation
+    to freeze layer weights (they won't be updated further
+    during training).</li>
+<li><strong>input_shape</strong>: a tuple of integers specifying the expected shape
+    of the input samples. Does not includes the batch size.
+    (e.g. <code>(100,)</code> for 100-dimensional inputs).</li>
+<li><strong>batch_input_shape</strong>: a tuple of integers specifying the expected
+    shape of a batch of input samples. Includes the batch size
+    (e.g. <code>(32, 100)</code> for a batch of 32 100-dimensional inputs).</li>
+</ul>
+<h3 id="methods">Methods</h3>
+<pre><code class="python">clear_previous(reset_weights=True)
+</code></pre>
+
+<p>Unlink a layer from its parent in the computational graph.</p>
+<p>This is only allowed if the layer has an <code>input</code> attribute.</p>
+<pre><code class="python">count_params()
+</code></pre>
+
+<p>Return the total number of floats (or ints)
+composing the weights of the layer.</p>
+<pre><code class="python">get_config()
+</code></pre>
+
+<p>Return the parameters of the layer, as a dictionary.</p>
+<pre><code class="python">get_input(train=False)
+</code></pre>
+
+<pre><code class="python">get_output(train=False)
+</code></pre>
+
+<pre><code class="python">get_output_mask(train=None)
+</code></pre>
+
+<p>For some models (such as RNNs) you want a way of being able to mark
+some output data-points as "masked",
+so they are not used in future calculations.
+In such a model, get_output_mask() should return a mask
+of one less dimension than get_output()
+(so if get_output is (nb_samples, nb_timesteps, nb_dimensions),
+then the mask is (nb_samples, nb_timesteps),
+with a one for every unmasked datapoint,
+and a zero for every masked one.</p>
+<p>If there is <em>no</em> masking then it shall return None.
+For instance if you attach an Activation layer (they support masking)
+to a layer with an output_mask, then that Activation shall
+also have an output_mask.
+If you attach it to a layer with no such mask,
+then the Activation's get_output_mask shall return None.</p>
+<p>Some layers have an output_mask even if their input is unmasked,
+notably Embedding which can turn the entry "0" into
+a mask.</p>
+<pre><code class="python">get_weights()
+</code></pre>
+
+<p>Return the weights of the layer,
+as a list of numpy arrays.</p>
+<pre><code class="python">set_input_shape(input_shape)
+</code></pre>
+
+<pre><code class="python">set_previous(layer, reset_weights=True)
+</code></pre>
+
+<p>Connect a layer to its parent in the computational graph.</p>
+<pre><code class="python">set_weights(weights)
+</code></pre>
+
+<p>Set the weights of the layer.</p>
+<ul>
+<li><strong>weights</strong>: a list of numpy arrays. The number
+of arrays and their shape must match
+number of the dimensions of the weights
+of the layer (i.e. it should match the
+output of <code>get_weights</code>).</li>
+</ul>
+<pre><code class="python">supports_masked_input()
+</code></pre>
+
+<p>Whether or not this layer respects the output mask of its previous
+layer in its calculations.
+If you try to attach a layer that does <em>not</em> support masked_input to
+a layer that gives a non-None output_mask(), an error will be raised.</p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L383">[source]</a></span></p>
+<h1 id="masking">Masking</h1>
+<pre><code class="python">keras.layers.core.Masking(mask_value=0.0)
+</code></pre>
+
+<p>Mask an input sequence by using a mask value to identify padding.</p>
+<p>This layer copies the input to the output layer with identified padding
+replaced with 0s and creates an output mask in the process.</p>
+<p>At each timestep, if the values all equal <code>mask_value</code>,
+then the corresponding mask value for the timestep is 0 (skipped),
+otherwise it is 1.</p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L412">[source]</a></span></p>
+<h1 id="merge">Merge</h1>
+<pre><code class="python">keras.layers.core.Merge(layers, mode='sum', concat_axis=-1, dot_axes=-1)
+</code></pre>
+
+<p>Merge the output of a list of layers or containers into a single tensor.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>mode</strong>: one of {sum, mul, concat, ave, join, cos, dot}.<ul>
+<li><strong>sum</strong>: sum the outputs (shapes must match)</li>
+<li><strong>mul</strong>: multiply the outputs element-wise (shapes must match)</li>
+<li><strong>concat</strong>: concatenate the outputs along the axis specified by <code>concat_axis</code></li>
+<li><strong>ave</strong>: average the outputs (shapes must match)</li>
+<li><strong>join</strong>: places the outputs in an OrderedDict (inputs must be named)</li>
+</ul>
+</li>
+<li><strong>concat_axis</strong>: axis to use in <code>concat</code> mode.</li>
+<li><strong>dot_axes</strong>: axis or axes to use in <code>dot</code> mode
+    (see <a href="http://docs.scipy.org/doc/numpy-1.10.1/reference/generated/numpy.tensordot.html">the Numpy documentation</a> for more details).</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code class="python">left = Sequential()
+left.add(Dense(50, input_shape=(784,)))
+left.add(Activation('relu'))
+
+right = Sequential()
+right.add(Dense(50, input_shape=(784,)))
+right.add(Activation('relu'))
+
+model = Sequential()
+model.add(Merge([left, right], mode='sum'))
+
+model.add(Dense(10))
+model.add(Activation('softmax'))
+
+model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
+
+model.fit([X_train, X_train], Y_train, batch_size=128, nb_epoch=20,
+      validation_data=([X_test, X_test], Y_test))
+</code></pre>
+
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L640">[source]</a></span></p>
+<h1 id="timedistributedmerge">TimeDistributedMerge</h1>
+<pre><code class="python">keras.layers.core.TimeDistributedMerge(mode='sum')
+</code></pre>
+
+<p>Sum/multiply/average over the outputs of a TimeDistributed layer.</p>
+<p><strong>Input shape</strong></p>
+<p>3D tensor with shape: <code>(samples, steps, features)</code>.</p>
+<p><strong>Output shape</strong></p>
+<p>2D tensor with shape: <code>(samples, features)</code>.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>mode</strong>: one of {'sum', 'mul', 'ave'}</li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L687">[source]</a></span></p>
+<h1 id="dropout">Dropout</h1>
+<pre><code class="python">keras.layers.core.Dropout(p)
+</code></pre>
+
+<p>Apply Dropout to the input. Dropout consists in randomly setting
+a fraction <code>p</code> of input units to 0 at each update during training time,
+which helps prevent overfitting.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>p</strong>: float between 0 and 1. Fraction of the input units to drop.</li>
+</ul>
+<p><strong>References</strong></p>
+<ul>
+<li><a href="http://www.cs.toronto.edu/~rsalakhu/papers/srivastava14a.pdf">Dropout: A Simple Way to Prevent Neural Networks from Overfitting</a></li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L716">[source]</a></span></p>
+<h1 id="activation">Activation</h1>
+<pre><code class="python">keras.layers.core.Activation(activation)
+</code></pre>
+
+<p>Apply an activation function to an output.</p>
+<p><strong>Input shape</strong></p>
+<p>Arbitrary. Use the keyword argument <code>input_shape</code>
+(tuple of integers, does not include the samples axis)
+when using this layer as the first layer in a model.</p>
+<p><strong>Output shape</strong></p>
+<p>Same shape as input.</p>
+<ul>
+<li>
+<p><strong><em>_Arguments</em>_:</strong></p>
+</li>
+<li>
+<p><strong>activation</strong>: name of activation function to use</p>
+<ul>
+<li><strong>(see</strong>: <a href="../../activations/">activations</a>),
+or alternatively, a Theano or TensorFlow operation.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L747">[source]</a></span></p>
+<h1 id="reshape">Reshape</h1>
+<pre><code class="python">keras.layers.core.Reshape(dims)
+</code></pre>
+
+<p>Reshape an output to a certain shape.</p>
+<p><strong>Input shape</strong></p>
+<p>Arbitrary, although all dimensions in the input shaped must be fixed.
+Use the keyword argument <code>input_shape</code>
+(tuple of integers, does not include the samples axis)
+when using this layer as the first layer in a model.</p>
+<p><strong>Output shape</strong></p>
+<p><code>(batch_size,) + dims</code></p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dims</strong>: target shape. Tuple of integers,
+    does not include the samples dimension (batch size).</li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L828">[source]</a></span></p>
+<h1 id="permute">Permute</h1>
+<pre><code class="python">keras.layers.core.Permute(dims)
+</code></pre>
+
+<p>Permute the dimensions of the input according to a given pattern.</p>
+<p>Useful for e.g. connecting RNNs and convnets together.</p>
+<p><strong>Input shape</strong></p>
+<p>Arbitrary. Use the keyword argument <code>input_shape</code>
+(tuple of integers, does not include the samples axis)
+when using this layer as the first layer in a model.</p>
+<p><strong>Output shape</strong></p>
+<p>Same as the input shape, but with the dimensions re-ordered according
+to the specified pattern.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dims</strong>: Tuple of integers. Permutation pattern, does not include the
+    samples dimension. Indexing starts at 1.
+    For instance, <code>(2, 1)</code> permutes the first and second dimension
+    of the input.</li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L872">[source]</a></span></p>
+<h1 id="flatten">Flatten</h1>
+<pre><code class="python">keras.layers.core.Flatten()
+</code></pre>
+
+<p>Flatten the input. Does not affect the batch size.</p>
+<p><strong>Input shape</strong></p>
+<p>Arbitrary, although all dimensions in the input shape must be fixed.
+Use the keyword argument <code>input_shape</code>
+(tuple of integers, does not include the samples axis)
+when using this layer as the first layer in a model.</p>
+<p><strong>Output shape</strong></p>
+<p><code>(batch_size,)</code></p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L904">[source]</a></span></p>
+<h1 id="repeatvector">RepeatVector</h1>
+<pre><code class="python">keras.layers.core.RepeatVector(n)
+</code></pre>
+
+<p>Repeat the input n times.</p>
+<p><strong>Input shape</strong></p>
+<p>2D tensor of shape <code>(nb_samples, features)</code>.</p>
+<p><strong>Output shape</strong></p>
+<p>3D tensor of shape <code>(nb_samples, n, features)</code>.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>n</strong>: integer, repetition factor.</li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L936">[source]</a></span></p>
+<h1 id="dense">Dense</h1>
+<pre><code class="python">keras.layers.core.Dense(output_dim, init='glorot_uniform', activation='linear', weights=None, W_regularizer=None, b_regularizer=None, activity_regularizer=None, W_constraint=None, b_constraint=None, input_dim=None)
+</code></pre>
+
+<p>Just your regular fully connected NN layer.</p>
+<p><strong>Input shape</strong></p>
+<p>2D tensor with shape: <code>(nb_samples, input_dim)</code>.</p>
+<p><strong>Output shape</strong></p>
+<p>2D tensor with shape: <code>(nb_samples, output_dim)</code>.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>output_dim</strong>: int &gt; 0.</li>
+<li><strong>init</strong>: name of initialization function for the weights of the layer
+    (see <a href="../../initializations/">initializations</a>),
+    or alternatively, Theano function to use for weights
+    initialization. This parameter is only relevant
+    if you don't pass a <code>weights</code> argument.</li>
+<li><strong>activation</strong>: name of activation function to use
+    (see <a href="../../activations/">activations</a>),
+    or alternatively, elementwise Theano function.
+    If you don't specify anything, no activation is applied
+    (ie. "linear" activation: a(x) = x).</li>
+<li><strong>weights</strong>: list of numpy arrays to set as initial weights.
+    The list should have 2 elements, of shape <code>(input_dim, output_dim)</code>
+    and (output_dim,) for weights and biases respectively.</li>
+<li><strong>W_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>
+    (eg. L1 or L2 regularization), applied to the main weights matrix.</li>
+<li><strong>b_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>,
+    applied to the bias.</li>
+<li><strong>activity_regularizer</strong>: instance of <a href="../../regularizers/">ActivityRegularizer</a>,
+    applied to the network output.</li>
+<li><strong>W_constraint</strong>: instance of the <a href="../../constraints/">constraints</a> module
+    (eg. maxnorm, nonneg), applied to the main weights matrix.</li>
+<li><strong>b_constraint</strong>: instance of the <a href="../../constraints/">constraints</a> module,
+    applied to the bias.</li>
+<li><strong>input_dim</strong>: dimensionality of the input (integer).
+    This argument (or alternatively, the keyword argument <code>input_shape</code>)
+    is required when using this layer as the first layer in a model.</li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L1049">[source]</a></span></p>
+<h1 id="timedistributeddense">TimeDistributedDense</h1>
+<pre><code class="python">keras.layers.core.TimeDistributedDense(output_dim, init='glorot_uniform', activation='linear', weights=None, W_regularizer=None, b_regularizer=None, activity_regularizer=None, W_constraint=None, b_constraint=None, input_dim=None, input_length=None)
+</code></pre>
+
+<p>Apply a same Dense layer for each dimension[1] (time_dimension) input.
+Especially useful after a recurrent network with 'return_sequence=True'.</p>
+<p><strong>Input shape</strong></p>
+<p>3D tensor with shape <code>(nb_sample, time_dimension, input_dim)</code>.</p>
+<p><strong>Output shape</strong></p>
+<p>3D tensor with shape <code>(nb_sample, time_dimension, output_dim)</code>.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>output_dim</strong>: int &gt; 0.</li>
+<li><strong>init</strong>: name of initialization function for the weights of the layer
+    (see <a href="../../initializations/">initializations</a>),
+    or alternatively, Theano function to use for weights
+    initialization. This parameter is only relevant
+    if you don't pass a <code>weights</code> argument.</li>
+<li><strong>activation</strong>: name of activation function to use
+    (see <a href="../../activations/">activations</a>),
+    or alternatively, elementwise Theano function.
+    If you don't specify anything, no activation is applied
+    (ie. "linear" activation: a(x) = x).</li>
+<li><strong>weights</strong>: list of numpy arrays to set as initial weights.
+    The list should have 2 elements, of shape <code>(input_dim, output_dim)</code>
+    and (output_dim,) for weights and biases respectively.</li>
+<li><strong>W_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>
+    (eg. L1 or L2 regularization), applied to the main weights matrix.</li>
+<li><strong>b_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>,
+    applied to the bias.</li>
+<li><strong>activity_regularizer</strong>: instance of <a href="../../regularizers/">ActivityRegularizer</a>,
+    applied to the network output.</li>
+<li><strong>W_constraint</strong>: instance of the <a href="../../constraints/">constraints</a> module
+    (eg. maxnorm, nonneg), applied to the main weights matrix.</li>
+<li><strong>b_constraint</strong>: instance of the <a href="../../constraints/">constraints</a> module,
+    applied to the bias.</li>
+<li><strong>input_dim</strong>: dimensionality of the input (integer).
+    This argument (or alternatively, the keyword argument <code>input_shape</code>)
+    is required when using this layer as the first layer in a model.</li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L1177">[source]</a></span></p>
+<h1 id="activityregularization">ActivityRegularization</h1>
+<pre><code class="python">keras.layers.core.ActivityRegularization(l1=0.0, l2=0.0)
+</code></pre>
+
+<p>Layer that passes through its input unchanged, but applies an update
+to the cost function based on the activity.</p>
+<p><strong>Input shape</strong></p>
+<p>Arbitrary. Use the keyword argument <code>input_shape</code>
+(tuple of integers, does not include the samples axis)
+when using this layer as the first layer in a model.</p>
+<p><strong>Output shape</strong></p>
+<p>Same shape as input.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>l1</strong>: L1 regularization factor.</li>
+<li><strong>l2</strong>: L2 regularization factor.</li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L1213">[source]</a></span></p>
+<h1 id="autoencoder">AutoEncoder</h1>
+<pre><code class="python">keras.layers.core.AutoEncoder(encoder, decoder, output_reconstruction=True, weights=None)
+</code></pre>
+
+<p>A customizable autoencoder model.</p>
+<p><strong>Input shape</strong></p>
+<p>Same as encoder input.</p>
+<p><strong>Output shape</strong></p>
+<p>If <code>output_reconstruction = True</code> then dim(input) = dim(output)
+else dim(output) = dim(hidden).</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>encoder</strong>: A <a href="../">layer</a> or <a href="../containers/">layer container</a>.</li>
+<li><strong>decoder</strong>: A <a href="../">layer</a> or <a href="../containers/">layer container</a>.</li>
+<li><strong>output_reconstruction</strong>: If this is <code>False</code>,
+    the output of the autoencoder is the output of
+    the deepest hidden layer.
+    Otherwise, the output of the final decoder layer is returned.</li>
+<li><strong>weights</strong>: list of numpy arrays to set as initial weights.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code class="python">from keras.layers import containers, AutoEncoder, Dense
+from keras import models
+
+# input shape: (nb_samples, 32)
+encoder = containers.Sequential([Dense(16, input_dim=32), Dense(8)])
+decoder = containers.Sequential([Dense(16, input_dim=8), Dense(32)])
+
+autoencoder = AutoEncoder(encoder=encoder, decoder=decoder, output_reconstruction=True)
+model = models.Sequential()
+model.add(autoencoder)
+
+# training the autoencoder:
+model.compile(optimizer='sgd', loss='mse')
+model.fit(X_train, X_train, nb_epoch=10)
+
+# predicting compressed representations of inputs:
+autoencoder.output_reconstruction = False  # the model has to be recompiled after modifying this property
+model.compile(optimizer='sgd', loss='mse')
+representations = model.predict(X_test)
+
+# the model is still trainable, although it now expects compressed representations as targets:
+model.fit(X_test, representations, nb_epoch=1)  # in this case the loss will be 0, so it's useless
+
+# to keep training against the original inputs, just switch back output_reconstruction to True:
+autoencoder.output_reconstruction = True
+model.compile(optimizer='sgd', loss='mse')
+model.fit(X_train, X_train, nb_epoch=10)
+</code></pre>
+
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L1376">[source]</a></span></p>
+<h1 id="maxoutdense">MaxoutDense</h1>
+<pre><code class="python">keras.layers.core.MaxoutDense(output_dim, nb_feature=4, init='glorot_uniform', weights=None, W_regularizer=None, b_regularizer=None, activity_regularizer=None, W_constraint=None, b_constraint=None, input_dim=None)
+</code></pre>
+
+<p>A dense maxout layer.</p>
+<p>A <code>MaxoutDense</code> layer takes the element-wise maximum of
+<code>nb_feature</code> <code>Dense(input_dim, output_dim)</code> linear layers.
+This allows the layer to learn a convex,
+piecewise linear activation function over the inputs.</p>
+<p>Note that this is a <em>linear</em> layer;
+if you wish to apply activation function
+(you shouldn't need to --they are universal function approximators),
+an <code>Activation</code> layer must be added after.</p>
+<p><strong>Input shape</strong></p>
+<p>2D tensor with shape: <code>(nb_samples, input_dim)</code>.</p>
+<p><strong>Output shape</strong></p>
+<p>2D tensor with shape: <code>(nb_samples, output_dim)</code>.</p>
+<p><strong>References</strong></p>
+<ul>
+<li><a href="http://arxiv.org/pdf/1302.4389.pdf">Maxout Networks</a></li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L1474">[source]</a></span></p>
+<h1 id="lambda">Lambda</h1>
+<pre><code class="python">keras.layers.core.Lambda(function, output_shape=None, arguments={})
+</code></pre>
+
+<p>Used for evaluating an arbitrary Theano / TensorFlow expression
+on the output of the previous layer.</p>
+<p><strong>Input shape</strong></p>
+<p>Arbitrary. Use the keyword argument input_shape
+(tuple of integers, does not include the samples axis)
+when using this layer as the first layer in a model.</p>
+<p><strong>Output shape</strong></p>
+<p>Specified by <code>output_shape</code> argument.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>function</strong>: The function to be evaluated.
+    Takes one argument: the output of previous layer</li>
+<li><strong>output_shape</strong>: Expected output shape from function.
+    Could be a tuple or a function of the shape of the input</li>
+<li><strong>arguments</strong>: optional dictionary of keyword arguments to be passed
+    to the function.</li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L1547">[source]</a></span></p>
+<h1 id="lambdamerge">LambdaMerge</h1>
+<pre><code class="python">keras.layers.core.LambdaMerge(layers, function, output_shape=None, arguments={})
+</code></pre>
+
+<p>LambdaMerge layer for evaluating an arbitrary Theano / TensorFlow
+function over multiple inputs.</p>
+<p><strong>Output shape</strong></p>
+<p>Specified by output_shape argument</p>
+<p><strong>Arguments</strong></p>
+<p>layers - Input layers. Similar to layers argument of Merge
+function - The function to be evaluated. Takes one argument:
+    list of outputs from input layers
+output_shape - Expected output shape from function.
+    Could be a tuple or a function of list of input shapes
+- <strong>arguments</strong>: optional dictionary of keyword arguments to be passed
+    to the function.</p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L1660">[source]</a></span></p>
+<h1 id="siamese">Siamese</h1>
+<pre><code class="python">keras.layers.core.Siamese(layer, inputs, merge_mode='concat', concat_axis=1, dot_axes=-1, is_graph=False)
+</code></pre>
+
+<p>Share a layer accross multiple inputs.</p>
+<p>For instance, this allows you to applied e.g.
+a same <code>Dense</code> layer to the output of two
+different layers in a graph.</p>
+<p><strong>Output shape</strong></p>
+<p>Depends on merge_mode argument</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>layer</strong>: The layer to be shared across multiple inputs</li>
+<li><strong>inputs</strong>: Inputs to the shared layer</li>
+<li><strong>merge_mode</strong>: Same meaning as <code>mode</code> argument of Merge layer</li>
+<li><strong>concat_axis</strong>: Same meaning as <code>concat_axis</code> argument of Merge layer</li>
+<li><strong>dot_axes</strong>: Same meaning as <code>dot_axes</code> argument of Merge layer</li>
+<li><strong>is_graph</strong>: Should be set to True when used inside <code>Graph</code></li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/core.py#L1930">[source]</a></span></p>
+<h1 id="highway">Highway</h1>
+<pre><code class="python">keras.layers.core.Highway(init='glorot_uniform', transform_bias=-2, activation='linear', weights=None, W_regularizer=None, b_regularizer=None, activity_regularizer=None, W_constraint=None, b_constraint=None, input_dim=None)
+</code></pre>
+
+<p>Densely connected highway network,
+a natural extension of LSTMs to feedforward networks.</p>
+<p><strong>Input shape</strong></p>
+<p>2D tensor with shape: <code>(nb_samples, input_dim)</code>.</p>
+<p><strong>Output shape</strong></p>
+<p>2D tensor with shape: <code>(nb_samples, input_dim)</code>.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>init</strong>: name of initialization function for the weights of the layer
+    (see <a href="../../initializations/">initializations</a>),
+    or alternatively, Theano function to use for weights
+    initialization. This parameter is only relevant
+    if you don't pass a <code>weights</code> argument.</li>
+<li><strong>transform_bias</strong>: value for the bias to take on initially (default -2)</li>
+<li><strong>activation</strong>: name of activation function to use
+    (see <a href="../../activations/">activations</a>),
+    or alternatively, elementwise Theano function.
+    If you don't specify anything, no activation is applied
+    (ie. "linear" activation: a(x) = x).</li>
+<li><strong>weights</strong>: list of numpy arrays to set as initial weights.
+    The list should have 2 elements, of shape <code>(input_dim, output_dim)</code>
+    and (output_dim,) for weights and biases respectively.</li>
+<li><strong>W_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>
+    (eg. L1 or L2 regularization), applied to the main weights matrix.</li>
+<li><strong>b_regularizer</strong>: instance of <a href="../../regularizers/">WeightRegularizer</a>,
+    applied to the bias.</li>
+<li><strong>activity_regularizer</strong>: instance of <a href="../../regularizers/">ActivityRegularizer</a>,
+    applied to the network output.</li>
+<li><strong>W_constraint</strong>: instance of the <a href="../../constraints/">constraints</a> module
+    (eg. maxnorm, nonneg), applied to the main weights matrix.</li>
+<li><strong>b_constraint</strong>: instance of the <a href="../../constraints/">constraints</a> module,
+    applied to the bias.</li>
+<li><strong>input_dim</strong>: dimensionality of the input (integer).
+    This argument (or alternatively, the keyword argument <code>input_shape</code>)
+    is required when using this layer as the first layer in a model.</li>
+</ul>
+<p><strong>References</strong></p>
+<ul>
+<li><a href="http://arxiv.org/pdf/1505.00387v2.pdf">Highway Networks</a></li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../convolutional/" class="btn btn-neutral float-right" title="Convolutional Layers">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../../visualization/" class="btn btn-neutral" title="Visualization"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="http://github.com/fchollet/keras" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../../visualization/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../convolutional/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

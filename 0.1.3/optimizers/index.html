@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Optimizers - Keras Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Optimizers";
+    var mkdocs_page_input_path = "optimizers.md";
+    var mkdocs_page_url = "/optimizers/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61785484-1', 'keras.io');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Keras Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../documentation/">Index</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../examples/">Examples</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Optimizers</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#usage-of-optimizers">Usage of optimizers</a></li>
+    
+
+    <li class="toctree-l2"><a href="#base-class">Base class</a></li>
+    
+
+    <li class="toctree-l2"><a href="#sgd">SGD</a></li>
+    
+
+    <li class="toctree-l2"><a href="#adagrad">Adagrad</a></li>
+    
+
+    <li class="toctree-l2"><a href="#adadelta">Adadelta</a></li>
+    
+
+    <li class="toctree-l2"><a href="#rmsprop">RMSprop</a></li>
+    
+
+    <li class="toctree-l2"><a href="#adam">Adam</a></li>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../objectives/">Objectives</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../models/">Models</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../activations/">Activations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../initializations/">Initializations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../regularizers/">Regularizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../constraints/">Constraints</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../callbacks/">Callbacks</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../datasets/">Datasets</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Layers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../layers/core/">Core Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/convolutional/">Convolutional Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/recurrent/">Recurrent Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/advanced_activations/">Advanced Activations Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/normalization/">Normalization Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/embeddings/">Embedding Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/noise/">Noise layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/containers/">Containers</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Preprocessing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../preprocessing/sequence/">Sequence Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../preprocessing/text/">Text Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../preprocessing/image/">Image Preprocessing</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Keras Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Optimizers</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="http://github.com/fchollet/keras/edit/master/docs/optimizers.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="usage-of-optimizers">Usage of optimizers</h2>
+<p>An optimizer is one of the two arguments required for compiling a Keras model:</p>
+<pre><code class="python">model = Sequential()
+model.add(Dense(20, 64, init='uniform'))
+model.add(Activation('tanh'))
+model.add(Activation('softmax'))
+
+sgd = SGD(lr=0.1, decay=1e-6, momentum=0.9, nesterov=True)
+model.compile(loss='mean_squared_error', optimizer=sgd)
+</code></pre>
+
+<p>You can either instantiate an optimizer before passing it to <code>model.compile()</code> , as in the above example, or you can call it by its name. In the latter case, the default parameters for the optimizer will be used.</p>
+<pre><code class="python"># pass optimizer by name: default parameters will be used
+model.compile(loss='mean_squared_error', optimizer='sgd')
+</code></pre>
+
+<hr />
+<h2 id="base-class">Base class</h2>
+<pre><code class="python">keras.optimizers.Optimizer(**kwargs)
+</code></pre>
+
+<p>All optimizers descended from this class support the following keyword argument:</p>
+<ul>
+<li><strong>clipnorm</strong>: float &gt;= 0.</li>
+</ul>
+<p>Note: this is base class for building optimizers, not an actual optimizer that can be used for training models.</p>
+<hr />
+<h2 id="sgd">SGD</h2>
+<pre><code class="python">keras.optimizers.SGD(lr=0.01, momentum=0., decay=0., nesterov=False)
+</code></pre>
+
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><strong>lr</strong>: float &gt;= 0. Learning rate.</li>
+<li><strong>momentum</strong>: float &gt;= 0. Parameter updates momentum.</li>
+<li><strong>decay</strong>: float &gt;= 0. Learning rate decay over each update.</li>
+<li><strong>nesterov</strong>: boolean. Whether to apply Nesterov momentum.</li>
+</ul>
+<hr />
+<h2 id="adagrad">Adagrad</h2>
+<pre><code class="python">keras.optimizers.Adagrad(lr=0.01, epsilon=1e-6)
+</code></pre>
+
+<p>It is recommended to leave the parameters of this optimizer at their default values.</p>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><strong>lr</strong>: float &gt;= 0. Learning rate. </li>
+<li><strong>epsilon</strong>: float &gt;= 0. </li>
+</ul>
+<hr />
+<h2 id="adadelta">Adadelta</h2>
+<pre><code class="python">keras.optimizers.Adadelta(lr=1.0, rho=0.95, epsilon=1e-6)
+</code></pre>
+
+<p>It is recommended to leave the parameters of this optimizer at their default values.</p>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><strong>lr</strong>: float &gt;= 0. Learning rate. It is recommended to leave it at the default value.</li>
+<li><strong>rho</strong>: float &gt;= 0. </li>
+<li><strong>epsilon</strong>: float &gt;= 0. Fuzz factor.</li>
+</ul>
+<p>For more info, see <em>"Adadelta: an adaptive learning rate method"</em> by Matthew Zeiler.</p>
+<hr />
+<h2 id="rmsprop">RMSprop</h2>
+<pre><code class="python">keras.optimizers.RMSprop(lr=0.001, rho=0.9, epsilon=1e-6)
+</code></pre>
+
+<p>It is recommended to leave the parameters of this optimizer at their default values.</p>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><strong>lr</strong>: float &gt;= 0. Learning rate. </li>
+<li><strong>rho</strong>: float &gt;= 0.</li>
+<li><strong>epsilon</strong>: float &gt;= 0. Fuzz factor.</li>
+</ul>
+<hr />
+<h2 id="adam">Adam</h2>
+<pre><code class="python">keras.optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-8)
+</code></pre>
+
+<p>Adam optimizer, proposed by Kingma and Lei Ba in <a href="http://arxiv.org/pdf/1412.6980v8.pdf">Adam: A Method For Stochastic Optimization</a>. Default parameters are those suggested in the paper.</p>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><strong>lr</strong>: float &gt;= 0. Learning rate.</li>
+<li><strong>beta_1</strong>, <strong>beta_2</strong>: floats, 0 &lt; beta &lt; 1. Generally close to 1.</li>
+<li><strong>epsilon</strong>: float &gt;= 0. Fuzz factor.</li>
+</ul>
+<hr />
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../objectives/" class="btn btn-neutral float-right" title="Objectives">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../examples/" class="btn btn-neutral" title="Examples"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="http://github.com/fchollet/keras" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../examples/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../objectives/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>

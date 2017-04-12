@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    
+    <url>
+     <loc>http://keras.io//</loc>
+     <lastmod>2017-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>http://keras.io//documentation/</loc>
+     <lastmod>2017-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>http://keras.io//examples/</loc>
+     <lastmod>2017-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>http://keras.io//optimizers/</loc>
+     <lastmod>2017-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>http://keras.io//objectives/</loc>
+     <lastmod>2017-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>http://keras.io//models/</loc>
+     <lastmod>2017-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>http://keras.io//activations/</loc>
+     <lastmod>2017-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>http://keras.io//initializations/</loc>
+     <lastmod>2017-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>http://keras.io//regularizers/</loc>
+     <lastmod>2017-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>http://keras.io//constraints/</loc>
+     <lastmod>2017-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>http://keras.io//callbacks/</loc>
+     <lastmod>2017-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>http://keras.io//datasets/</loc>
+     <lastmod>2017-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+        
+    <url>
+     <loc>http://keras.io//layers/core/</loc>
+     <lastmod>2017-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>http://keras.io//layers/convolutional/</loc>
+     <lastmod>2017-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>http://keras.io//layers/recurrent/</loc>
+     <lastmod>2017-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>http://keras.io//layers/advanced_activations/</loc>
+     <lastmod>2017-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>http://keras.io//layers/normalization/</loc>
+     <lastmod>2017-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>http://keras.io//layers/embeddings/</loc>
+     <lastmod>2017-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>http://keras.io//layers/noise/</loc>
+     <lastmod>2017-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>http://keras.io//layers/containers/</loc>
+     <lastmod>2017-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
+     <loc>http://keras.io//preprocessing/sequence/</loc>
+     <lastmod>2017-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>http://keras.io//preprocessing/text/</loc>
+     <lastmod>2017-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>http://keras.io//preprocessing/image/</loc>
+     <lastmod>2017-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+</urlset>

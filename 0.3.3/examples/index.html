@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Examples - Keras Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Examples";
+    var mkdocs_page_input_path = "examples.md";
+    var mkdocs_page_url = "/examples/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61785484-1', 'keras.io');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Keras Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../documentation/">Index</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Examples</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#multilayer-perceptron-mlp-for-multi-class-softmax-classification">Multilayer Perceptron (MLP) for multi-class softmax classification:</a></li>
+    
+
+    <li class="toctree-l2"><a href="#alternative-implementation-of-a-similar-mlp">Alternative implementation of a similar MLP:</a></li>
+    
+
+    <li class="toctree-l2"><a href="#mlp-for-binary-classification">MLP for binary classification:</a></li>
+    
+
+    <li class="toctree-l2"><a href="#vgg-like-convnet">VGG-like convnet:</a></li>
+    
+
+    <li class="toctree-l2"><a href="#sequence-classification-with-lstm">Sequence classification with LSTM:</a></li>
+    
+
+    <li class="toctree-l2"><a href="#architecture-for-learning-image-captions-with-a-convnet-and-a-gated-recurrent-unit">Architecture for learning image captions with a convnet and a Gated Recurrent Unit:</a></li>
+    
+
+    <li class="toctree-l2"><a href="#stacked-lstm-for-sequence-classification">Stacked LSTM for sequence classification</a></li>
+    
+
+    <li class="toctree-l2"><a href="#same-stacked-lstm-model-rendered-stateful">Same stacked LSTM model, rendered "stateful"</a></li>
+    
+
+    <li class="toctree-l2"><a href="#two-merged-lstm-encoders-for-classification-over-two-parallel-sequences">Two merged LSTM encoders for classification over two parallel sequences</a></li>
+    
+
+    <li class="toctree-l2"><a href="#single-shared-lstm-over-two-parallel-sequences-for-classification">Single shared LSTM over two parallel sequences, for classification</a></li>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../faq/">FAQ</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../backend/">Backends</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../optimizers/">Optimizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../objectives/">Objectives</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../models/">Models</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../activations/">Activations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../initializations/">Initializations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../regularizers/">Regularizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../constraints/">Constraints</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../callbacks/">Callbacks</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../datasets/">Datasets</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../visualization/">Visualization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Layers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../layers/core/">Core Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/convolutional/">Convolutional Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/recurrent/">Recurrent Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/advanced_activations/">Advanced Activations Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/normalization/">Normalization Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/embeddings/">Embedding Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/noise/">Noise layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/containers/">Containers</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Preprocessing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../preprocessing/sequence/">Sequence Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../preprocessing/text/">Text Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../preprocessing/image/">Image Preprocessing</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Keras Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Examples</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="http://github.com/fchollet/keras/edit/master/docs/examples.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p>Here are a few examples to get you started!</p>
+<p>In the examples folder, you will also find example models for real datasets:</p>
+<ul>
+<li>CIFAR10 small images classification: Convolutional Neural Network (CNN) with realtime data augmentation</li>
+<li>IMDB movie review sentiment classification: LSTM over sequences of words</li>
+<li>Reuters newswires topic classification: Multilayer Perceptron (MLP)</li>
+<li>MNIST handwritten digits classification: MLP &amp; CNN</li>
+<li>Character-level text generation with LSTM</li>
+</ul>
+<p>...and more.</p>
+<hr />
+<h3 id="multilayer-perceptron-mlp-for-multi-class-softmax-classification">Multilayer Perceptron (MLP) for multi-class softmax classification:</h3>
+<pre><code class="python">from keras.models import Sequential
+from keras.layers import Dense, Dropout, Activation
+from keras.optimizers import SGD
+
+model = Sequential()
+# Dense(64) is a fully-connected layer with 64 hidden units.
+# in the first layer, you must specify the expected input data shape:
+# here, 20-dimensional vectors.
+model.add(Dense(64, input_dim=20, init='uniform'))
+model.add(Activation('tanh'))
+model.add(Dropout(0.5))
+model.add(Dense(64, init='uniform'))
+model.add(Activation('tanh'))
+model.add(Dropout(0.5))
+model.add(Dense(10, init='uniform'))
+model.add(Activation('softmax'))
+
+sgd = SGD(lr=0.1, decay=1e-6, momentum=0.9, nesterov=True)
+model.compile(loss='categorical_crossentropy',
+              optimizer=sgd)
+
+model.fit(X_train, y_train,
+          nb_epoch=20,
+          batch_size=16,
+          show_accuracy=True)
+score = model.evaluate(X_test, y_test, batch_size=16)
+</code></pre>
+
+<hr />
+<h3 id="alternative-implementation-of-a-similar-mlp">Alternative implementation of a similar MLP:</h3>
+<pre><code class="python">model = Sequential()
+model.add(Dense(64, input_dim=20, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(64, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(10, activation='softmax'))
+
+model.compile(loss='categorical_crossentropy', optimizer='adadelta')
+</code></pre>
+
+<hr />
+<h3 id="mlp-for-binary-classification">MLP for binary classification:</h3>
+<pre><code class="python">model = Sequential()
+model.add(Dense(64, input_dim=20, init='uniform', activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(64, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(1, activation='sigmoid'))
+
+model.compile(loss='binary_crossentropy',
+              optimizer='rmsprop')
+</code></pre>
+
+<hr />
+<h3 id="vgg-like-convnet">VGG-like convnet:</h3>
+<pre><code class="python">from keras.models import Sequential
+from keras.layers import Dense, Dropout, Activation, Flatten
+from keras.layers import Convolution2D, MaxPooling2D
+from keras.optimizers import SGD
+
+model = Sequential()
+# input: 100x100 images with 3 channels -&gt; (3, 100, 100) tensors.
+# this applies 32 convolution filters of size 3x3 each.
+model.add(Convolution2D(32, 3, 3, border_mode='valid', input_shape=(3, 100, 100)))
+model.add(Activation('relu'))
+model.add(Convolution2D(32, 3, 3))
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.25))
+
+model.add(Convolution2D(64, 3, 3, border_mode='valid'))
+model.add(Activation('relu'))
+model.add(Convolution2D(64, 3, 3))
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.25))
+
+model.add(Flatten())
+# Note: Keras does automatic shape inference.
+model.add(Dense(256))
+model.add(Activation('relu'))
+model.add(Dropout(0.5))
+
+model.add(Dense(10))
+model.add(Activation('softmax'))
+
+sgd = SGD(lr=0.1, decay=1e-6, momentum=0.9, nesterov=True)
+model.compile(loss='categorical_crossentropy', optimizer=sgd)
+
+model.fit(X_train, Y_train, batch_size=32, nb_epoch=1)
+
+</code></pre>
+
+<hr />
+<h3 id="sequence-classification-with-lstm">Sequence classification with LSTM:</h3>
+<pre><code class="python">from keras.models import Sequential
+from keras.layers import Dense, Dropout, Activation
+from keras.layers import Embedding
+from keras.layers import LSTM
+
+model = Sequential()
+model.add(Embedding(max_features, 256, input_length=maxlen))
+model.add(LSTM(output_dim=128, activation='sigmoid', inner_activation='hard_sigmoid'))
+model.add(Dropout(0.5))
+model.add(Dense(1))
+model.add(Activation('sigmoid'))
+
+model.compile(loss='binary_crossentropy', optimizer='rmsprop')
+
+model.fit(X_train, Y_train, batch_size=16, nb_epoch=10)
+score = model.evaluate(X_test, Y_test, batch_size=16)
+</code></pre>
+
+<h3 id="architecture-for-learning-image-captions-with-a-convnet-and-a-gated-recurrent-unit">Architecture for learning image captions with a convnet and a Gated Recurrent Unit:</h3>
+<p>(word-level embedding, caption of maximum length 16 words).</p>
+<p>Note that getting this to work well will require using a bigger convnet, initialized with pre-trained weights.</p>
+<pre><code class="python">max_caption_len = 16
+vocab_size = 10000
+
+# first, let's define an image model that
+# will encode pictures into 128-dimensional vectors.
+# it should be initialized with pre-trained weights.
+image_model = Sequential()
+image_model.add(Convolution2D(32, 3, 3, border_mode='valid', input_shape=(3, 100, 100)))
+image_model.add(Activation('relu'))
+image_model.add(Convolution2D(32, 3, 3))
+image_model.add(Activation('relu'))
+image_model.add(MaxPooling2D(pool_size=(2, 2)))
+
+image_model.add(Convolution2D(64, 3, 3, border_mode='valid'))
+image_model.add(Activation('relu'))
+image_model.add(Convolution2D(64, 3, 3))
+image_model.add(Activation('relu'))
+image_model.add(MaxPooling2D(pool_size=(2, 2)))
+
+image_model.add(Flatten())
+image_model.add(Dense(128))
+
+# let's load the weights from a save file.
+image_model.load_weights('weight_file.h5')
+
+# next, let's define a RNN model that encodes sequences of words
+# into sequences of 128-dimensional word vectors.
+language_model = Sequential()
+language_model.add(Embedding(vocab_size, 256, input_length=max_caption_len))
+language_model.add(GRU(output_dim=128, return_sequences=True))
+language_model.add(TimeDistributedDense(128))
+
+# let's repeat the image vector to turn it into a sequence.
+image_model.add(RepeatVector(max_caption_len))
+
+# the output of both models will be tensors of shape (samples, max_caption_len, 128).
+# let's concatenate these 2 vector sequences.
+model = Sequential()
+model.add(Merge([image_model, language_model], mode='concat', concat_axis=-1))
+# let's encode this vector sequence into a single vector
+model.add(GRU(256, return_sequences=False))
+# which will be used to compute a probability
+# distribution over what the next word in the caption should be!
+model.add(Dense(vocab_size))
+model.add(Activation('softmax'))
+
+model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
+
+# &quot;images&quot; is a numpy float array of shape (nb_samples, nb_channels=3, width, height).
+# &quot;captions&quot; is a numpy integer array of shape (nb_samples, max_caption_len)
+# containing word index sequences representing partial captions.
+# &quot;next_words&quot; is a numpy float array of shape (nb_samples, vocab_size)
+# containing a categorical encoding (0s and 1s) of the next word in the corresponding
+# partial caption.
+model.fit([images, partial_captions], next_words, batch_size=16, nb_epoch=100)
+</code></pre>
+
+<hr />
+<h3 id="stacked-lstm-for-sequence-classification">Stacked LSTM for sequence classification</h3>
+<p>In this model, we stack 3 LSTM layers on top of each other,
+making the model capable of learning higher-level temporal representations.</p>
+<p>The first two LSTMs return their full output sequences, but the last one only returns
+the last step in its output sequence, thus dropping the temporal dimension
+(i.e. converting the input sequence into a single vector).</p>
+<p><img src="http://keras.io/img/regular_stacked_lstm.png" alt="stacked LSTM" style="width: 300px;"/></p>
+<p>(N.B.: in Keras, "None" in an input shape indicates a variable dimension. In the graph above, the batch size is "None",
+meaning that any batch size is allowed for the input data).</p>
+<pre><code class="python">from keras.models import Sequential
+from keras.layers import LSTM, Dense
+import numpy as np
+
+data_dim = 16
+timesteps = 8
+nb_classes = 10
+
+# expected input data shape: (batch_size, timesteps, data_dim)
+model = Sequential()
+model.add(LSTM(32, return_sequences=True,
+               input_shape=(timesteps, data_dim)))  # returns a sequence of vectors of dimension 32
+model.add(LSTM(32, return_sequences=True))  # returns a sequence of vectors of dimension 32
+model.add(LSTM(32))  # return a single vector of dimension 32
+model.add(Dense(10, activation='softmax'))
+
+model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
+
+# generate dummy training data
+x_train = np.random.random((1000, timesteps, data_dim))
+y_train = np.random.random((1000, nb_classes))
+
+# generate dummy validation data
+x_val = np.random.random((100, timesteps, data_dim))
+y_val = np.random.random((100, nb_classes))
+
+model.fit(x_train, y_train,
+          batch_size=64, nb_epoch=5, show_accuracy=True,
+          validation_data=(x_val, y_val))
+</code></pre>
+
+<hr />
+<h3 id="same-stacked-lstm-model-rendered-stateful">Same stacked LSTM model, rendered "stateful"</h3>
+<p>A stateful recurrent model is one for which the internal states (memories) obtained after processing a batch
+of samples are reused as initial states for the samples of the next batch. This allows to process longer sequences
+while keeping computational complexity manageable.</p>
+<p><a href="../faq/#how-can-i-use-stateful-rnns">You can read more about stateful RNNs in the FAQ.</a></p>
+<pre><code class="python">from keras.models import Sequential
+from keras.layers import LSTM, Dense
+import numpy as np
+
+data_dim = 16
+timesteps = 8
+nb_classes = 10
+batch_size = 32
+
+# expected input batch shape: (batch_size, timesteps, data_dim)
+# note that we have to provide the full batch_input_shape since the network is stateful.
+# the sample of index i in batch k is the follow-up for the sample i in batch k-1.
+model = Sequential()
+model.add(LSTM(32, return_sequences=True, stateful=True,
+               batch_input_shape=(batch_size, timesteps, data_dim)))
+model.add(LSTM(32, return_sequences=True, stateful=True))
+model.add(LSTM(32, stateful=True))
+model.add(Dense(10, activation='softmax'))
+
+model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
+
+# generate dummy training data
+x_train = np.random.random((batch_size * 10, timesteps, data_dim))
+y_train = np.random.random((batch_size * 10, nb_classes))
+
+# generate dummy validation data
+x_val = np.random.random((batch_size * 3, timesteps, data_dim))
+y_val = np.random.random((batch_size * 3, nb_classes))
+
+model.fit(x_train, y_train,
+          batch_size=batch_size, nb_epoch=5, show_accuracy=True,
+          validation_data=(x_val, y_val))
+</code></pre>
+
+<hr />
+<h3 id="two-merged-lstm-encoders-for-classification-over-two-parallel-sequences">Two merged LSTM encoders for classification over two parallel sequences</h3>
+<p>In this model, two input sequences are encoded into vectors by two separate LSTM modules.</p>
+<p>These two vectors are then concatenated, and a fully connected network is trained on top of the concatenated representations.</p>
+<p><img alt="Dual LSTM" src="http://keras.io/img/dual_lstm.png" /></p>
+<pre><code class="python">from keras.models import Sequential
+from keras.layers import Merge, LSTM, Dense
+import numpy as np
+
+data_dim = 16
+timesteps = 8
+nb_classes = 10
+
+encoder_a = Sequential()
+encoder_a.add(LSTM(32, input_shape=(timesteps, data_dim)))
+
+encoder_b = Sequential()
+encoder_b.add(LSTM(32, input_shape=(timesteps, data_dim)))
+
+decoder = Sequential()
+decoder.add(Merge([encoder_a, encoder_b], mode='concat'))
+decoder.add(Dense(32, activation='relu'))
+decoder.add(Dense(nb_classes, activation='softmax'))
+
+decoder.compile(loss='categorical_crossentropy', optimizer='rmsprop')
+
+# generate dummy training data
+x_train_a = np.random.random((1000, timesteps, data_dim))
+x_train_b = np.random.random((1000, timesteps, data_dim))
+y_train = np.random.random((1000, nb_classes))
+
+# generate dummy validation data
+x_val_a = np.random.random((100, timesteps, data_dim))
+x_val_b = np.random.random((100, timesteps, data_dim))
+y_val = np.random.random((100, nb_classes))
+
+decoder.fit([x_train_a, x_train_b], y_train,
+            batch_size=64, nb_epoch=5, show_accuracy=True,
+            validation_data=([x_val_a, x_val_b], y_val))
+</code></pre>
+
+<hr />
+<h3 id="single-shared-lstm-over-two-parallel-sequences-for-classification">Single shared LSTM over two parallel sequences, for classification</h3>
+<p>This is a similar setup as above, but now a single LSTM encoder is used for both input sequences.
+Such a setup makes sense if the two input sequences are the same type of object.</p>
+<p><img src="http://keras.io/img/shared_lstm.png" alt="Shared LSTM" style="width: 500px;"/></p>
+<pre><code class="python">from keras.models import Graph
+from keras.layers import LSTM, Dense
+import numpy as np
+
+data_dim = 16
+timesteps = 8
+nb_classes = 10
+
+encoder = Sequential()
+encoder.add(LSTM(32, input_shape=(timesteps, data_dim)))
+
+model = Graph()
+model.add_input(name='input_a', input_shape=(timesteps, data_dim))
+model.add_input(name='input_b', input_shape=(timesteps, data_dim))
+model.add_shared_node(encoder, name='shared_encoder', inputs=['input_a', 'input_b'],
+                      merge_mode='concat')
+model.add_node(Dense(64, activation='relu'), name='fc1', input='shared_encoder')
+model.add_node(Dense(3, activation='softmax'), name='output', input='fc1', create_output=True)
+
+model.compile(optimizer='adam', loss={'output': 'categorical_crossentropy'})
+
+# generate dummy training data
+x_train_a = np.random.random((1000, timesteps, data_dim))
+x_train_b = np.random.random((1000, timesteps, data_dim))
+y_train = np.random.random((1000, 3))
+
+# generate dummy validation data
+x_val_a = np.random.random((100, timesteps, data_dim))
+x_val_b = np.random.random((100, timesteps, data_dim))
+y_val = np.random.random((100, 3))
+
+model.fit({'input_a': x_train_a, 'input_b': x_train_b, 'output': y_train},
+          batch_size=64, nb_epoch=5,
+          validation_data={'input_a': x_val_a, 'input_b': x_val_b, 'output': y_val})
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../faq/" class="btn btn-neutral float-right" title="FAQ">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../documentation/" class="btn btn-neutral" title="Index"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="http://github.com/fchollet/keras" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../documentation/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../faq/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>

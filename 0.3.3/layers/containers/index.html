@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Containers - Keras Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Containers";
+    var mkdocs_page_input_path = "layers/containers.md";
+    var mkdocs_page_url = "/layers/containers/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61785484-1', 'keras.io');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Keras Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../documentation/">Index</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../examples/">Examples</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../faq/">FAQ</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../backend/">Backends</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../optimizers/">Optimizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../objectives/">Objectives</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../models/">Models</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../activations/">Activations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../initializations/">Initializations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../regularizers/">Regularizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../constraints/">Constraints</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../callbacks/">Callbacks</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../datasets/">Datasets</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../visualization/">Visualization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Layers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../core/">Core Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../convolutional/">Convolutional Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../recurrent/">Recurrent Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../advanced_activations/">Advanced Activations Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../normalization/">Normalization Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../embeddings/">Embedding Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../noise/">Noise layers</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Containers</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#sequential">Sequential</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#methods">Methods</a></li>
+        
+        </ul>
+    
+
+    <li class="toctree-l3"><a href="#graph">Graph</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#methods_1">Methods</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Preprocessing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/sequence/">Sequence Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/text/">Text Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/image/">Image Preprocessing</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Keras Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Layers &raquo;</li>
+        
+      
+    
+    <li>Containers</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="http://github.com/fchollet/keras/edit/master/docs/layers/containers.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/containers.py#L11">[source]</a></span></p>
+<h1 id="sequential">Sequential</h1>
+<pre><code class="python">keras.layers.containers.Sequential(layers=[])
+</code></pre>
+
+<p>The Sequential container is a linear stack of layers.
+Apart from the <code>add</code> methods and the <code>layers</code> constructor argument,
+the API is identical to that of the <code>Layer</code> class.</p>
+<p>This class is also the basis for the <code>keras.models.Sequential</code> model.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>layers</strong>: list of layers to be added to the container.</li>
+</ul>
+<h3 id="methods">Methods</h3>
+<pre><code class="python">add(layer)
+</code></pre>
+
+<pre><code class="python">reset_states()
+</code></pre>
+
+<pre><code class="python">set_input()
+</code></pre>
+
+<pre><code class="python">clear_previous(reset_weights=True)
+</code></pre>
+
+<p>Defined by <a href="http://keras.io/layers/core#layer">Layer</a>.</p>
+<pre><code class="python">count_params()
+</code></pre>
+
+<p>Defined by <a href="http://keras.io/layers/core#layer">Layer</a>.</p>
+<pre><code class="python">get_config()
+</code></pre>
+
+<p>Defined by <a href="http://keras.io/layers/core#layer">Layer</a>.</p>
+<pre><code class="python">get_input(train=False)
+</code></pre>
+
+<p>Defined by <a href="http://keras.io/layers/core#layer">Layer</a>.</p>
+<pre><code class="python">get_output(train=False)
+</code></pre>
+
+<p>Defined by <a href="http://keras.io/layers/core#layer">Layer</a>.</p>
+<pre><code class="python">get_output_mask(train=None)
+</code></pre>
+
+<p>Defined by <a href="http://keras.io/layers/core#layer">Layer</a>.</p>
+<pre><code class="python">get_weights()
+</code></pre>
+
+<p>Defined by <a href="http://keras.io/layers/core#layer">Layer</a>.</p>
+<pre><code class="python">set_input_shape(input_shape)
+</code></pre>
+
+<p>Defined by <a href="http://keras.io/layers/core#layer">Layer</a>.</p>
+<pre><code class="python">set_previous(layer, reset_weights=True)
+</code></pre>
+
+<p>Defined by <a href="http://keras.io/layers/core#layer">Layer</a>.</p>
+<pre><code class="python">set_weights(weights)
+</code></pre>
+
+<p>Defined by <a href="http://keras.io/layers/core#layer">Layer</a>.</p>
+<pre><code class="python">supports_masked_input()
+</code></pre>
+
+<p>Defined by <a href="http://keras.io/layers/core#layer">Layer</a>.</p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/containers.py#L172">[source]</a></span></p>
+<h1 id="graph">Graph</h1>
+<pre><code class="python">keras.layers.containers.Graph()
+</code></pre>
+
+<p>Implement a NN graph with arbitrary layer connections,
+arbitrary number of inputs and arbitrary number of outputs.</p>
+<p>This class is also the basis for the <code>keras.models.Graph</code> model.</p>
+<ul>
+<li><strong>Note</strong>: <code>Graph</code> can only be used as a layer
+(connect, input, get_input, get_output)
+when it has exactly one input and one output.</li>
+</ul>
+<h3 id="methods_1">Methods</h3>
+<pre><code class="python">add_input(name, input_shape=None, batch_input_shape=None, dtype='float')
+</code></pre>
+
+<p>Add an input to the graph.</p>
+<ul>
+<li>
+<p><strong><em>_Arguments</em>_:</strong></p>
+</li>
+<li>
+<p><strong>name</strong>: string. The name of the new input. Must be unique in the graph.</p>
+</li>
+<li><strong>input_shape</strong>: a tuple of integers, the expected shape of the input samples.
+    Does not include the batch size.</li>
+<li><strong>batch_input_shape</strong>: a tuple of integers, the expected shape of the
+    whole input batch, including the batch size.</li>
+<li><strong>dtype</strong>: 'float' or 'int'.</li>
+</ul>
+<pre><code class="python">add_node(layer, name, input=None, inputs=[], merge_mode='concat', concat_axis=-1, dot_axes=-1, create_output=False)
+</code></pre>
+
+<p>Add a node in the graph. It can be connected to multiple
+inputs, which will first be merged into one tensor
+according to the mode specified.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>layer</strong>: the layer at the node.</li>
+<li><strong>name</strong>: name for the node.</li>
+<li><strong>input</strong>: when connecting the layer to a single input,
+    this is the name of the incoming node.</li>
+<li><strong>inputs</strong>: when connecting the layer to multiple inputs,
+    this is a list of names of incoming nodes.</li>
+<li><strong>merge_mode</strong>: one of {concat, sum, dot, ave, mul}</li>
+<li><strong>concat_axis</strong>: when <code>merge_mode=='concat'</code>, this is the
+    input concatenation axis.</li>
+<li><strong>dot_axes</strong>: when <code>merge_mode='dot'</code>, this is the contraction axes
+    specification; see the `Merge layer for details.</li>
+<li><strong>create_output</strong>: boolean. Set this to <code>True</code> if you want the output
+    of your node to be an output of the graph.</li>
+</ul>
+<pre><code class="python">add_output(name, input=None, inputs=[], merge_mode='concat', concat_axis=-1, dot_axes=-1)
+</code></pre>
+
+<p>Add an output to the graph.</p>
+<p>This output can merge several node outputs into a single output.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>name</strong>: name of the output.</li>
+<li><strong>input</strong>: when connecting the layer to a single input,
+    this is the name of the incoming node.</li>
+<li><strong>inputs</strong>: when connecting the layer to multiple inputs,
+    this is a list of names of incoming nodes.</li>
+<li><strong>merge_mode</strong>: one of {concat, sum, dot, ave, mul}</li>
+<li><strong>concat_axis</strong>: when <code>merge_mode=='concat'</code>, this is the
+    input concatenation axis.</li>
+<li><strong>dot_axes</strong>: when <code>merge_mode='dot'</code>, this is the contraction axes
+    specification; see the `Merge layer for details.</li>
+</ul>
+<pre><code class="python">add_shared_node(layer, name, inputs=[], merge_mode=None, concat_axis=-1, dot_axes=-1, outputs=[], create_output=False)
+</code></pre>
+
+<p>Used to share a same layer across multiple nodes.</p>
+<p>Supposed, for instance, that you want to apply one same <code>Dense</code>
+layer after to the output of two different nodes.
+You can then add the <code>Dense</code> layer as a shared node.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>layer</strong>: The layer to be shared across multiple inputs</li>
+<li><strong>name</strong>: Name of the shared node</li>
+<li><strong>inputs</strong>: List of names of input nodes</li>
+<li><strong>merge_mode</strong>: Same meaning as <code>merge_mode</code> argument of <code>add_node()</code></li>
+<li><strong>concat_axis</strong>: Same meaning as <code>concat_axis</code> argument of <code>add_node()</code></li>
+<li><strong>dot_axes</strong>: Same meaning as <code>dot_axes</code> argument of <code>add_node()</code></li>
+<li><strong>outputs</strong>: Used when <code>merge_mode=None</code>. Names for the output nodes.</li>
+<li><strong>create_output</strong>: Same meaning as <code>create_output</code> argument of <code>add_node()</code>.</li>
+</ul>
+<pre><code class="python">reset_states()
+</code></pre>
+
+<pre><code class="python">clear_previous(reset_weights=True)
+</code></pre>
+
+<p>Defined by <a href="http://keras.io/layers/core#layer">Layer</a>.</p>
+<pre><code class="python">count_params()
+</code></pre>
+
+<p>Defined by <a href="http://keras.io/layers/core#layer">Layer</a>.</p>
+<pre><code class="python">get_config()
+</code></pre>
+
+<p>Defined by <a href="http://keras.io/layers/core#layer">Layer</a>.</p>
+<pre><code class="python">get_input(train=False)
+</code></pre>
+
+<p>Defined by <a href="http://keras.io/layers/core#layer">Layer</a>.</p>
+<pre><code class="python">get_output(train=False)
+</code></pre>
+
+<p>Defined by <a href="http://keras.io/layers/core#layer">Layer</a>.</p>
+<pre><code class="python">get_output_mask(train=None)
+</code></pre>
+
+<p>Defined by <a href="http://keras.io/layers/core#layer">Layer</a>.</p>
+<pre><code class="python">get_weights()
+</code></pre>
+
+<p>Defined by <a href="http://keras.io/layers/core#layer">Layer</a>.</p>
+<pre><code class="python">set_input_shape(input_shape)
+</code></pre>
+
+<p>Defined by <a href="http://keras.io/layers/core#layer">Layer</a>.</p>
+<pre><code class="python">set_previous(layer, connection_map={}, reset_weights=True)
+</code></pre>
+
+<p>Defined by <a href="http://keras.io/layers/core#layer">Layer</a>.</p>
+<pre><code class="python">set_weights(weights)
+</code></pre>
+
+<p>Defined by <a href="http://keras.io/layers/core#layer">Layer</a>.</p>
+<pre><code class="python">supports_masked_input()
+</code></pre>
+
+<p>Defined by <a href="http://keras.io/layers/core#layer">Layer</a>.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../preprocessing/sequence/" class="btn btn-neutral float-right" title="Sequence Preprocessing">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../noise/" class="btn btn-neutral" title="Noise layers"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="http://github.com/fchollet/keras" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../noise/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../preprocessing/sequence/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

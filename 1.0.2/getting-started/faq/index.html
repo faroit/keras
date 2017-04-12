@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>FAQ - Keras Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "FAQ";
+    var mkdocs_page_input_path = "getting-started/faq.md";
+    var mkdocs_page_url = "/getting-started/faq/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61785484-1', 'keras.io');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Keras Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting started</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../sequential-model-guide/">Guide to the Sequential model</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../functional-api-guide/">Guide to the Functional API</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">FAQ</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#keras-faq-frequently-asked-keras-questions">Keras FAQ: Frequently Asked Keras Questions</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#how-should-i-cite-keras">How should I cite Keras?</a></li>
+        
+            <li><a class="toctree-l4" href="#how-can-i-run-keras-on-gpu">How can I run Keras on GPU?</a></li>
+        
+            <li><a class="toctree-l4" href="#how-can-i-save-a-keras-model">How can I save a Keras model?</a></li>
+        
+            <li><a class="toctree-l4" href="#why-is-the-training-loss-much-higher-than-the-testing-loss">Why is the training loss much higher than the testing loss?</a></li>
+        
+            <li><a class="toctree-l4" href="#how-can-i-visualize-the-output-of-an-intermediate-layer">How can I visualize the output of an intermediate layer?</a></li>
+        
+            <li><a class="toctree-l4" href="#how-can-i-use-keras-with-datasets-that-dont-fit-in-memory">How can I use Keras with datasets that don't fit in memory?</a></li>
+        
+            <li><a class="toctree-l4" href="#how-can-i-interrupt-training-when-the-validation-loss-isnt-decreasing-anymore">How can I interrupt training when the validation loss isn't decreasing anymore?</a></li>
+        
+            <li><a class="toctree-l4" href="#how-is-the-validation-split-computed">How is the validation split computed?</a></li>
+        
+            <li><a class="toctree-l4" href="#is-the-data-shuffled-during-training">Is the data shuffled during training?</a></li>
+        
+            <li><a class="toctree-l4" href="#how-can-i-record-the-training-validation-loss-accuracy-at-each-epoch">How can I record the training / validation loss / accuracy at each epoch?</a></li>
+        
+            <li><a class="toctree-l4" href="#how-can-i-use-stateful-rnns">How can I use stateful RNNs?</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Models</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../models/about-keras-models/">About Keras models</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../models/sequential/">Sequential</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../models/model/">Model (functional API)</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Layers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../layers/about-keras-layers/">About Keras layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/core/">Core Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/convolutional/">Convolutional Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/recurrent/">Recurrent Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/embeddings/">Embedding Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/advanced-activations/">Advanced Activations Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/normalization/">Normalization Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/noise/">Noise layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/wrappers/">Layer wrappers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/writing-your-own-keras-layers/">Writing your own Keras layers</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Preprocessing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/sequence/">Sequence Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/text/">Text Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/image/">Image Preprocessing</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../objectives/">Objectives</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../optimizers/">Optimizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../activations/">Activations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../callbacks/">Callbacks</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../datasets/">Datasets</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../backend/">Backend</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../initializations/">Initializations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../regularizers/">Regularizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../constraints/">Constraints</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../visualization/">Visualization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../scikit-learn-api/">Scikit-learn API</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Keras Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Getting started &raquo;</li>
+        
+      
+    
+    <li>FAQ</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="http://github.com/fchollet/keras/edit/master/docs/getting-started/faq.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="keras-faq-frequently-asked-keras-questions">Keras FAQ: Frequently Asked Keras Questions</h1>
+<ul>
+<li><a href="#how-should-i-cite-keras">How should I cite Keras?</a></li>
+<li><a href="#how-can-i-run-keras-on-gpu">How can I run Keras on GPU?</a></li>
+<li><a href="#how-can-i-save-a-keras-model">How can I save a Keras model?</a></li>
+<li><a href="#why-is-the-training-loss-much-higher-than-the-testing-loss">Why is the training loss much higher than the testing loss?</a></li>
+<li><a href="#how-can-i-visualize-the-output-of-an-intermediate-layer">How can I visualize the output of an intermediate layer?</a></li>
+<li><a href="#how-can-i-use-keras-with-datasets-that-dont-fit-in-memory">How can I use Keras with datasets that don't fit in memory?</a></li>
+<li><a href="#how-can-i-interrupt-training-when-the-validation-loss-isnt-decreasing-anymore">How can I interrupt training when the validation loss isn't decreasing anymore?</a></li>
+<li><a href="#how-is-the-validation-split-computed">How is the validation split computed?</a></li>
+<li><a href="#is-the-data-shuffled-during-training">Is the data shuffled during training?</a></li>
+<li><a href="#how-can-i-record-the-training-validation-loss-accuracy-at-each-epoch">How can I record the training / validation loss / accuracy at each epoch?</a></li>
+<li><a href="#how-can-i-use-stateful-rnns">How can I use stateful RNNs?</a></li>
+</ul>
+<hr />
+<h3 id="how-should-i-cite-keras">How should I cite Keras?</h3>
+<p>Please cite Keras in your publications if it helps your research. Here is an example BibTeX entry:</p>
+<pre><code>@misc{chollet2015keras,
+  author = {Chollet, François},
+  title = {Keras},
+  year = {2015},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{https://github.com/fchollet/keras}}
+}
+</code></pre>
+
+<h3 id="how-can-i-run-keras-on-gpu">How can I run Keras on GPU?</h3>
+<p>If you are running on the TensorFlow backend, your code will automatically run on GPU if any available GPU is detected.
+If you are running on the Theano backend, you can use one of the following methods:</p>
+<p>Method 1: use Theano flags.</p>
+<pre><code class="bash">THEANO_FLAGS=device=gpu,floatX=float32 python my_keras_script.py
+</code></pre>
+
+<p>The name 'gpu' might have to be changed depending on your device's identifier (e.g. <code>gpu0</code>, <code>gpu1</code>, etc).</p>
+<p>Method 2: set up your <code>.theanorc</code>: <a href="http://deeplearning.net/software/theano/library/config.html">Instructions</a></p>
+<p>Method 3: manually set <code>theano.config.device</code>, <code>theano.config.floatX</code> at the beginning of your code:</p>
+<pre><code class="python">import theano
+theano.config.device = 'gpu'
+theano.config.floatX = 'float32'
+</code></pre>
+
+<hr />
+<h3 id="how-can-i-save-a-keras-model">How can I save a Keras model?</h3>
+<p><em>It is not recommended to use pickle or cPickle to save a Keras model.</em></p>
+<p>If you only need to save the architecture of a model, and not its weights, you can do:</p>
+<pre><code class="python"># save as JSON
+json_string = model.to_json()
+
+# save as YAML
+yaml_string = model.to_yaml()
+</code></pre>
+
+<p>You can then build a fresh model from this data:</p>
+<pre><code class="python"># model reconstruction from JSON:
+from keras.models import model_from_json
+model = model_from_json(json_string)
+
+# model reconstruction from YAML
+model = model_from_yaml(yaml_string)
+</code></pre>
+
+<p>If you need to save the weights of a model, you can do so in HDF5 with the code below.</p>
+<p>Note that you will first need to install HDF5 and the Python library h5py, which do not come bundled with Keras.</p>
+<pre><code class="python">model.save_weights('my_model_weights.h5')
+</code></pre>
+
+<p>Assuming you have code for instantiating your model, you can then load the weights you saved into a model with the same architecture:</p>
+<pre><code class="python">model.load_weights('my_model_weights.h5')
+</code></pre>
+
+<p>This leads us to a way to save and reconstruct models from only serialized data:</p>
+<pre><code class="python">json_string = model.to_json()
+open('my_model_architecture.json', 'w').write(json_string)
+model.save_weights('my_model_weights.h5')
+
+# elsewhere...
+model = model_from_json(open('my_model_architecture.json').read())
+model.load_weights('my_model_weights.h5')
+</code></pre>
+
+<p>Finally, before it can be used, the model shall be compiled.</p>
+<pre><code class="python">model.compile(optimizer='adagrad', loss='mse')
+</code></pre>
+
+<hr />
+<h3 id="why-is-the-training-loss-much-higher-than-the-testing-loss">Why is the training loss much higher than the testing loss?</h3>
+<p>A Keras model has two modes: training and testing. Regularization mechanisms, such as Dropout and L1/L2 weight regularization, are turned off at testing time.</p>
+<p>Besides, the training loss is the average of the losses over each batch of training data. Because your model is changing over time, the loss over the first batches of an epoch is generally higher than over the last batches. On the other hand, the testing loss for an epoch is computed using the model as it is at the end of the epoch, resulting in a lower loss.</p>
+<hr />
+<h3 id="how-can-i-visualize-the-output-of-an-intermediate-layer">How can I visualize the output of an intermediate layer?</h3>
+<p>You can build a Keras function that will return the output of a certain layer given a certain input, for example:</p>
+<pre><code class="python">from keras import backend as K
+
+# with a Sequential model
+get_3rd_layer_output = K.function([model.layers[0].input],
+                                  [model.layers[3].output])
+layer_output = get_3rd_layer_output([X])[0]
+</code></pre>
+
+<p>Similarly, you could build a Theano and TensorFlow function directly.</p>
+<p>Note that if your model has a different behavior in training and testing phase (e.g. if it uses <code>Dropout</code>, <code>BatchNormalization</code>, etc.), you will need
+to pass the learning phase flag to your function:</p>
+<pre><code class="python">get_3rd_layer_output = K.function([model.layers[0].input, K.learning_phase()],
+                                  [model.layers[3].output])
+
+# output in train mode = 0
+layer_output = get_3rd_layer_output([X, 0])[0]
+
+# output in test mode = 1
+layer_output = get_3rd_layer_output([X, 1])[0]
+</code></pre>
+
+<p>Another more flexible way of getting output from intermediate layers is to use the <a href="../../getting-started/functional-api-guide">functional API</a>.</p>
+<hr />
+<h3 id="how-can-i-use-keras-with-datasets-that-dont-fit-in-memory">How can I use Keras with datasets that don't fit in memory?</h3>
+<p>You can do batch training using <code>model.train_on_batch(X, y)</code> and <code>model.test_on_batch(X, y)</code>. See the <a href="../../models/sequential">models documentation</a>.</p>
+<p>Alternatively, you can write a generator that yields batches of training data and use the method <code>model.fit_generator(data_generator, samples_per_epoch, nb_epoch)</code>.</p>
+<p>You can see batch training in action in our <a href="https://github.com/fchollet/keras/blob/master/examples/cifar10_cnn.py">CIFAR10 example</a>.</p>
+<hr />
+<h3 id="how-can-i-interrupt-training-when-the-validation-loss-isnt-decreasing-anymore">How can I interrupt training when the validation loss isn't decreasing anymore?</h3>
+<p>You can use an <code>EarlyStopping</code> callback:</p>
+<pre><code class="python">from keras.callbacks import EarlyStopping
+early_stopping = EarlyStopping(monitor='val_loss', patience=2)
+model.fit(X, y, validation_split=0.2, callbacks=[early_stopping])
+</code></pre>
+
+<p>Find out more in the <a href="../../callbacks">callbacks documentation</a>.</p>
+<hr />
+<h3 id="how-is-the-validation-split-computed">How is the validation split computed?</h3>
+<p>If you set the <code>validation_split</code> argument in <code>model.fit</code> to e.g. 0.1, then the validation data used will be the <em>last 10%</em> of the data. If you set it to 0.25, it will be the last 25% of the data, etc.</p>
+<hr />
+<h3 id="is-the-data-shuffled-during-training">Is the data shuffled during training?</h3>
+<p>Yes, if the <code>shuffle</code> argument in <code>model.fit</code> is set to <code>True</code> (which is the default), the training data will be randomly shuffled at each epoch.</p>
+<p>Validation data is never shuffled.</p>
+<hr />
+<h3 id="how-can-i-record-the-training-validation-loss-accuracy-at-each-epoch">How can I record the training / validation loss / accuracy at each epoch?</h3>
+<p>The <code>model.fit</code> method returns an <code>History</code> callback, which has a <code>history</code> attribute containing the lists of successive losses and other metrics.</p>
+<pre><code class="python">hist = model.fit(X, y, validation_split=0.2)
+print(hist.history)
+</code></pre>
+
+<hr />
+<h3 id="how-can-i-use-stateful-rnns">How can I use stateful RNNs?</h3>
+<p>Making a RNN stateful means that the states for the samples of each batch will be reused as initial states for the samples in the next batch.</p>
+<p>When using stateful RNNs, it is therefore assumed that:</p>
+<ul>
+<li>all batches have the same number of samples</li>
+<li>If <code>X1</code> and <code>X2</code> are successive batches of samples, then <code>X2[i]</code> is the follow-up sequence to <code>X1[i]</code>, for every <code>i</code>.</li>
+</ul>
+<p>To use statefulness in RNNs, you need to:</p>
+<ul>
+<li>explicitly specify the batch size you are using, by passing a <code>batch_input_shape</code> argument to the first layer in your model. It should be a tuple of integers, e.g. <code>(32, 10, 16)</code> for a 32-samples batch of sequences of 10 timesteps with 16 features per timestep.</li>
+<li>set <code>stateful=True</code> in your RNN layer(s).</li>
+</ul>
+<p>To reset the states accumulated:</p>
+<ul>
+<li>use <code>model.reset_states()</code> to reset the states of all layers in the model</li>
+<li>use <code>layer.reset_states()</code> to reset the states of a specific stateful RNN layer</li>
+</ul>
+<p>Example:</p>
+<pre><code class="python">
+X  # this is our input data, of shape (32, 21, 16)
+# we will feed it to our model in sequences of length 10
+
+model = Sequential()
+model.add(LSTM(32, batch_input_shape=(32, 10, 16), stateful=True))
+model.add(Dense(16, activation='softmax'))
+
+model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
+
+# we train the network to predict the 11th timestep given the first 10:
+model.train_on_batch(X[:, :10, :], np.reshape(X[:, 10, :], (32, 16)))
+
+# the state of the network has changed. We can feed the follow-up sequences:
+model.train_on_batch(X[:, 10:20, :], np.reshape(X[:, 20, :], (32, 16)))
+
+# let's reset the states of the LSTM layer:
+model.reset_states()
+
+# another way to do it in this case:
+model.layers[0].reset_states()
+</code></pre>
+
+<p>Notes that the methods <code>predict</code>, <code>fit</code>, <code>train_on_batch</code>, <code>predict_classes</code>, etc. will <em>all</em> update the states of the stateful layers in a model. This allows you to do not only stateful training, but also stateful prediction.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../models/about-keras-models/" class="btn btn-neutral float-right" title="About Keras models">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../functional-api-guide/" class="btn btn-neutral" title="Guide to the Functional API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="http://github.com/fchollet/keras" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../functional-api-guide/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../models/about-keras-models/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

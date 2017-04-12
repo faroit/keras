@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Objectives - Keras Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Objectives";
+    var mkdocs_page_input_path = "objectives.md";
+    var mkdocs_page_url = "/objectives/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61785484-1', 'keras.io');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Keras Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting started</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../getting-started/sequential-model-guide/">Guide to the Sequential model</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../getting-started/functional-api-guide/">Guide to the Functional API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../getting-started/faq/">FAQ</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Models</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../models/about-keras-models/">About Keras models</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../models/sequential/">Sequential</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../models/model/">Model (functional API)</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Layers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../layers/about-keras-layers/">About Keras layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/core/">Core Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/convolutional/">Convolutional Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/pooling/">Pooling Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/local/">Locally-connected Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/recurrent/">Recurrent Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/embeddings/">Embedding Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/advanced-activations/">Advanced Activations Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/normalization/">Normalization Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/noise/">Noise layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/wrappers/">Layer wrappers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/writing-your-own-keras-layers/">Writing your own Keras layers</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Preprocessing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../preprocessing/sequence/">Sequence Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../preprocessing/text/">Text Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../preprocessing/image/">Image Preprocessing</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Objectives</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#usage-of-objectives">Usage of objectives</a></li>
+    
+
+    <li class="toctree-l2"><a href="#available-objectives">Available objectives</a></li>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../metrics/">Metrics</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../optimizers/">Optimizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../activations/">Activations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../callbacks/">Callbacks</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../datasets/">Datasets</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../applications/">Applications</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../backend/">Backend</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../initializations/">Initializations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../regularizers/">Regularizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../constraints/">Constraints</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../visualization/">Visualization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../scikit-learn-api/">Scikit-learn API</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Utils</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../utils/data_utils/">Data Utils</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../utils/io_utils/">I/O Utils</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../utils/layer_utils/">Layer Utils</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../utils/np_utils/">Numpy Utils</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Keras Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Objectives</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="http://github.com/fchollet/keras/edit/master/docs/objectives.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="usage-of-objectives">Usage of objectives</h2>
+<p>An objective function (or loss function, or optimization score function) is one of the two parameters required to compile a model:</p>
+<pre><code class="python">model.compile(loss='mean_squared_error', optimizer='sgd')
+</code></pre>
+
+<p>You can either pass the name of an existing objective, or pass a Theano/TensorFlow symbolic function that returns a scalar for each data-point and takes the following two arguments:</p>
+<ul>
+<li><strong>y_true</strong>: True labels. Theano/TensorFlow tensor.</li>
+<li><strong>y_pred</strong>: Predictions. Theano/TensorFlow tensor of the same shape as y_true.</li>
+</ul>
+<p>The actual optimized objective is the mean of the output array across all datapoints.</p>
+<p>For a few examples of such functions, check out the <a href="https://github.com/fchollet/keras/blob/master/keras/objectives.py">objectives source</a>.</p>
+<h2 id="available-objectives">Available objectives</h2>
+<ul>
+<li><strong>mean_squared_error</strong> / <strong>mse</strong></li>
+<li><strong>mean_absolute_error</strong> / <strong>mae</strong></li>
+<li><strong>mean_absolute_percentage_error</strong> / <strong>mape</strong></li>
+<li><strong>mean_squared_logarithmic_error</strong> / <strong>msle</strong></li>
+<li><strong>squared_hinge</strong></li>
+<li><strong>hinge</strong></li>
+<li><strong>binary_crossentropy</strong>: Also known as logloss. </li>
+<li><strong>categorical_crossentropy</strong>: Also known as multiclass logloss. <strong>Note</strong>: using this objective requires that your labels are binary arrays of shape <code>(nb_samples, nb_classes)</code>.</li>
+<li><strong>sparse_categorical_crossentropy</strong>: As above but accepts sparse labels. <strong>Note</strong>: this objective still requires that your labels have the same number of dimensions as your outputs; you may need to add a length-1 dimension to the shape of your labels, e.g with <code>np.expand_dims(y, -1)</code>.</li>
+<li><strong>kullback_leibler_divergence</strong> / <strong>kld</strong>: Information gain from a predicted probability distribution Q to a true probability distribution P. Gives a measure of difference between both distributions.</li>
+<li><strong>poisson</strong>: Mean of <code>(predictions - targets * log(predictions))</code></li>
+<li><strong>cosine_proximity</strong>: The opposite (negative) of the mean cosine proximity between predictions and targets.</li>
+</ul>
+<p><strong>Note</strong>: when using the <code>categorical_crossentropy</code> objective, your targets should be in categorical format (e.g. if you have 10 classes, the target for each sample should be a 10-dimensional vector that is all-zeros expect for a 1 at the index corresponding to the class of the sample). In order to convert <em>integer targets</em> into <em>categorical targets</em>, you can use the Keras utility <code>to_categorical</code>:</p>
+<pre><code class="python">from keras.utils.np_utils import to_categorical
+
+categorical_labels = to_categorical(int_labels, nb_classes=None)
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../metrics/" class="btn btn-neutral float-right" title="Metrics">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../preprocessing/image/" class="btn btn-neutral" title="Image Preprocessing"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="http://github.com/fchollet/keras" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../preprocessing/image/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../metrics/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>
