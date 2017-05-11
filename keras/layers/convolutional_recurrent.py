@@ -105,7 +105,8 @@ class ConvRecurrent2D(Recurrent):
         self.return_sequences = return_sequences
         self.go_backwards = go_backwards
         self.stateful = stateful
-        self.input_spec = InputSpec(ndim=5)
+        self.input_spec = [InputSpec(ndim=5)]
+        self.state_spec = None
 
     def compute_output_shape(self, input_shape):
         if self.data_format == 'channels_first':
@@ -330,9 +331,10 @@ class ConvLSTM2D(ConvRecurrent2D):
         self.recurrent_dropout = min(1., max(0., recurrent_dropout))
 
     def build(self, input_shape):
-        # TODO: better handling of input spec
-        self.input_spec = InputSpec(shape=input_shape)
-
+        if isinstance(input_shape, list):
+            input_shape = input_shape[0]
+        batch_size = input_shape[0] if self.stateful else None
+        self.input_spec[0] = InputSpec(shape=(batch_size, None) + input_shape[2:])
         if self.stateful:
             self.reset_states()
         else:
@@ -351,19 +353,19 @@ class ConvLSTM2D(ConvRecurrent2D):
         self.kernel_shape = kernel_shape
         recurrent_kernel_shape = self.kernel_size + (self.filters, self.filters * 4)
 
-        self.kernel = self.add_weight(kernel_shape,
+        self.kernel = self.add_weight(shape=kernel_shape,
                                       initializer=self.kernel_initializer,
                                       name='kernel',
                                       regularizer=self.kernel_regularizer,
                                       constraint=self.kernel_constraint)
         self.recurrent_kernel = self.add_weight(
-            recurrent_kernel_shape,
+            shape=recurrent_kernel_shape,
             initializer=self.recurrent_initializer,
             name='recurrent_kernel',
             regularizer=self.recurrent_regularizer,
             constraint=self.recurrent_constraint)
         if self.use_bias:
-            self.bias = self.add_weight((self.filters * 4,),
+            self.bias = self.add_weight(shape=(self.filters * 4,),
                                         initializer=self.bias_initializer,
                                         name='bias',
                                         regularizer=self.bias_regularizer,
@@ -396,7 +398,7 @@ class ConvLSTM2D(ConvRecurrent2D):
             self.bias_o = None
         self.built = True
 
-    def get_initial_states(self, inputs):
+    def get_initial_state(self, inputs):
         # (samples, timesteps, rows, cols, filters)
         initial_state = K.zeros_like(inputs)
         # (samples, rows, cols, filters)
@@ -413,7 +415,7 @@ class ConvLSTM2D(ConvRecurrent2D):
     def reset_states(self):
         if not self.stateful:
             raise RuntimeError('Layer must be stateful.')
-        input_shape = self.input_spec.shape
+        input_shape = self.input_spec[0].shape
         output_shape = self.compute_output_shape(input_shape)
         if not input_shape[0]:
             raise ValueError('If a RNN is stateful, a complete '

@@ -685,6 +685,8 @@ class Model(Container):
                 See [losses](/losses).
                 If the model has multiple outputs, you can use a different loss
                 on each output by passing a dictionary or a list of losses.
+                The loss value that will be minimized by the model
+                will then be the sum of all individual losses.
             metrics: list of metrics to be evaluated by the model
                 during training and testing.
                 Typically you will use `metrics=['accuracy']`.
@@ -694,6 +696,9 @@ class Model(Container):
             loss_weights: Optional list or dictionary specifying scalar
                 coefficients (Python floats) to weight the loss contributions
                 of different model outputs.
+                The loss value that will be minimized by the model
+                will then be the *weighted sum* of all individual losses,
+                weighted by the `loss_weights` coefficients.
                 If a list, it is expected to have a 1:1 mapping
                 to the model's outputs. If a tensor, it is expected to map
                 output names (strings) to scalar coefficients.
@@ -1011,6 +1016,7 @@ class Model(Container):
             self.train_function = K.function(inputs,
                                              [self.total_loss] + self.metrics_tensors,
                                              updates=updates,
+                                             name='train_function',
                                              **self._function_kwargs)
 
     def _make_test_function(self):
@@ -1025,6 +1031,7 @@ class Model(Container):
             self.test_function = K.function(inputs,
                                             [self.total_loss] + self.metrics_tensors,
                                             updates=self.state_updates,
+                                            name='test_function',
                                             **self._function_kwargs)
 
     def _make_predict_function(self):
@@ -1041,6 +1048,7 @@ class Model(Container):
             self.predict_function = K.function(inputs,
                                                self.outputs,
                                                updates=self.state_updates,
+                                               name='predict_function',
                                                **kwargs)
 
     def _fit_loop(self, f, ins, out_labels=None, batch_size=32,
@@ -1151,6 +1159,8 @@ class Model(Container):
                     batch_logs[l] = o
 
                 callbacks.on_batch_end(batch_index, batch_logs)
+                if callback_model.stop_training:
+                    break
 
                 if batch_index == len(batches) - 1:  # Last batch.
                     if do_validation:
@@ -1322,6 +1332,20 @@ class Model(Container):
                                  str(x[0].shape[0]) + ' samples')
         return x, y, sample_weights
 
+    def _get_deduped_metrics_names(self):
+        out_labels = self.metrics_names
+
+        # Rename duplicated metrics name
+        # (can happen with an output layer shared among multiple dataflows).
+        deduped_out_labels = []
+        for i, label in enumerate(out_labels):
+            new_label = label
+            if out_labels.count(label) > 1:
+                dup_idx = out_labels[:i].count(label)
+                new_label += '_' + str(dup_idx + 1)
+            deduped_out_labels.append(new_label)
+        return deduped_out_labels
+
     def fit(self, x=None,
             y=None,
             batch_size=32,
@@ -1351,7 +1375,7 @@ class Model(Container):
             batch_size: integer. Number of samples per gradient update.
             epochs: integer, the number of times to iterate
                 over the training data arrays.
-                verbose: 0, 1, or 2. Verbosity mode.
+            verbose: 0, 1, or 2. Verbosity mode.
                 0 = silent, 1 = verbose, 2 = one log line per epoch.
             callbacks: list of callbacks to be called during training.
                 See [callbacks](/callbacks).
@@ -1463,18 +1487,7 @@ class Model(Container):
         f = self.train_function
 
         # Prepare display labels.
-        out_labels = self.metrics_names
-
-        # Rename duplicated metrics name
-        # (can happen with an output layer shared among multiple dataflows).
-        deduped_out_labels = []
-        for i, label in enumerate(out_labels):
-            new_label = label
-            if out_labels.count(label) > 1:
-                dup_idx = out_labels[:i].count(label)
-                new_label += '_' + str(dup_idx + 1)
-            deduped_out_labels.append(new_label)
-        out_labels = deduped_out_labels
+        out_labels = self._get_deduped_metrics_names()
 
         if do_validation:
             callback_metrics = copy.copy(out_labels) + ['val_' + n for n in out_labels]
@@ -1717,7 +1730,7 @@ class Model(Container):
                 All arrays should contain the same number of samples.
                 The generator is expected to loop over its data
                 indefinitely. An epoch finishes when `steps_per_epoch`
-                samples have been seen by the model.
+                batches have been seen by the model.
             steps_per_epoch: Total number of steps (batches of samples)
                 to yield from `generator` before declaring one epoch
                 finished and starting the next epoch. It should typically
@@ -1789,7 +1802,8 @@ class Model(Container):
                              'you must specify a value for '
                              '`validation_steps`.')
 
-        out_labels = self.metrics_names
+        # Prepare display labels.
+        out_labels = self._get_deduped_metrics_names()
         callback_metrics = out_labels + ['val_' + n for n in out_labels]
 
         # prepare callbacks
@@ -1827,8 +1841,11 @@ class Model(Container):
                                  str(validation_data))
             val_x, val_y, val_sample_weights = self._standardize_user_data(
                 val_x, val_y, val_sample_weight)
+            val_data = val_x + val_y + val_sample_weights
+            if self.uses_learning_phase and not isinstance(K.learning_phase(), int):
+                val_data += [0.]
             for cbk in callbacks:
-                cbk.validation_data = val_x + [val_y, val_sample_weights]
+                cbk.validation_data = val_data
         enqueuer = None
 
         try:
@@ -1935,7 +1952,7 @@ class Model(Container):
         The generator should return the same kind of data
         as accepted by `test_on_batch`.
 
-        Arguments:
+        # Arguments
             generator: Generator yielding tuples (inputs, targets)
                 or (inputs, targets, sample_weights)
             steps: Total number of steps (batches of samples)

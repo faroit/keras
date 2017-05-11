@@ -360,28 +360,35 @@ class Layer(object):
     def non_trainable_weights(self, weights):
         self._non_trainable_weights = weights
 
-    def add_weight(self, shape, initializer,
-                   name=None,
-                   trainable=True,
+    @interfaces.legacy_add_weight_support
+    def add_weight(self,
+                   name,
+                   shape,
+                   dtype=None,
+                   initializer=None,
                    regularizer=None,
+                   trainable=True,
                    constraint=None):
         """Adds a weight variable to the layer.
 
         # Arguments
-            shape: The shape tuple of the weight.
-            initializer: An Initializer instance (callable).
             name: String, the name for the weight variable.
+            shape: The shape tuple of the weight.
+            dtype: The dtype of the weight.
+            initializer: An Initializer instance (callable).
+            regularizer: An optional Regularizer instance.
             trainable: A boolean, whether the weight should
                 be trained via backprop or not (assuming
                 that the layer itself is also trainable).
-            regularizer: An optional Regularizer instance.
             constraint: An optional Constraint instance.
 
         # Returns
             The created weight variable.
         """
         initializer = initializers.get(initializer)
-        weight = K.variable(initializer(shape), dtype=K.floatx(), name=name)
+        if dtype is None:
+            dtype = K.floatx()
+        weight = K.variable(initializer(shape), dtype=dtype, name=name)
         if regularizer is not None:
             self.add_loss(regularizer(weight))
         if constraint is not None:
@@ -1263,6 +1270,7 @@ class InputLayer(Layer):
         name: Name of the layer (string).
     """
 
+    @interfaces.legacy_input_support
     def __init__(self, input_shape=None, batch_size=None,
                  batch_input_shape=None,
                  dtype=None, input_tensor=None, sparse=False, name=None):
@@ -1600,55 +1608,52 @@ class Container(Layer):
         nodes_depths = {}  # dict {node: depth value}
         layers_depths = {}  # dict {layer: depth value}
         layer_indices = {}  # dict {layer: index in traversal}
+        nodes_in_decreasing_depth = []
 
-        def make_node_marker(node, depth):
-            return str(id(node)) + '-' + str(depth)
-
-        def build_map_of_graph(tensor, seen_nodes=None, depth=0,
+        def build_map_of_graph(tensor, finished_nodes, nodes_in_progress,
                                layer=None, node_index=None, tensor_index=None):
             """Builds a map of the graph of layers.
 
-            This recursively updates the maps `nodes_depths`,
-            `layers_depths` and the set `container_nodes`.
-
-            Does not try to detect cycles in the graph.
+            This recursively updates the map `layer_indices`,
+            the list `nodes_in_decreasing_depth` and the set `container_nodes`.
 
             # Arguments
                 tensor: Some tensor in a graph.
-                seen_nodes: Set of node ids ("{layer.name}_ib-{node_index}")
-                    of nodes seen so far. Useful to prevent infinite loops.
-                depth: Current depth in the graph (0 = last output).
+                finished_nodes: Set of nodes whose subgraphs have been traversed
+                    completely. Useful to prevent duplicated work.
+                nodes_in_progress: Set of nodes that are currently active on the
+                    recursion stack. Useful to detect cycles.
                 layer: Layer from which `tensor` comes from. If not provided,
                     will be obtained from `tensor._keras_history`.
                 node_index: Node index from which `tensor` comes from.
                 tensor_index: Tensor_index from which `tensor` comes from.
+
+            # Raises
+                RuntimeError: if a cycle is detected.
             """
-            seen_nodes = seen_nodes or set()
             if not layer or node_index is None or tensor_index is None:
                 layer, node_index, tensor_index = tensor._keras_history
             node = layer.inbound_nodes[node_index]
 
             # Prevent cycles.
-            seen_nodes.add(make_node_marker(node, depth))
+            if node in nodes_in_progress:
+                raise RuntimeError(
+                    'The tensor ' + str(tensor) + ' at layer "' +
+                    layer.name + '" is part of a cycle.')
+
+            # Don't repeat work for shared subgraphs
+            if node in finished_nodes:
+                return
 
             node_key = layer.name + '_ib-' + str(node_index)
             # Update container_nodes.
             container_nodes.add(node_key)
-            # Update nodes_depths.
-            node_depth = nodes_depths.get(node)
-            if node_depth is None:
-                nodes_depths[node] = depth
-            else:
-                nodes_depths[node] = max(depth, node_depth)
-            # Update layers_depths.
-            previously_seen_depth = layers_depths.get(layer)
-            if previously_seen_depth is None:
-                current_depth = depth
-            else:
-                current_depth = max(depth, previously_seen_depth)
-            layers_depths[layer] = current_depth
+
+            # Store the traversal order for layer sorting.
             if layer not in layer_indices:
                 layer_indices[layer] = len(layer_indices)
+
+            nodes_in_progress.add(node)
 
             # Propagate to all previous tensors connected to this node.
             for i in range(len(node.inbound_layers)):
@@ -1657,15 +1662,34 @@ class Container(Layer):
                 node_index = node.node_indices[i]
                 tensor_index = node.tensor_indices[i]
                 next_node = layer.inbound_nodes[node_index]
-                # use node_marker to prevent cycles
-                node_marker = make_node_marker(next_node, current_depth + 1)
-                if node_marker not in seen_nodes:
-                    build_map_of_graph(x, seen_nodes, current_depth + 1,
-                                       layer, node_index, tensor_index)
+                build_map_of_graph(x, finished_nodes, nodes_in_progress,
+                                   layer, node_index, tensor_index)
 
+            finished_nodes.add(node)
+            nodes_in_progress.remove(node)
+
+            nodes_in_decreasing_depth.append(node)
+
+        finished_nodes = set()
+        nodes_in_progress = set()
         for x in self.outputs:
-            seen_nodes = set()
-            build_map_of_graph(x, seen_nodes, depth=0)
+            build_map_of_graph(x, finished_nodes, nodes_in_progress)
+
+        for node in reversed(nodes_in_decreasing_depth):
+            # If the depth is not set, the node has no outbound nodes (depth 0).
+            depth = nodes_depths.setdefault(node, 0)
+
+            # Update the depth of inbound nodes.
+            for i in range(len(node.inbound_layers)):
+                inbound_layer = node.inbound_layers[i]
+                node_index = node.node_indices[i]
+                inbound_node = inbound_layer.inbound_nodes[node_index]
+                previous_depth = nodes_depths.get(inbound_node, 0)
+                nodes_depths[inbound_node] = max(depth + 1, previous_depth)
+
+            # Update the depth of the corresponding layer
+            previous_depth = layers_depths.get(node.outbound_layer, 0)
+            layers_depths[node.outbound_layer] = max(depth, previous_depth)
 
         # Build a dict {depth: list of nodes with this depth}
         nodes_by_depth = {}
@@ -2761,6 +2785,25 @@ def preprocess_weights_for_loading(layer, weights,
         A list of weights values (Numpy arrays).
     """
     if original_keras_version == '1':
+        if layer.__class__.__name__ == 'Bidirectional':
+            num_weights_per_layer = len(weights) // 2
+
+            forward_weights = preprocess_weights_for_loading(layer.forward_layer,
+                                                             weights[:num_weights_per_layer],
+                                                             original_keras_version,
+                                                             original_backend)
+            backward_weights = preprocess_weights_for_loading(layer.backward_layer,
+                                                              weights[num_weights_per_layer:],
+                                                              original_keras_version,
+                                                              original_backend)
+            weights = forward_weights + backward_weights
+
+        if layer.__class__.__name__ == 'TimeDistributed':
+            weights = preprocess_weights_for_loading(layer.layer,
+                                                     weights,
+                                                     original_keras_version,
+                                                     original_backend)
+
         if layer.__class__.__name__ == 'Conv1D':
             shape = weights[0].shape
             # Handle Keras 1.1 format
