@@ -1,6 +1,6 @@
 # Keras-docs
 
-this repository hosts older versions of [keras](http://keras.io) documentations, because the original author doesn't think this is useful:
+this repository hosts older versions of [keras](http://keras.io) documentations useful if you need to look up the API for an specfific version:
 
 * [2.0.4](https://faroit.github.io/keras-docs/2.0.4/)
 * [2.0.3](https://faroit.github.io/keras-docs/2.0.3/)
