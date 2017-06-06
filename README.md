@@ -1,6 +1,8 @@
 # Keras-docs
 
-this repository hosts older versions of [keras](http://keras.io) documentations useful if you need to look up the API for an specfific version:
+> versions only exist to force PyPI users to upgrade. They are not meaningful. You should be constantly synced to master.
+
+If this is not how you work, you will find this repository useful. It hosts older versions of [keras](http://keras.io) documentations useful if you need to look up the API for an specfific version:
 
 * [2.0.4](https://faroit.github.io/keras-docs/2.0.4/)
 * [2.0.3](https://faroit.github.io/keras-docs/2.0.3/)
