@@ -8,8 +8,8 @@ import shutil
 from keras import optimizers
 from keras import initializers
 from keras import callbacks
-from keras.models import Sequential
-from keras.layers.core import Dense, Dropout
+from keras.models import Sequential, Model
+from keras.layers import Input, Dense, Dropout, add
 from keras.layers.convolutional import Conv2D
 from keras.layers.pooling import MaxPooling2D, GlobalAveragePooling2D
 from keras.utils.test_utils import get_test_data
@@ -46,17 +46,36 @@ def test_TerminateOnNaN():
     model.compile(loss='mean_squared_error',
                   optimizer='rmsprop')
 
+    # case 1 fit
     history = model.fit(X_train, y_train, batch_size=batch_size,
                         validation_data=(X_test, y_test), callbacks=cbks, epochs=20)
     loss = history.history['loss']
     assert len(loss) == 1
     assert loss[0] == np.inf
 
+    # case 2 fit_generator
+    def data_generator():
+        max_batch_index = len(X_train) // batch_size
+        i = 0
+        while 1:
+            yield (X_train[i * batch_size: (i + 1) * batch_size],
+                   y_train[i * batch_size: (i + 1) * batch_size])
+            i += 1
+            i = i % max_batch_index
+    history = model.fit_generator(data_generator(),
+                                  len(X_train),
+                                  validation_data=(X_test, y_test),
+                                  callbacks=cbks,
+                                  epochs=20)
+    loss = history.history['loss']
+    assert len(loss) == 1
+    assert loss[0] == np.inf or np.isnan(loss[0])
+
 
 @keras_test
-def test_ModelCheckpoint():
+def test_ModelCheckpoint(tmpdir):
     np.random.seed(1337)
-    filepath = 'checkpoint.h5'
+    filepath = str(tmpdir / 'checkpoint.h5')
     (X_train, y_train), (X_test, y_test) = get_test_data(num_train=train_samples,
                                                          num_test=test_samples,
                                                          input_shape=(input_dim,),
@@ -80,7 +99,7 @@ def test_ModelCheckpoint():
                                       save_best_only=save_best_only, mode=mode)]
     model.fit(X_train, y_train, batch_size=batch_size,
               validation_data=(X_test, y_test), callbacks=cbks, epochs=1)
-    assert os.path.exists(filepath)
+    assert os.path.isfile(filepath)
     os.remove(filepath)
 
     # case 2
@@ -89,7 +108,7 @@ def test_ModelCheckpoint():
                                       save_best_only=save_best_only, mode=mode)]
     model.fit(X_train, y_train, batch_size=batch_size,
               validation_data=(X_test, y_test), callbacks=cbks, epochs=1)
-    assert os.path.exists(filepath)
+    assert os.path.isfile(filepath)
     os.remove(filepath)
 
     # case 3
@@ -99,7 +118,7 @@ def test_ModelCheckpoint():
                                       save_best_only=save_best_only, mode=mode)]
     model.fit(X_train, y_train, batch_size=batch_size,
               validation_data=(X_test, y_test), callbacks=cbks, epochs=1)
-    assert os.path.exists(filepath)
+    assert os.path.isfile(filepath)
     os.remove(filepath)
 
     # case 4
@@ -108,7 +127,7 @@ def test_ModelCheckpoint():
                                       save_best_only=save_best_only, mode=mode)]
     model.fit(X_train, y_train, batch_size=batch_size,
               validation_data=(X_test, y_test), callbacks=cbks, epochs=1)
-    assert os.path.exists(filepath)
+    assert os.path.isfile(filepath)
     os.remove(filepath)
 
     # case 5
@@ -121,12 +140,13 @@ def test_ModelCheckpoint():
                                       period=period)]
     model.fit(X_train, y_train, batch_size=batch_size,
               validation_data=(X_test, y_test), callbacks=cbks, epochs=4)
-    assert os.path.exists(filepath.format(epoch=1))
-    assert os.path.exists(filepath.format(epoch=3))
+    assert os.path.isfile(filepath.format(epoch=1))
+    assert os.path.isfile(filepath.format(epoch=3))
     assert not os.path.exists(filepath.format(epoch=0))
     assert not os.path.exists(filepath.format(epoch=2))
     os.remove(filepath.format(epoch=1))
     os.remove(filepath.format(epoch=3))
+    assert not tmpdir.listdir()
 
 
 @keras_test
@@ -244,9 +264,9 @@ def test_ReduceLROnPlateau():
 
 
 @keras_test
-def test_CSVLogger():
+def test_CSVLogger(tmpdir):
     np.random.seed(1337)
-    filepath = 'log.tsv'
+    filepath = str(tmpdir / 'log.tsv')
     sep = '\t'
     (X_train, y_train), (X_test, y_test) = get_test_data(num_train=train_samples,
                                                          num_test=test_samples,
@@ -273,7 +293,7 @@ def test_CSVLogger():
     model.fit(X_train, y_train, batch_size=batch_size,
               validation_data=(X_test, y_test), callbacks=cbks, epochs=1)
 
-    assert os.path.exists(filepath)
+    assert os.path.isfile(filepath)
     with open(filepath) as csvfile:
         dialect = Sniffer().sniff(csvfile.read())
     assert dialect.delimiter == sep
@@ -296,15 +316,16 @@ def test_CSVLogger():
         assert len(re.findall('epoch', output)) == 1
 
     os.remove(filepath)
+    assert not tmpdir.listdir()
 
 
 @keras_test
 @pytest.mark.skipif((K.backend() != 'tensorflow'),
                     reason='Requires tensorflow backend')
-def test_TensorBoard():
-    np.random.seed(1337)
+def test_TensorBoard(tmpdir):
+    np.random.seed(np.random.randint(1, 1e7))
+    filepath = str(tmpdir / 'logs')
 
-    filepath = './logs'
     (X_train, y_train), (X_test, y_test) = get_test_data(
         num_train=train_samples,
         num_test=test_samples,
@@ -322,6 +343,7 @@ def test_TensorBoard():
         i = 0
         while 1:
             if train:
+                # simulate multi-input/output models
                 yield (X_train[i * batch_size: (i + 1) * batch_size],
                        y_train[i * batch_size: (i + 1) * batch_size])
             else:
@@ -330,39 +352,30 @@ def test_TensorBoard():
             i += 1
             i = i % max_batch_index
 
-    def data_generator_graph(train):
-        while 1:
-            if train:
-                yield {'X_vars': X_train, 'output': y_train}
-            else:
-                yield {'X_vars': X_test, 'output': y_test}
-
-    # case 1 Sequential
-    model = Sequential()
-    model.add(Dense(num_hidden, input_dim=input_dim, activation='relu'))
-    model.add(Dropout(0.1))
-    model.add(Dense(num_class, activation='softmax'))
+    inp = Input((input_dim,))
+    hidden = Dense(num_hidden, activation='relu')(inp)
+    hidden = Dropout(0.1)(hidden)
+    output = Dense(num_class, activation='softmax')(hidden)
+    model = Model(inputs=inp, outputs=output)
     model.compile(loss='categorical_crossentropy',
                   optimizer='sgd',
                   metrics=['accuracy'])
 
     tsb = callbacks.TensorBoard(log_dir=filepath, histogram_freq=1,
                                 write_images=True, write_grads=True,
+                                embeddings_freq=1,
+                                embeddings_layer_names=['dense_1'],
                                 batch_size=5)
     cbks = [tsb]
 
-    # fit with validation data
+    # fit without validation data
     model.fit(X_train, y_train, batch_size=batch_size,
-              validation_data=(X_test, y_test), callbacks=cbks, epochs=3)
+              callbacks=cbks, epochs=3)
 
     # fit with validation data and accuracy
     model.fit(X_train, y_train, batch_size=batch_size,
-              validation_data=(X_test, y_test), callbacks=cbks, epochs=2)
-
-    # fit generator with validation data
-    model.fit_generator(data_generator(True), len(X_train), epochs=2,
-                        validation_data=(X_test, y_test),
-                        callbacks=cbks)
+              validation_data=(X_test, y_test),
+              callbacks=cbks, epochs=2)
 
     # fit generator without validation data
     model.fit_generator(data_generator(True), len(X_train), epochs=2,
@@ -373,21 +386,93 @@ def test_TensorBoard():
                         validation_data=(X_test, y_test),
                         callbacks=cbks)
 
-    # fit generator without validation data and accuracy
-    model.fit_generator(data_generator(True), len(X_train), epochs=2,
-                        callbacks=cbks)
-
-    assert os.path.exists(filepath)
+    assert os.path.isdir(filepath)
     shutil.rmtree(filepath)
+    assert not tmpdir.listdir()
 
 
 @keras_test
 @pytest.mark.skipif((K.backend() != 'tensorflow'),
                     reason='Requires tensorflow backend')
-def test_TensorBoard_convnet():
-    np.random.seed(1337)
+def test_TensorBoard_multi_input_output(tmpdir):
+    np.random.seed(np.random.randint(1, 1e7))
+    filepath = str(tmpdir / 'logs')
 
-    filepath = './logs'
+    (X_train, y_train), (X_test, y_test) = get_test_data(
+        num_train=train_samples,
+        num_test=test_samples,
+        input_shape=(input_dim,),
+        classification=True,
+        num_classes=num_class)
+    y_test = np_utils.to_categorical(y_test)
+    y_train = np_utils.to_categorical(y_train)
+
+    def data_generator(train):
+        if train:
+            max_batch_index = len(X_train) // batch_size
+        else:
+            max_batch_index = len(X_test) // batch_size
+        i = 0
+        while 1:
+            if train:
+                # simulate multi-input/output models
+                yield ([X_train[i * batch_size: (i + 1) * batch_size]] * 2,
+                       [y_train[i * batch_size: (i + 1) * batch_size]] * 2)
+            else:
+                yield ([X_test[i * batch_size: (i + 1) * batch_size]] * 2,
+                       [y_test[i * batch_size: (i + 1) * batch_size]] * 2)
+            i += 1
+            i = i % max_batch_index
+
+    inp1 = Input((input_dim,))
+    inp2 = Input((input_dim,))
+    inp = add([inp1, inp2])
+    hidden = Dense(num_hidden, activation='relu')(inp)
+    hidden = Dropout(0.1)(hidden)
+    output1 = Dense(num_class, activation='softmax')(hidden)
+    output2 = Dense(num_class, activation='softmax')(hidden)
+    model = Model(inputs=[inp1, inp2], outputs=[output1, output2])
+    model.compile(loss='categorical_crossentropy',
+                  optimizer='sgd',
+                  metrics=['accuracy'])
+
+    tsb = callbacks.TensorBoard(log_dir=filepath, histogram_freq=1,
+                                write_images=True, write_grads=True,
+                                embeddings_freq=1,
+                                embeddings_layer_names=['dense_1'],
+                                batch_size=5)
+    cbks = [tsb]
+
+    # fit without validation data
+    model.fit([X_train] * 2, [y_train] * 2, batch_size=batch_size,
+              callbacks=cbks, epochs=3)
+
+    # fit with validation data and accuracy
+    model.fit([X_train] * 2, [y_train] * 2, batch_size=batch_size,
+              validation_data=([X_test] * 2, [y_test] * 2),
+              callbacks=cbks, epochs=2)
+
+    # fit generator without validation data
+    model.fit_generator(data_generator(True), len(X_train), epochs=2,
+                        callbacks=cbks)
+
+    # fit generator with validation data and accuracy
+    model.fit_generator(data_generator(True), len(X_train), epochs=2,
+                        validation_data=([X_test] * 2, [y_test] * 2),
+                        callbacks=cbks)
+
+    assert os.path.isdir(filepath)
+    shutil.rmtree(filepath)
+    assert not tmpdir.listdir()
+
+
+@keras_test
+@pytest.mark.skipif((K.backend() != 'tensorflow'),
+                    reason='Requires tensorflow backend')
+def test_TensorBoard_convnet(tmpdir):
+    np.random.seed(np.random.randint(1, 1e7))
+    filepath = str(tmpdir / 'logs')
+
     input_shape = (16, 16, 3)
     (x_train, y_train), (x_test, y_test) = get_test_data(num_train=500,
                                                          num_test=200,
@@ -419,8 +504,9 @@ def test_TensorBoard_convnet():
                         validation_data=(x_test, y_test),
                         callbacks=cbks,
                         verbose=0)
-    assert os.path.exists(filepath)
+    assert os.path.isdir(filepath)
     shutil.rmtree(filepath)
+    assert not tmpdir.listdir()
 
 
 @keras_test
@@ -508,9 +594,11 @@ def test_LambdaCallback():
 @keras_test
 @pytest.mark.skipif((K.backend() != 'tensorflow'),
                     reason="Requires tensorflow backend")
-def test_TensorBoard_with_ReduceLROnPlateau():
+def test_TensorBoard_with_ReduceLROnPlateau(tmpdir):
     import shutil
-    filepath = './logs'
+    np.random.seed(np.random.randint(1, 1e7))
+    filepath = str(tmpdir / 'logs')
+
     (X_train, y_train), (X_test, y_test) = get_test_data(num_train=train_samples,
                                                          num_test=test_samples,
                                                          input_shape=(input_dim,),
@@ -538,8 +626,9 @@ def test_TensorBoard_with_ReduceLROnPlateau():
     model.fit(X_train, y_train, batch_size=batch_size,
               validation_data=(X_test, y_test), callbacks=cbks, epochs=2)
 
-    assert os.path.exists(filepath)
+    assert os.path.isdir(filepath)
     shutil.rmtree(filepath)
+    assert not tmpdir.listdir()
 
 
 if __name__ == '__main__':
