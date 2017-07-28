@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Sequential - Keras 2.0.5 Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Sequential";
+    var mkdocs_page_input_path = "models/sequential.md";
+    var mkdocs_page_url = "/models/sequential/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61785484-1', 'keras.io');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Keras 2.0.5 Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting started</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../getting-started/sequential-model-guide/">Guide to the Sequential model</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../getting-started/functional-api-guide/">Guide to the Functional API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../getting-started/faq/">FAQ</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Models</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../about-keras-models/">About Keras models</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Sequential</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#the-sequential-model-api">The Sequential model API</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#useful-attributes-of-model">Useful attributes of Model</a></li>
+        
+            <li><a class="toctree-l4" href="#sequential-model-methods">Sequential model methods</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../model/">Model (functional API)</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Layers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../layers/about-keras-layers/">About Keras layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/core/">Core Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/convolutional/">Convolutional Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/pooling/">Pooling Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/local/">Locally-connected Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/recurrent/">Recurrent Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/embeddings/">Embedding Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/merge/">Merge Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/advanced-activations/">Advanced Activations Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/normalization/">Normalization Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/noise/">Noise layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/wrappers/">Layer wrappers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/writing-your-own-keras-layers/">Writing your own Keras layers</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Preprocessing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/sequence/">Sequence Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/text/">Text Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/image/">Image Preprocessing</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../losses/">Losses</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../metrics/">Metrics</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../optimizers/">Optimizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../activations/">Activations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../callbacks/">Callbacks</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../datasets/">Datasets</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../applications/">Applications</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../backend/">Backend</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../initializers/">Initializers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../regularizers/">Regularizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../constraints/">Constraints</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../visualization/">Visualization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../scikit-learn-api/">Scikit-learn API</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../utils/">Utils</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../contributing/">Contributing</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Keras 2.0.5 Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Models &raquo;</li>
+        
+      
+    
+    <li>Sequential</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="http://github.com/fchollet/keras/edit/master/docs/models/sequential.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="the-sequential-model-api">The Sequential model API</h1>
+<p>To get started, read <a href="../../getting-started/sequential-model-guide">this guide to the Keras Sequential model</a>.</p>
+<h2 id="useful-attributes-of-model">Useful attributes of Model</h2>
+<ul>
+<li><code>model.layers</code> is a list of the layers added to the model.</li>
+</ul>
+<hr />
+<h2 id="sequential-model-methods">Sequential model methods</h2>
+<h3 id="compile">compile</h3>
+<pre><code class="python">compile(self, optimizer, loss, metrics=None, sample_weight_mode=None)
+</code></pre>
+
+<p>Configures the learning process.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>optimizer</strong>: str (name of optimizer) or optimizer object.
+    See <a href="../../optimizers">optimizers</a>.</li>
+<li><strong>loss</strong>: str (name of objective function) or objective function.
+    See <a href="../../losses">losses</a>.</li>
+<li><strong>metrics</strong>: list of metrics to be evaluated by the model
+    during training and testing.
+    Typically you will use <code>metrics=['accuracy']</code>.
+    See <a href="../../metrics">metrics</a>.</li>
+<li><strong>sample_weight_mode</strong>: if you need to do timestep-wise
+    sample weighting (2D weights), set this to "temporal".
+    "None" defaults to sample-wise weights (1D).</li>
+<li><strong>**kwargs</strong>: for Theano backend, these are passed into K.function.
+    When using the Tensorflow backend, these are passed into
+    <code>tf.Session.run</code>.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="python">    model = Sequential()
+    model.add(Dense(32, input_shape=(500,)))
+    model.add(Dense(10, activation='softmax'))
+    model.compile(optimizer='rmsprop',
+          loss='categorical_crossentropy',
+          metrics=['accuracy'])
+</code></pre>
+
+<hr />
+<h3 id="fit">fit</h3>
+<pre><code class="python">fit(self, x, y, batch_size=32, epochs=10, verbose=1, callbacks=None, validation_split=0.0, validation_data=None, shuffle=True, class_weight=None, sample_weight=None, initial_epoch=0)
+</code></pre>
+
+<p>Trains the model for a fixed number of epochs.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>x</strong>: input data, as a Numpy array or list of Numpy arrays
+    (if the model has multiple inputs).</li>
+<li><strong>y</strong>: labels, as a Numpy array.</li>
+<li><strong>batch_size</strong>: integer. Number of samples per gradient update.</li>
+<li><strong>epochs</strong>: integer, the number of epochs to train the model.</li>
+<li><strong>verbose</strong>: 0 for no logging to stdout,
+    1 for progress bar logging, 2 for one log line per epoch.</li>
+<li><strong>callbacks</strong>: list of <code>keras.callbacks.Callback</code> instances.
+    List of callbacks to apply during training.
+    See <a href="../../callbacks">callbacks</a>.</li>
+<li><strong>validation_split</strong>: float (0. &lt; x &lt; 1).
+    Fraction of the data to use as held-out validation data.</li>
+<li><strong>validation_data</strong>: tuple (x_val, y_val) or tuple
+    (x_val, y_val, val_sample_weights) to be used as held-out
+    validation data. Will override validation_split.</li>
+<li><strong>shuffle</strong>: boolean or str (for 'batch').
+    Whether to shuffle the samples at each epoch.
+    'batch' is a special option for dealing with the
+    limitations of HDF5 data; it shuffles in batch-sized chunks.</li>
+<li><strong>class_weight</strong>: dictionary mapping classes to a weight value,
+    used for scaling the loss function (during training only).</li>
+<li><strong>sample_weight</strong>: Numpy array of weights for
+    the training samples, used for scaling the loss function
+    (during training only). You can either pass a flat (1D)
+    Numpy array with the same length as the input samples
+    (1:1 mapping between weights and samples),
+    or in the case of temporal data,
+    you can pass a 2D array with shape (samples, sequence_length),
+    to apply a different weight to every timestep of every sample.
+    In this case you should make sure to specify
+    sample_weight_mode="temporal" in compile().</li>
+<li><strong>initial_epoch</strong>: epoch at which to start training
+    (useful for resuming a previous training run)</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>A <code>History</code> object. Its <code>History.history</code> attribute is
+a record of training loss values and metrics values
+at successive epochs, as well as validation loss values
+and validation metrics values (if applicable).</p>
+<p><strong>Raises</strong></p>
+<ul>
+<li><strong>RuntimeError</strong>: if the model was never compiled.</li>
+</ul>
+<hr />
+<h3 id="evaluate">evaluate</h3>
+<pre><code class="python">evaluate(self, x, y, batch_size=32, verbose=1, sample_weight=None)
+</code></pre>
+
+<p>Computes the loss on some input data, batch by batch.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>x</strong>: input data, as a Numpy array or list of Numpy arrays
+    (if the model has multiple inputs).</li>
+<li><strong>y</strong>: labels, as a Numpy array.</li>
+<li><strong>batch_size</strong>: integer. Number of samples per gradient update.</li>
+<li><strong>verbose</strong>: verbosity mode, 0 or 1.</li>
+<li><strong>sample_weight</strong>: sample weights, as a Numpy array.</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>Scalar test loss (if the model has no metrics)
+or list of scalars (if the model computes other metrics).
+The attribute <code>model.metrics_names</code> will give you
+the display labels for the scalar outputs.</p>
+<p><strong>Raises</strong></p>
+<ul>
+<li><strong>RuntimeError</strong>: if the model was never compiled.</li>
+</ul>
+<hr />
+<h3 id="predict">predict</h3>
+<pre><code class="python">predict(self, x, batch_size=32, verbose=0)
+</code></pre>
+
+<p>Generates output predictions for the input samples.</p>
+<p>The input samples are processed batch by batch.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>x</strong>: the input data, as a Numpy array.</li>
+<li><strong>batch_size</strong>: integer.</li>
+<li><strong>verbose</strong>: verbosity mode, 0 or 1.</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>A Numpy array of predictions.</p>
+<hr />
+<h3 id="train_on_batch">train_on_batch</h3>
+<pre><code class="python">train_on_batch(self, x, y, class_weight=None, sample_weight=None)
+</code></pre>
+
+<p>Single gradient update over one batch of samples.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>x</strong>: input data, as a Numpy array or list of Numpy arrays
+    (if the model has multiple inputs).</li>
+<li><strong>y</strong>: labels, as a Numpy array.</li>
+<li><strong>class_weight</strong>: dictionary mapping classes to a weight value,
+    used for scaling the loss function (during training only).</li>
+<li><strong>sample_weight</strong>: sample weights, as a Numpy array.</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>Scalar training loss (if the model has no metrics)
+or list of scalars (if the model computes other metrics).
+The attribute <code>model.metrics_names</code> will give you
+the display labels for the scalar outputs.</p>
+<p><strong>Raises</strong></p>
+<ul>
+<li><strong>RuntimeError</strong>: if the model was never compiled.</li>
+</ul>
+<hr />
+<h3 id="test_on_batch">test_on_batch</h3>
+<pre><code class="python">test_on_batch(self, x, y, sample_weight=None)
+</code></pre>
+
+<p>Evaluates the model over a single batch of samples.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>x</strong>: input data, as a Numpy array or list of Numpy arrays
+    (if the model has multiple inputs).</li>
+<li><strong>y</strong>: labels, as a Numpy array.</li>
+<li><strong>sample_weight</strong>: sample weights, as a Numpy array.</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>Scalar test loss (if the model has no metrics)
+or list of scalars (if the model computes other metrics).
+The attribute <code>model.metrics_names</code> will give you
+the display labels for the scalar outputs.</p>
+<p><strong>Raises</strong></p>
+<ul>
+<li><strong>RuntimeError</strong>: if the model was never compiled.</li>
+</ul>
+<hr />
+<h3 id="predict_on_batch">predict_on_batch</h3>
+<pre><code class="python">predict_on_batch(self, x)
+</code></pre>
+
+<p>Returns predictions for a single batch of samples.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>x</strong>: input data, as a Numpy array or list of Numpy arrays
+    (if the model has multiple inputs).</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>A Numpy array of predictions.</p>
+<hr />
+<h3 id="fit_generator">fit_generator</h3>
+<pre><code class="python">fit_generator(self, generator, steps_per_epoch, epochs=1, verbose=1, callbacks=None, validation_data=None, validation_steps=None, class_weight=None, max_q_size=10, workers=1, pickle_safe=False, initial_epoch=0)
+</code></pre>
+
+<p>Fits the model on data generated batch-by-batch by a Python generator.</p>
+<p>The generator is run in parallel to the model, for efficiency.
+For instance, this allows you to do real-time data augmentation
+on images on CPU in parallel to training your model on GPU.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>generator</strong>: A generator.
+    The output of the generator must be either<ul>
+<li>a tuple (inputs, targets)</li>
+<li>a tuple (inputs, targets, sample_weights).
+All arrays should contain the same number of samples.
+The generator is expected to loop over its data
+indefinitely. An epoch finishes when <code>steps_per_epoch</code>
+batches have been seen by the model.</li>
+</ul>
+</li>
+<li><strong>steps_per_epoch</strong>: Total number of steps (batches of samples)
+    to yield from <code>generator</code> before declaring one epoch
+    finished and starting the next epoch. It should typically
+    be equal to the number of unique samples of your dataset
+    divided by the batch size.</li>
+<li><strong>epochs</strong>: Integer, total number of iterations on the data.</li>
+<li><strong>verbose</strong>: Verbosity mode, 0, 1, or 2.</li>
+<li><strong>callbacks</strong>: List of callbacks to be called during training.</li>
+<li><strong>validation_data</strong>: This can be either<ul>
+<li>A generator for the validation data</li>
+<li>A tuple (inputs, targets)</li>
+<li>A tuple (inputs, targets, sample_weights).</li>
+</ul>
+</li>
+<li><strong>validation_steps</strong>: Only relevant if <code>validation_data</code>
+    is a generator.
+    Number of steps to yield from validation generator
+    at the end of every epoch. It should typically
+    be equal to the number of unique samples of your
+    validation dataset divided by the batch size.</li>
+<li><strong>class_weight</strong>: Dictionary mapping class indices to a weight
+    for the class.</li>
+<li><strong>max_q_size</strong>: Maximum size for the generator queue</li>
+<li><strong>workers</strong>: Maximum number of processes to spin up</li>
+<li><strong>pickle_safe</strong>: Ff True, use process based threading.
+    Note that because
+    this implementation relies on multiprocessing,
+    you should not pass
+    non picklable arguments to the generator
+    as they can't be passed
+    easily to children processes.</li>
+<li><strong>initial_epoch</strong>: Epoch at which to start training
+    (useful for resuming a previous training run)</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>A <code>History</code> object.</p>
+<p><strong>Raises</strong></p>
+<ul>
+<li><strong>RuntimeError</strong>: if the model was never compiled.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="python">def generate_arrays_from_file(path):
+    while 1:
+    f = open(path)
+    for line in f:
+        # create Numpy arrays of input data
+        # and labels, from each line in the file
+        x, y = process_line(line)
+        yield (x, y)
+        f.close()
+
+model.fit_generator(generate_arrays_from_file('/my_file.txt'),
+        steps_per_epoch=1000, epochs=10)
+</code></pre>
+
+<hr />
+<h3 id="evaluate_generator">evaluate_generator</h3>
+<pre><code class="python">evaluate_generator(self, generator, steps, max_q_size=10, workers=1, pickle_safe=False)
+</code></pre>
+
+<p>Evaluates the model on a data generator.</p>
+<p>The generator should return the same kind of data
+as accepted by <code>test_on_batch</code>.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>generator</strong>: Generator yielding tuples (inputs, targets)
+    or (inputs, targets, sample_weights)</li>
+<li><strong>steps</strong>: Total number of steps (batches of samples)
+    to yield from <code>generator</code> before stopping.</li>
+<li><strong>max_q_size</strong>: maximum size for the generator queue</li>
+<li><strong>workers</strong>: maximum number of processes to spin up</li>
+<li><strong>pickle_safe</strong>: if True, use process based threading.
+    Note that because this implementation
+    relies on multiprocessing, you should not pass
+    non picklable arguments to the generator
+    as they can't be passed easily to children processes.</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>Scalar test loss (if the model has no metrics)
+or list of scalars (if the model computes other metrics).
+The attribute <code>model.metrics_names</code> will give you
+the display labels for the scalar outputs.</p>
+<p><strong>Raises</strong></p>
+<ul>
+<li><strong>RuntimeError</strong>: if the model was never compiled.</li>
+</ul>
+<hr />
+<h3 id="predict_generator">predict_generator</h3>
+<pre><code class="python">predict_generator(self, generator, steps, max_q_size=10, workers=1, pickle_safe=False, verbose=0)
+</code></pre>
+
+<p>Generates predictions for the input samples from a data generator.</p>
+<p>The generator should return the same kind of data as accepted by
+<code>predict_on_batch</code>.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>generator</strong>: generator yielding batches of input samples.</li>
+<li><strong>steps</strong>: Total number of steps (batches of samples)
+    to yield from <code>generator</code> before stopping.</li>
+<li><strong>max_q_size</strong>: maximum size for the generator queue</li>
+<li><strong>workers</strong>: maximum number of processes to spin up</li>
+<li><strong>pickle_safe</strong>: if True, use process based threading.
+    Note that because this implementation
+    relies on multiprocessing, you should not pass
+    non picklable arguments to the generator
+    as they can't be passed easily to children processes.</li>
+<li><strong>verbose</strong>: verbosity mode, 0 or 1.</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>A Numpy array of predictions.</p>
+<hr />
+<h3 id="get_layer">get_layer</h3>
+<pre><code class="python">get_layer(self, name=None, index=None)
+</code></pre>
+
+<p>Retrieve a layer that is part of the model.</p>
+<p>Returns a layer based on either its name (unique)
+or its index in the graph. Indices are based on
+order of horizontal graph traversal (bottom-up).</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>name</strong>: string, name of layer.</li>
+<li><strong>index</strong>: integer, index of layer.</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>A layer instance.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../model/" class="btn btn-neutral float-right" title="Model (functional API)">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../about-keras-models/" class="btn btn-neutral" title="About Keras models"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="http://github.com/fchollet/keras" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../about-keras-models/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../model/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>
