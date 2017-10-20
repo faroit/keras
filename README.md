@@ -6,6 +6,8 @@ From the Keras Maintainer:
 
 If this is not how you work, you will find this repository useful. It hosts older versions of [keras](http://keras.io) documentations useful if you need to look up the API for an specfific version:
 
+* [2.0.8](https://faroit.github.io/keras-docs/2.0.8/)
+* [2.0.7](https://faroit.github.io/keras-docs/2.0.7/)
 * [2.0.6](https://faroit.github.io/keras-docs/2.0.6/)
 * [2.0.5](https://faroit.github.io/keras-docs/2.0.5/)
 * [2.0.4](https://faroit.github.io/keras-docs/2.0.4/)

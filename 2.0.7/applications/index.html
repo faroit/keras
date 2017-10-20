@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Applications - Keras 2.0.7 Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Applications";
+    var mkdocs_page_input_path = "applications.md";
+    var mkdocs_page_url = "/applications/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61785484-1', 'keras.io');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Keras 2.0.7 Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting started</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../getting-started/sequential-model-guide/">Guide to the Sequential model</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../getting-started/functional-api-guide/">Guide to the Functional API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../getting-started/faq/">FAQ</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Models</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../models/about-keras-models/">About Keras models</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../models/sequential/">Sequential</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../models/model/">Model (functional API)</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Layers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../layers/about-keras-layers/">About Keras layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/core/">Core Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/convolutional/">Convolutional Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/pooling/">Pooling Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/local/">Locally-connected Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/recurrent/">Recurrent Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/embeddings/">Embedding Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/merge/">Merge Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/advanced-activations/">Advanced Activations Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/normalization/">Normalization Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/noise/">Noise layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/wrappers/">Layer wrappers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/writing-your-own-keras-layers/">Writing your own Keras layers</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Preprocessing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../preprocessing/sequence/">Sequence Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../preprocessing/text/">Text Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../preprocessing/image/">Image Preprocessing</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../losses/">Losses</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../metrics/">Metrics</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../optimizers/">Optimizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../activations/">Activations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../callbacks/">Callbacks</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../datasets/">Datasets</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Applications</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#applications">Applications</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#available-models">Available models</a></li>
+        
+            <li><a class="toctree-l3" href="#usage-examples-for-image-classification-models">Usage examples for image classification models</a></li>
+        
+        </ul>
+    
+
+    <li class="toctree-l2"><a href="#documentation-for-individual-models">Documentation for individual models</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#xception">Xception</a></li>
+        
+            <li><a class="toctree-l3" href="#vgg16">VGG16</a></li>
+        
+            <li><a class="toctree-l3" href="#vgg19">VGG19</a></li>
+        
+            <li><a class="toctree-l3" href="#resnet50">ResNet50</a></li>
+        
+            <li><a class="toctree-l3" href="#inceptionv3">InceptionV3</a></li>
+        
+            <li><a class="toctree-l3" href="#mobilenet">MobileNet</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../backend/">Backend</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../initializers/">Initializers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../regularizers/">Regularizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../constraints/">Constraints</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../visualization/">Visualization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../scikit-learn-api/">Scikit-learn API</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../utils/">Utils</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../contributing/">Contributing</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Keras 2.0.7 Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Applications</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="http://github.com/edit/master/docs/applications.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="applications">Applications</h1>
+<p>Keras Applications are deep learning models that are made available alongside pre-trained weights.
+These models can be used for prediction, feature extraction, and fine-tuning.</p>
+<p>Weights are downloaded automatically when instantiating a model. They are stored at <code>~/.keras/models/</code>.</p>
+<h2 id="available-models">Available models</h2>
+<h3 id="models-for-image-classification-with-weights-trained-on-imagenet">Models for image classification with weights trained on ImageNet:</h3>
+<ul>
+<li><a href="#xception">Xception</a></li>
+<li><a href="#vgg16">VGG16</a></li>
+<li><a href="#vgg19">VGG19</a></li>
+<li><a href="#resnet50">ResNet50</a></li>
+<li><a href="#inceptionv3">InceptionV3</a></li>
+<li><a href="#mobilenet">MobileNet</a></li>
+</ul>
+<p>All of these architectures (except Xception and MobileNet) are compatible with both TensorFlow and Theano, and upon instantiation the models will be built according to the image data format set in your Keras configuration file at <code>~/.keras/keras.json</code>. For instance, if you have set <code>image_data_format=channels_last</code>, then any model loaded from this repository will get built according to the TensorFlow data format convention, "Width-Height-Depth".</p>
+<p>The Xception model is only available for TensorFlow, due to its reliance on <code>SeparableConvolution</code> layers.
+The MobileNet model is only available for TensorFlow, due to its reliance on <code>DepthwiseConvolution</code> layers.</p>
+<hr />
+<h2 id="usage-examples-for-image-classification-models">Usage examples for image classification models</h2>
+<h3 id="classify-imagenet-classes-with-resnet50">Classify ImageNet classes with ResNet50</h3>
+<pre><code class="python">from keras.applications.resnet50 import ResNet50
+from keras.preprocessing import image
+from keras.applications.resnet50 import preprocess_input, decode_predictions
+import numpy as np
+
+model = ResNet50(weights='imagenet')
+
+img_path = 'elephant.jpg'
+img = image.load_img(img_path, target_size=(224, 224))
+x = image.img_to_array(img)
+x = np.expand_dims(x, axis=0)
+x = preprocess_input(x)
+
+preds = model.predict(x)
+# decode the results into a list of tuples (class, description, probability)
+# (one such list for each sample in the batch)
+print('Predicted:', decode_predictions(preds, top=3)[0])
+# Predicted: [(u'n02504013', u'Indian_elephant', 0.82658225), (u'n01871265', u'tusker', 0.1122357), (u'n02504458', u'African_elephant', 0.061040461)]
+</code></pre>
+
+<h3 id="extract-features-with-vgg16">Extract features with VGG16</h3>
+<pre><code class="python">from keras.applications.vgg16 import VGG16
+from keras.preprocessing import image
+from keras.applications.vgg16 import preprocess_input
+import numpy as np
+
+model = VGG16(weights='imagenet', include_top=False)
+
+img_path = 'elephant.jpg'
+img = image.load_img(img_path, target_size=(224, 224))
+x = image.img_to_array(img)
+x = np.expand_dims(x, axis=0)
+x = preprocess_input(x)
+
+features = model.predict(x)
+</code></pre>
+
+<h3 id="extract-features-from-an-arbitrary-intermediate-layer-with-vgg19">Extract features from an arbitrary intermediate layer with VGG19</h3>
+<pre><code class="python">from keras.applications.vgg19 import VGG19
+from keras.preprocessing import image
+from keras.applications.vgg19 import preprocess_input
+from keras.models import Model
+import numpy as np
+
+base_model = VGG19(weights='imagenet')
+model = Model(inputs=base_model.input, outputs=base_model.get_layer('block4_pool').output)
+
+img_path = 'elephant.jpg'
+img = image.load_img(img_path, target_size=(224, 224))
+x = image.img_to_array(img)
+x = np.expand_dims(x, axis=0)
+x = preprocess_input(x)
+
+block4_pool_features = model.predict(x)
+</code></pre>
+
+<h3 id="fine-tune-inceptionv3-on-a-new-set-of-classes">Fine-tune InceptionV3 on a new set of classes</h3>
+<pre><code class="python">from keras.applications.inception_v3 import InceptionV3
+from keras.preprocessing import image
+from keras.models import Model
+from keras.layers import Dense, GlobalAveragePooling2D
+from keras import backend as K
+
+# create the base pre-trained model
+base_model = InceptionV3(weights='imagenet', include_top=False)
+
+# add a global spatial average pooling layer
+x = base_model.output
+x = GlobalAveragePooling2D()(x)
+# let's add a fully-connected layer
+x = Dense(1024, activation='relu')(x)
+# and a logistic layer -- let's say we have 200 classes
+predictions = Dense(200, activation='softmax')(x)
+
+# this is the model we will train
+model = Model(inputs=base_model.input, outputs=predictions)
+
+# first: train only the top layers (which were randomly initialized)
+# i.e. freeze all convolutional InceptionV3 layers
+for layer in base_model.layers:
+    layer.trainable = False
+
+# compile the model (should be done *after* setting layers to non-trainable)
+model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
+
+# train the model on the new data for a few epochs
+model.fit_generator(...)
+
+# at this point, the top layers are well trained and we can start fine-tuning
+# convolutional layers from inception V3. We will freeze the bottom N layers
+# and train the remaining top layers.
+
+# let's visualize layer names and layer indices to see how many layers
+# we should freeze:
+for i, layer in enumerate(base_model.layers):
+   print(i, layer.name)
+
+# we chose to train the top 2 inception blocks, i.e. we will freeze
+# the first 249 layers and unfreeze the rest:
+for layer in model.layers[:249]:
+   layer.trainable = False
+for layer in model.layers[249:]:
+   layer.trainable = True
+
+# we need to recompile the model for these modifications to take effect
+# we use SGD with a low learning rate
+from keras.optimizers import SGD
+model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossentropy')
+
+# we train our model again (this time fine-tuning the top 2 inception blocks
+# alongside the top Dense layers
+model.fit_generator(...)
+</code></pre>
+
+<h3 id="build-inceptionv3-over-a-custom-input-tensor">Build InceptionV3 over a custom input tensor</h3>
+<pre><code class="python">from keras.applications.inception_v3 import InceptionV3
+from keras.layers import Input
+
+# this could also be the output a different Keras model or layer
+input_tensor = Input(shape=(224, 224, 3))  # this assumes K.image_data_format() == 'channels_last'
+
+model = InceptionV3(input_tensor=input_tensor, weights='imagenet', include_top=True)
+</code></pre>
+
+<hr />
+<h1 id="documentation-for-individual-models">Documentation for individual models</h1>
+<ul>
+<li><a href="#xception">Xception</a></li>
+<li><a href="#vgg16">VGG16</a></li>
+<li><a href="#vgg19">VGG19</a></li>
+<li><a href="#resnet50">ResNet50</a></li>
+<li><a href="#inceptionv3">InceptionV3</a></li>
+<li><a href="#mobilenet">MobileNet</a></li>
+</ul>
+<hr />
+<h2 id="xception">Xception</h2>
+<pre><code class="python">keras.applications.xception.Xception(include_top=True, weights='imagenet', input_tensor=None, input_shape=None, pooling=None, classes=1000)
+</code></pre>
+
+<p>Xception V1 model, with weights pre-trained on ImageNet.</p>
+<p>On ImageNet, this model gets to a top-1 validation accuracy of 0.790
+and a top-5 validation accuracy of 0.945.</p>
+<p>Note that this model is only available for the TensorFlow backend,
+due to its reliance on <code>SeparableConvolution</code> layers. Additionally it only supports
+the data format "channels_last" (height, width, channels).</p>
+<p>The default input size for this model is 299x299.</p>
+<h3 id="arguments">Arguments</h3>
+<ul>
+<li>include_top: whether to include the fully-connected layer at the top of the network.</li>
+<li>weights: one of <code>None</code> (random initialization) or "imagenet" (pre-training on ImageNet).</li>
+<li>input_tensor: optional Keras tensor (i.e. output of <code>layers.Input()</code>) to use as image input for the model.</li>
+<li>input_shape: optional shape tuple, only to be specified
+    if <code>include_top</code> is False (otherwise the input shape
+    has to be <code>(299, 299, 3)</code>.
+    It should have exactly 3 inputs channels,
+    and width and height should be no smaller than 71.
+    E.g. <code>(150, 150, 3)</code> would be one valid value.</li>
+<li>pooling: Optional pooling mode for feature extraction
+    when <code>include_top</code> is <code>False</code>.<ul>
+<li><code>None</code> means that the output of the model will be
+    the 4D tensor output of the
+    last convolutional layer.</li>
+<li><code>avg</code> means that global average pooling
+    will be applied to the output of the
+    last convolutional layer, and thus
+    the output of the model will be a 2D tensor.</li>
+<li><code>max</code> means that global max pooling will
+    be applied.</li>
+</ul>
+</li>
+<li>classes: optional number of classes to classify images 
+    into, only to be specified if <code>include_top</code> is True, and 
+    if no <code>weights</code> argument is specified.</li>
+</ul>
+<h3 id="returns">Returns</h3>
+<p>A Keras model instance.</p>
+<h3 id="references">References</h3>
+<ul>
+<li><a href="https://arxiv.org/abs/1610.02357">Xception: Deep Learning with Depthwise Separable Convolutions</a></li>
+</ul>
+<h3 id="license">License</h3>
+<p>These weights are trained by ourselves and are released under the MIT license.</p>
+<hr />
+<h2 id="vgg16">VGG16</h2>
+<pre><code class="python">keras.applications.vgg16.VGG16(include_top=True, weights='imagenet', input_tensor=None, input_shape=None, pooling=None, classes=1000)
+</code></pre>
+
+<p>VGG16 model, with weights pre-trained on ImageNet.</p>
+<p>This model is available for both the Theano and TensorFlow backend, and can be built both
+with "channels_first" data format (channels, height, width) or "channels_last" data format (height, width, channels).</p>
+<p>The default input size for this model is 224x224.</p>
+<h3 id="arguments_1">Arguments</h3>
+<ul>
+<li>include_top: whether to include the 3 fully-connected layers at the top of the network.</li>
+<li>weights: one of <code>None</code> (random initialization) or "imagenet" (pre-training on ImageNet).</li>
+<li>input_tensor: optional Keras tensor (i.e. output of <code>layers.Input()</code>) to use as image input for the model.</li>
+<li>input_shape: optional shape tuple, only to be specified
+    if <code>include_top</code> is False (otherwise the input shape
+    has to be <code>(224, 224, 3)</code> (with <code>channels_last</code> data format)
+    or <code>(3, 224, 224)</code> (with <code>channels_first</code> data format).
+    It should have exactly 3 inputs channels,
+    and width and height should be no smaller than 48.
+    E.g. <code>(200, 200, 3)</code> would be one valid value.</li>
+<li>pooling: Optional pooling mode for feature extraction
+    when <code>include_top</code> is <code>False</code>.<ul>
+<li><code>None</code> means that the output of the model will be
+    the 4D tensor output of the
+    last convolutional layer.</li>
+<li><code>avg</code> means that global average pooling
+    will be applied to the output of the
+    last convolutional layer, and thus
+    the output of the model will be a 2D tensor.</li>
+<li><code>max</code> means that global max pooling will
+    be applied.</li>
+</ul>
+</li>
+<li>classes: optional number of classes to classify images 
+    into, only to be specified if <code>include_top</code> is True, and 
+    if no <code>weights</code> argument is specified.</li>
+</ul>
+<h3 id="returns_1">Returns</h3>
+<p>A Keras model instance.</p>
+<h3 id="references_1">References</h3>
+<ul>
+<li><a href="https://arxiv.org/abs/1409.1556">Very Deep Convolutional Networks for Large-Scale Image Recognition</a>: please cite this paper if you use the VGG models in your work.</li>
+</ul>
+<h3 id="license_1">License</h3>
+<p>These weights are ported from the ones <a href="http://www.robots.ox.ac.uk/~vgg/research/very_deep/">released by VGG at Oxford</a> under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution License</a>.</p>
+<hr />
+<h2 id="vgg19">VGG19</h2>
+<pre><code class="python">keras.applications.vgg19.VGG19(include_top=True, weights='imagenet', input_tensor=None, input_shape=None, pooling=None, classes=1000)
+</code></pre>
+
+<p>VGG19 model, with weights pre-trained on ImageNet.</p>
+<p>This model is available for both the Theano and TensorFlow backend, and can be built both
+with "channels_first" data format (channels, height, width) or "channels_last" data format (height, width, channels).</p>
+<p>The default input size for this model is 224x224.</p>
+<h3 id="arguments_2">Arguments</h3>
+<ul>
+<li>include_top: whether to include the 3 fully-connected layers at the top of the network.</li>
+<li>weights: one of <code>None</code> (random initialization) or "imagenet" (pre-training on ImageNet).</li>
+<li>input_tensor: optional Keras tensor (i.e. output of <code>layers.Input()</code>) to use as image input for the model.</li>
+<li>input_shape: optional shape tuple, only to be specified
+    if <code>include_top</code> is False (otherwise the input shape
+    has to be <code>(224, 224, 3)</code> (with <code>channels_last</code> data format)
+    or <code>(3, 224, 224)</code> (with <code>channels_first</code> data format).
+    It should have exactly 3 inputs channels,
+    and width and height should be no smaller than 48.
+    E.g. <code>(200, 200, 3)</code> would be one valid value.</li>
+<li>pooling: Optional pooling mode for feature extraction
+    when <code>include_top</code> is <code>False</code>.<ul>
+<li><code>None</code> means that the output of the model will be
+    the 4D tensor output of the
+    last convolutional layer.</li>
+<li><code>avg</code> means that global average pooling
+    will be applied to the output of the
+    last convolutional layer, and thus
+    the output of the model will be a 2D tensor.</li>
+<li><code>max</code> means that global max pooling will
+    be applied.</li>
+</ul>
+</li>
+<li>classes: optional number of classes to classify images 
+    into, only to be specified if <code>include_top</code> is True, and 
+    if no <code>weights</code> argument is specified.</li>
+</ul>
+<h3 id="returns_2">Returns</h3>
+<p>A Keras model instance.</p>
+<h3 id="references_2">References</h3>
+<ul>
+<li><a href="https://arxiv.org/abs/1409.1556">Very Deep Convolutional Networks for Large-Scale Image Recognition</a></li>
+</ul>
+<h3 id="license_2">License</h3>
+<p>These weights are ported from the ones <a href="http://www.robots.ox.ac.uk/~vgg/research/very_deep/">released by VGG at Oxford</a> under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution License</a>.</p>
+<hr />
+<h2 id="resnet50">ResNet50</h2>
+<pre><code class="python">keras.applications.resnet50.ResNet50(include_top=True, weights='imagenet', input_tensor=None, input_shape=None, pooling=None, classes=1000)
+</code></pre>
+
+<p>ResNet50 model, with weights pre-trained on ImageNet.</p>
+<p>This model is available for both the Theano and TensorFlow backend, and can be built both
+with "channels_first" data format (channels, height, width) or "channels_last" data format (height, width, channels).</p>
+<p>The default input size for this model is 224x224.</p>
+<h3 id="arguments_3">Arguments</h3>
+<ul>
+<li>include_top: whether to include the fully-connected layer at the top of the network.</li>
+<li>weights: one of <code>None</code> (random initialization) or "imagenet" (pre-training on ImageNet).</li>
+<li>input_tensor: optional Keras tensor (i.e. output of <code>layers.Input()</code>) to use as image input for the model.</li>
+<li>input_shape: optional shape tuple, only to be specified
+    if <code>include_top</code> is False (otherwise the input shape
+    has to be <code>(224, 224, 3)</code> (with <code>channels_last</code> data format)
+    or <code>(3, 224, 224)</code> (with <code>channels_first</code> data format).
+    It should have exactly 3 inputs channels,
+    and width and height should be no smaller than 197.
+    E.g. <code>(200, 200, 3)</code> would be one valid value.</li>
+<li>pooling: Optional pooling mode for feature extraction
+    when <code>include_top</code> is <code>False</code>.<ul>
+<li><code>None</code> means that the output of the model will be
+    the 4D tensor output of the
+    last convolutional layer.</li>
+<li><code>avg</code> means that global average pooling
+    will be applied to the output of the
+    last convolutional layer, and thus
+    the output of the model will be a 2D tensor.</li>
+<li><code>max</code> means that global max pooling will
+    be applied.</li>
+</ul>
+</li>
+<li>classes: optional number of classes to classify images 
+    into, only to be specified if <code>include_top</code> is True, and 
+    if no <code>weights</code> argument is specified.</li>
+</ul>
+<h3 id="returns_3">Returns</h3>
+<p>A Keras model instance.</p>
+<h3 id="references_3">References</h3>
+<ul>
+<li><a href="https://arxiv.org/abs/1512.03385">Deep Residual Learning for Image Recognition</a></li>
+</ul>
+<h3 id="license_3">License</h3>
+<p>These weights are ported from the ones <a href="https://github.com/KaimingHe/deep-residual-networks">released by Kaiming He</a> under the <a href="https://github.com/KaimingHe/deep-residual-networks/blob/master/LICENSE">MIT license</a>.</p>
+<hr />
+<h2 id="inceptionv3">InceptionV3</h2>
+<pre><code class="python">keras.applications.inception_v3.InceptionV3(include_top=True, weights='imagenet', input_tensor=None, input_shape=None, pooling=None, classes=1000)
+</code></pre>
+
+<p>Inception V3 model, with weights pre-trained on ImageNet.</p>
+<p>This model is available for both the Theano and TensorFlow backend, and can be built both
+with "channels_first" data format (channels, height, width) or "channels_last" data format (height, width, channels).</p>
+<p>The default input size for this model is 299x299.</p>
+<h3 id="arguments_4">Arguments</h3>
+<ul>
+<li>include_top: whether to include the fully-connected layer at the top of the network.</li>
+<li>weights: one of <code>None</code> (random initialization) or "imagenet" (pre-training on ImageNet).</li>
+<li>input_tensor: optional Keras tensor (i.e. output of <code>layers.Input()</code>) to use as image input for the model.</li>
+<li>input_shape: optional shape tuple, only to be specified
+    if <code>include_top</code> is False (otherwise the input shape
+    has to be <code>(299, 299, 3)</code> (with <code>channels_last</code> data format)
+    or <code>(3, 299, 299)</code> (with <code>channels_first</code> data format).
+    It should have exactly 3 inputs channels,
+    and width and height should be no smaller than 139.
+    E.g. <code>(150, 150, 3)</code> would be one valid value.</li>
+<li>pooling: Optional pooling mode for feature extraction
+    when <code>include_top</code> is <code>False</code>.<ul>
+<li><code>None</code> means that the output of the model will be
+    the 4D tensor output of the
+    last convolutional layer.</li>
+<li><code>avg</code> means that global average pooling
+    will be applied to the output of the
+    last convolutional layer, and thus
+    the output of the model will be a 2D tensor.</li>
+<li><code>max</code> means that global max pooling will
+    be applied.</li>
+</ul>
+</li>
+<li>classes: optional number of classes to classify images 
+    into, only to be specified if <code>include_top</code> is True, and 
+    if no <code>weights</code> argument is specified.</li>
+</ul>
+<h3 id="returns_4">Returns</h3>
+<p>A Keras model instance.</p>
+<h3 id="references_4">References</h3>
+<ul>
+<li><a href="http://arxiv.org/abs/1512.00567">Rethinking the Inception Architecture for Computer Vision</a></li>
+</ul>
+<h3 id="license_4">License</h3>
+<p>These weights are released under <a href="https://github.com/tensorflow/models/blob/master/LICENSE">the Apache License</a>.</p>
+<hr />
+<h2 id="mobilenet">MobileNet</h2>
+<pre><code class="python">keras.applications.mobilenet.MobileNet(input_shape=None, alpha=1.0, depth_multiplier=1, dropout=1e-3, include_top=True, weights='imagenet', input_tensor=None, pooling=None, classes=1000)
+</code></pre>
+
+<p>MobileNet model, with weights pre-trained on ImageNet.</p>
+<p>Note that only TensorFlow is supported for now,
+therefore it only works with the data format
+<code>image_data_format='channels_last'</code> in your Keras config at <code>~/.keras/keras.json</code>.
+To load a MobileNet model via <code>load_model</code>, import the custom objects <code>relu6</code> and <code>DepthwiseConv2D</code> and pass them to the <code>custom_objects</code> parameter.</p>
+<p>E.g.</p>
+<pre><code class="python">model = load_model('mobilenet.h5', custom_objects={
+                   'relu6': mobilenet.relu6,
+                   'DepthwiseConv2D': mobilenet.DepthwiseConv2D})
+</code></pre>
+
+<p>The default input size for this model is 224x224.</p>
+<h3 id="arguments_5">Arguments</h3>
+<ul>
+<li>input_shape: optional shape tuple, only to be specified
+    if <code>include_top</code> is False (otherwise the input shape
+    has to be <code>(224, 224, 3)</code> (with <code>channels_last</code> data format)
+    or (3, 224, 224) (with <code>channels_first</code> data format).
+    It should have exactly 3 inputs channels,
+    and width and height should be no smaller than 32.
+    E.g. <code>(200, 200, 3)</code> would be one valid value.</li>
+<li>alpha: controls the width of the network.<ul>
+<li>If <code>alpha</code> &lt; 1.0, proportionally decreases the number
+    of filters in each layer.</li>
+<li>If <code>alpha</code> &gt; 1.0, proportionally increases the number
+    of filters in each layer.</li>
+<li>If <code>alpha</code> = 1, default number of filters from the paper
+    are used at each layer.</li>
+</ul>
+</li>
+<li>depth_multiplier: depth multiplier for depthwise convolution
+    (also called the resolution multiplier)</li>
+<li>dropout: dropout rate</li>
+<li>include_top: whether to include the fully-connected
+    layer at the top of the network.</li>
+<li>weights: <code>None</code> (random initialization) or
+    <code>imagenet</code> (ImageNet weights)</li>
+<li>input_tensor: optional Keras tensor (i.e. output of
+    <code>layers.Input()</code>)
+    to use as image input for the model.</li>
+<li>pooling: Optional pooling mode for feature extraction
+    when <code>include_top</code> is <code>False</code>.<ul>
+<li><code>None</code> means that the output of the model
+will be the 4D tensor output of the
+    last convolutional layer.</li>
+<li><code>avg</code> means that global average pooling
+    will be applied to the output of the
+    last convolutional layer, and thus
+    the output of the model will be a
+    2D tensor.</li>
+<li><code>max</code> means that global max pooling will
+    be applied.</li>
+</ul>
+</li>
+<li>classes: optional number of classes to classify images
+    into, only to be specified if <code>include_top</code> is True, and
+    if no <code>weights</code> argument is specified.</li>
+</ul>
+<h3 id="returns_5">Returns</h3>
+<p>A Keras model instance.</p>
+<h3 id="references_5">References</h3>
+<ul>
+<li><a href="https://arxiv.org/pdf/1704.04861.pdf">MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications</a></li>
+</ul>
+<h3 id="license_5">License</h3>
+<p>These weights are released under <a href="https://github.com/tensorflow/models/blob/master/LICENSE">the Apache License</a>.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../backend/" class="btn btn-neutral float-right" title="Backend">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../datasets/" class="btn btn-neutral" title="Datasets"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="http://github.com/fchollet/keras" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../datasets/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../backend/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/require.js"></script>
+      <script src="../search/search.js"></script>
+
+</body>
+</html>
