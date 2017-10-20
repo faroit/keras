@@ -43,7 +43,7 @@ the 100 % MobileNet on various input sizes:
 
 The weights for all 16 models are obtained and translated
 from TensorFlow checkpoints found at
-https://github.com/tensorflow/models/blob/master/slim/nets/mobilenet_v1.md
+https://github.com/tensorflow/models/blob/master/research/slim/nets/mobilenet_v1.md
 
 # Reference
 - [MobileNets: Efficient Convolutional Neural Networks for
@@ -71,8 +71,9 @@ from ..utils import conv_utils
 from ..utils.data_utils import get_file
 from ..engine.topology import get_source_inputs
 from ..engine import InputSpec
-from ..applications.imagenet_utils import _obtain_input_shape
-from ..applications.imagenet_utils import decode_predictions
+from . import imagenet_utils
+from .imagenet_utils import _obtain_input_shape
+from .imagenet_utils import decode_predictions
 from .. import backend as K
 
 
@@ -84,10 +85,15 @@ def relu6(x):
 
 
 def preprocess_input(x):
-    x /= 255.
-    x -= 0.5
-    x *= 2.
-    return x
+    """Preprocesses a numpy array encoding a batch of images.
+
+    # Arguments
+        x: a 4D numpy array consists of RGB values within [0, 255].
+
+    # Returns
+        Preprocessed array.
+    """
+    return imagenet_utils.preprocess_input(x, mode='tf')
 
 
 class DepthwiseConv2D(Conv2D):
@@ -110,7 +116,7 @@ class DepthwiseConv2D(Conv2D):
             all spatial dimensions.
             Specifying any stride value != 1 is incompatible with specifying
             any `dilation_rate` value != 1.
-        padding: one of `"valid"` or `"same"` (case-insensitive).
+        padding: one of `'valid'` or `'same'` (case-insensitive).
         depth_multiplier: The number of depthwise convolution output channels
             for each input channel.
             The total number of depthwise convolution output
@@ -124,11 +130,11 @@ class DepthwiseConv2D(Conv2D):
             `(batch, channels, height, width)`.
             It defaults to the `image_data_format` value found in your
             Keras config file at `~/.keras/keras.json`.
-            If you never set it, then it will be "channels_last".
+            If you never set it, then it will be 'channels_last'.
         activation: Activation function to use
             (see [activations](../activations.md)).
             If you don't specify anything, no activation is applied
-            (ie. "linear" activation: `a(x) = x`).
+            (ie. 'linear' activation: `a(x) = x`).
         use_bias: Boolean, whether the layer uses a bias vector.
         depthwise_initializer: Initializer for the depthwise kernel matrix
             (see [initializers](../initializers.md)).
@@ -140,7 +146,7 @@ class DepthwiseConv2D(Conv2D):
         bias_regularizer: Regularizer function applied to the bias vector
             (see [regularizer](../regularizers.md)).
         activity_regularizer: Regularizer function applied to
-            the output of the layer (its "activation").
+            the output of the layer (its 'activation').
             (see [regularizer](../regularizers.md)).
         depthwise_constraint: Constraint function applied to
             the depthwise kernel matrix
@@ -377,12 +383,29 @@ def MobileNet(input_shape=None,
         raise ValueError('If using `weights` as ImageNet with `include_top` '
                          'as true, `classes` should be 1000')
 
-    # Determine proper input shape.
+    # Determine proper input shape and default size.
+    if input_shape is None:
+        default_size = 224
+    else:
+        if K.image_data_format() == 'channels_first':
+            rows = input_shape[1]
+            cols = input_shape[2]
+        else:
+            rows = input_shape[0]
+            cols = input_shape[1]
+
+        if rows == cols and rows in [128, 160, 192, 224]:
+            default_size = rows
+        else:
+            default_size = 224
+
     input_shape = _obtain_input_shape(input_shape,
-                                      default_size=224,
+                                      default_size=default_size,
                                       min_size=32,
                                       data_format=K.image_data_format(),
-                                      include_top=include_top or weights)
+                                      require_flatten=include_top,
+                                      weights=weights)
+
     if K.image_data_format() == 'channels_last':
         row_axis, col_axis = (0, 1)
     else:

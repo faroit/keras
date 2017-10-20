@@ -1217,7 +1217,8 @@ class SeparableConv2D(Conv2D):
             self.pointwise_kernel,
             data_format=self.data_format,
             strides=self.strides,
-            padding=self.padding)
+            padding=self.padding,
+            dilation_rate=self.dilation_rate)
 
         if self.bias:
             outputs = K.bias_add(
@@ -1228,25 +1229,6 @@ class SeparableConv2D(Conv2D):
         if self.activation is not None:
             return self.activation(outputs)
         return outputs
-
-    def compute_output_shape(self, input_shape):
-        if self.data_format == 'channels_first':
-            rows = input_shape[2]
-            cols = input_shape[3]
-        elif self.data_format == 'channels_last':
-            rows = input_shape[1]
-            cols = input_shape[2]
-
-        rows = conv_utils.conv_output_length(rows, self.kernel_size[0],
-                                             self.padding,
-                                             self.strides[0])
-        cols = conv_utils.conv_output_length(cols, self.kernel_size[1],
-                                             self.padding,
-                                             self.strides[1])
-        if self.data_format == 'channels_first':
-            return (input_shape[0], self.filters, rows, cols)
-        elif self.data_format == 'channels_last':
-            return (input_shape[0], rows, cols, self.filters)
 
     def get_config(self):
         config = super(SeparableConv2D, self).get_config()
@@ -1903,14 +1885,14 @@ class Cropping3D(Layer):
     """Cropping layer for 3D data (e.g. spatial or spatio-temporal).
 
     # Arguments
-        cropping: int, or tuple of 2 ints, or tuple of 2 tuples of 2 ints.
+        cropping: int, or tuple of 3 ints, or tuple of 3 tuples of 2 ints.
             - If int: the same symmetric cropping
-                is applied to width and height.
-            - If tuple of 2 ints:
+                is applied to depth, height, and width.
+            - If tuple of 3 ints:
                 interpreted as two different
-                symmetric cropping values for height and width:
+                symmetric cropping values for depth, height, and width:
                 `(symmetric_dim1_crop, symmetric_dim2_crop, symmetric_dim3_crop)`.
-            - If tuple of 2 tuples of 2 ints:
+            - If tuple of 3 tuples of 2 ints:
                 interpreted as
                 `((left_dim1_crop, right_dim1_crop), (left_dim2_crop, right_dim2_crop), (left_dim3_crop, right_dim3_crop))`
         data_format: A string,

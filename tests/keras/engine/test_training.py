@@ -4,9 +4,9 @@ from numpy.testing import assert_allclose
 import sys
 import scipy.sparse as sparse
 
+import keras
 from keras.layers import Dense, Dropout
 from keras.engine.topology import Input
-from keras.engine.training import Model
 from keras.engine.training import Model
 from keras.engine.training import _check_loss_and_target_compatibility
 from keras.engine.training import _weighted_masked_objective
@@ -140,9 +140,6 @@ def test_model_methods():
                     epochs=1, batch_size=4, validation_split=0.5)
     out = model.fit({'input_a': input_a_np, 'input_b': input_b_np},
                     [output_a_np, output_b_np],
-                    epochs=1, batch_size=4, validation_split=0.5)
-    out = model.fit({'input_a': input_a_np, 'input_b': input_b_np},
-                    {'dense_1': output_a_np, 'dropout': output_b_np},
                     epochs=1, batch_size=4, validation_split=0.5)
 
     # test validation data
@@ -356,7 +353,7 @@ def test_model_methods():
         model.compile(optimizer, loss='mse', sample_weight_mode={'dense_1': 'temporal'})
 
     # `loss` does not exist.
-    with pytest.raises(RuntimeError):
+    with pytest.raises(ValueError):
         model.compile(optimizer, loss=[])
 
     model.compile(optimizer, loss=['mse', 'mae'])
@@ -420,7 +417,7 @@ def test_warnings():
     assert all(['Sequence' not in str(w_.message) for w_ in w]), 'A warning was raised for Sequence.'
 
 
-@pytest.mark.skipif(K.backend() != 'tensorflow', reason='sparse operations supported only by TF')
+@pytest.mark.skipif(K.backend() != 'tensorflow', reason='sparse operations supported only by TensorFlow')
 @keras_test
 def test_sparse_input_validation_split():
     test_input = sparse.random(6, 3, density=0.25).tocsr()
@@ -481,7 +478,7 @@ def test_check_bad_shape():
     assert 'targets to have the same shape' in str(exc)
 
 
-@pytest.mark.skipif(K.backend() != 'tensorflow', reason='Requires TF backend')
+@pytest.mark.skipif(K.backend() != 'tensorflow', reason='Requires TensorFlow backend')
 @keras_test
 def test_model_with_input_feed_tensor():
     """We test building a model with a TF variable as input.
@@ -578,9 +575,9 @@ def test_model_with_input_feed_tensor():
                          output_a_np, batch_size=10)
 
     # test predict
-    out = model.predict(None, batch_size=10)
-    out = model.predict(None, batch_size=10)
-    assert out.shape == (10, 4)
+    out = model.predict(None, steps=3)
+    out = model.predict(None, steps=3)
+    assert out.shape == (10 * 3, 4)
 
     # Same, without learning phase
     # i.e. we don't pass any data to fit the model.
@@ -619,9 +616,9 @@ def test_model_with_input_feed_tensor():
                          output_a_np, batch_size=10)
 
     # test predict
-    out = model.predict(None, batch_size=10)
-    out = model.predict(None, batch_size=10)
-    assert out.shape == (10, 4)
+    out = model.predict(None, steps=3)
+    out = model.predict(None, steps=3)
+    assert out.shape == (10 * 3, 4)
 
 
 @keras_test
@@ -668,7 +665,7 @@ def test_model_with_partial_loss():
 
 @keras_test
 @pytest.mark.skipif((K.backend() == 'cntk'),
-                    reason="cntk does not support external loss yet")
+                    reason='cntk does not support external loss yet')
 def test_model_with_external_loss():
     # None loss, only regularization loss.
     a = Input(shape=(3,), name='input_a')
@@ -734,14 +731,196 @@ def test_model_with_external_loss():
         out = model.predict_on_batch(None)
 
         # test fit
-        out = model.fit(None, None, epochs=1, batch_size=10)
+        with pytest.raises(ValueError):
+            out = model.fit(None, None, epochs=1, batch_size=10)
+        out = model.fit(None, None, epochs=1, steps_per_epoch=1)
+
+        # test fit with validation data
+        with pytest.raises(ValueError):
+            out = model.fit(None, None,
+                            epochs=1,
+                            steps_per_epoch=None,
+                            validation_steps=2)
+        out = model.fit(None, None,
+                        epochs=1,
+                        steps_per_epoch=2,
+                        validation_steps=2)
 
         # test evaluate
-        out = model.evaluate(None, None, batch_size=10)
+        with pytest.raises(ValueError):
+            out = model.evaluate(None, None, batch_size=10)
+        out = model.evaluate(None, None, steps=3)
 
         # test predict
-        out = model.predict(None, batch_size=10)
-        assert out.shape == (10, 4)
+        with pytest.raises(ValueError):
+            out = model.predict(None, batch_size=10)
+        out = model.predict(None, steps=3)
+        assert out.shape == (10 * 3, 4)
+
+        # Test multi-output model without external data.
+        a = Input(tensor=tf.Variable(input_a_np, dtype=tf.float32))
+        a_1 = Dense(4, name='dense_1')(a)
+        a_2 = Dropout(0.5, name='dropout')(a_1)
+        model = Model(a, [a_1, a_2])
+        model.add_loss(K.mean(a_2))
+        model.compile(optimizer='rmsprop',
+                      loss=None,
+                      metrics=['mean_squared_error'])
+
+        # test train_on_batch
+        out = model.train_on_batch(None, None)
+        out = model.test_on_batch(None, None)
+        out = model.predict_on_batch(None)
+
+        # test fit
+        with pytest.raises(ValueError):
+            out = model.fit(None, None, epochs=1, batch_size=10)
+        out = model.fit(None, None, epochs=1, steps_per_epoch=1)
+
+        # test fit with validation data
+        with pytest.raises(ValueError):
+            out = model.fit(None, None,
+                            epochs=1,
+                            steps_per_epoch=None,
+                            validation_steps=2)
+        out = model.fit(None, None,
+                        epochs=1,
+                        steps_per_epoch=2,
+                        validation_steps=2)
+
+        # test evaluate
+        with pytest.raises(ValueError):
+            out = model.evaluate(None, None, batch_size=10)
+        out = model.evaluate(None, None, steps=3)
+
+        # test predict
+        with pytest.raises(ValueError):
+            out = model.predict(None, batch_size=10)
+        out = model.predict(None, steps=3)
+        assert len(out) == 2
+        assert out[0].shape == (10 * 3, 4)
+        assert out[1].shape == (10 * 3, 4)
+
+
+@keras_test
+def test_target_tensors():
+    # single-output, as list
+    model = keras.models.Sequential()
+    model.add(keras.layers.Dense(4, input_shape=(4,), name='dense'))
+    input_val = np.random.random((10, 4))
+    target_val = np.random.random((10, 4))
+    target = keras.backend.variable(target_val)
+    model.compile(optimizer='rmsprop', loss='mse', target_tensors=[target])
+    model.train_on_batch(input_val, None)
+
+    # single-output, as dict
+    model.compile(optimizer='rmsprop', loss='mse',
+                  target_tensors={'dense': target})
+    model.train_on_batch(input_val, None)
+
+    # test invalid arguments
+    with pytest.raises(TypeError):
+        model.compile(optimizer='rmsprop', loss='mse',
+                      target_tensors=set())
+    with pytest.raises(ValueError):
+        model.compile(optimizer='rmsprop', loss='mse',
+                      target_tensors=[target, target])
+    with pytest.raises(ValueError):
+        model.compile(optimizer='rmsprop', loss='mse',
+                      target_tensors={'dense2': None})
+    with pytest.raises(ValueError):
+        model.compile(optimizer='rmsprop', loss='mse',
+                      target_tensors=[target])
+        model.train_on_batch(input_val, target_val)
+
+    # multi-output, as list
+    input_val = np.random.random((10, 4))
+    target_val_a = np.random.random((10, 4))
+    target_val_b = np.random.random((10, 4))
+    target_a = keras.backend.variable(target_val_a)
+    target_b = keras.backend.variable(target_val_b)
+
+    inputs = keras.layers.Input(shape=(4,))
+    output_a = keras.layers.Dense(4, name='dense_a')(inputs)
+    output_b = keras.layers.Dense(4, name='dense_b')(inputs)
+    model = keras.models.Model(inputs, [output_a, output_b])
+    model.compile(optimizer='rmsprop', loss='mse',
+                  target_tensors=[target_a, target_b])
+    model.train_on_batch(input_val, None)
+
+    # multi-output, as dict
+    model.compile(optimizer='rmsprop', loss='mse',
+                  target_tensors={'dense_a': target_a,
+                                  'dense_b': target_b})
+    model.train_on_batch(input_val, None)
+
+    # test with sample weights
+    model.compile(optimizer='rmsprop', loss='mse',
+                  target_tensors=[target_a, target_b])
+    model.train_on_batch(input_val, None,
+                         sample_weight={'dense_a': np.random.random((10,))})
+
+
+@keras_test
+def test_model_custom_target_tensors():
+    a = Input(shape=(3,), name='input_a')
+    b = Input(shape=(3,), name='input_b')
+
+    a_2 = Dense(4, name='dense_1')(a)
+    dp = Dropout(0.5, name='dropout')
+    b_2 = dp(b)
+
+    y = K.placeholder([10, 4], name='y')
+    y1 = K.placeholder([10, 3], name='y1')
+    y2 = K.placeholder([7, 5], name='y2')
+    model = Model([a, b], [a_2, b_2])
+
+    optimizer = 'rmsprop'
+    loss = 'mse'
+    loss_weights = [1., 0.5]
+
+    # test list of target tensors
+    with pytest.raises(ValueError):
+        model.compile(optimizer, loss, metrics=[], loss_weights=loss_weights,
+                      sample_weight_mode=None, target_tensors=[y, y1, y2])
+    model.compile(optimizer, loss, metrics=[], loss_weights=loss_weights,
+                  sample_weight_mode=None, target_tensors=[y, y1])
+    input_a_np = np.random.random((10, 3))
+    input_b_np = np.random.random((10, 3))
+
+    output_a_np = np.random.random((10, 4))
+    output_b_np = np.random.random((10, 3))
+
+    out = model.train_on_batch([input_a_np, input_b_np],
+                               [output_a_np, output_b_np],
+                               {y: np.random.random((10, 4)),
+                                y1: np.random.random((10, 3))})
+    # test dictionary of target_tensors
+    with pytest.raises(ValueError):
+        model.compile(optimizer, loss,
+                      metrics=[],
+                      loss_weights=loss_weights,
+                      sample_weight_mode=None,
+                      target_tensors={'does_not_exist': y2})
+    # test dictionary of target_tensors
+    model.compile(optimizer, loss,
+                  metrics=[],
+                  loss_weights=loss_weights,
+                  sample_weight_mode=None,
+                  target_tensors={'dense_1': y, 'dropout': y1})
+    out = model.train_on_batch([input_a_np, input_b_np],
+                               [output_a_np, output_b_np],
+                               {y: np.random.random((10, 4)),
+                                y1: np.random.random((10, 3))})
+
+    if K.backend() == 'tensorflow':
+        import tensorflow as tf
+        # test with custom TF placeholder as target
+        pl_target_a = tf.placeholder('float32', shape=(None, 4))
+        model.compile(optimizer='rmsprop', loss='mse',
+                      target_tensors={'dense_1': pl_target_a})
+        model.train_on_batch([input_a_np, input_b_np],
+                             [output_a_np, output_b_np])
 
 
 if __name__ == '__main__':

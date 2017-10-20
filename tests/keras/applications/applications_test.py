@@ -1,4 +1,5 @@
 import pytest
+from multiprocessing import Process, Queue
 from keras.utils.test_utils import keras_test
 from keras.utils.test_utils import layer_test
 from keras.utils.generic_utils import CustomObjectScope
@@ -14,38 +15,27 @@ def test_resnet50():
 
 
 @keras_test
-@pytest.mark.skipif((K.backend() == 'cntk'),
-                    reason="cntk does not support padding with non-concrete dimension")
 def test_resnet50_notop():
     model = applications.ResNet50(weights=None, include_top=False)
     assert model.output_shape == (None, None, None, 2048)
 
 
 @keras_test
-def test_resnet50_notop_specified_input_shape():
-    input_shape = (3, 300, 300) if K.image_data_format() == 'channels_first' else (300, 300, 3)
+def test_resnet50_variable_input_channels():
+    input_shape = (1, None, None) if K.image_data_format() == 'channels_first' else (None, None, 1)
     model = applications.ResNet50(weights=None, include_top=False, input_shape=input_shape)
-    output_shape = (None, 2048, 1, 1) if K.image_data_format() == 'channels_first' else (None, 1, 1, 2048)
-    assert model.output_shape == output_shape
+    assert model.output_shape == (None, None, None, 2048)
+
+    input_shape = (4, None, None) if K.image_data_format() == 'channels_first' else (None, None, 4)
+    model = applications.ResNet50(weights=None, include_top=False, input_shape=input_shape)
+    assert model.output_shape == (None, None, None, 2048)
 
 
 @keras_test
-@pytest.mark.skipif((K.backend() == 'cntk'),
-                    reason="cntk does not support padding with non-concrete dimension")
 def test_resnet50_pooling():
     model = applications.ResNet50(weights=None,
                                   include_top=False,
                                   pooling='avg')
-    assert model.output_shape == (None, 2048)
-
-
-@keras_test
-def test_resnet50_pooling_specified_input_shape():
-    input_shape = (3, 300, 300) if K.image_data_format() == 'channels_first' else (300, 300, 3)
-    model = applications.ResNet50(weights=None,
-                                  include_top=False,
-                                  pooling='avg',
-                                  input_shape=input_shape)
     assert model.output_shape == (None, 2048)
 
 
@@ -56,33 +46,25 @@ def test_vgg16():
 
 
 @keras_test
-@pytest.mark.skipif((K.backend() == 'cntk'),
-                    reason="cntk does not support padding with non-concrete dimension")
 def test_vgg16_notop():
     model = applications.VGG16(weights=None, include_top=False)
     assert model.output_shape == (None, None, None, 512)
 
 
 @keras_test
-def test_vgg16_notop_specified_input_shape():
-    input_shape = (3, 300, 300) if K.image_data_format() == 'channels_first' else (300, 300, 3)
+def test_vgg16_variable_input_channels():
+    input_shape = (1, None, None) if K.image_data_format() == 'channels_first' else (None, None, 1)
     model = applications.VGG16(weights=None, include_top=False, input_shape=input_shape)
-    output_shape = (None, 512, 9, 9) if K.image_data_format() == 'channels_first' else (None, 9, 9, 512)
-    assert model.output_shape == output_shape
+    assert model.output_shape == (None, None, None, 512)
+
+    input_shape = (4, None, None) if K.image_data_format() == 'channels_first' else (None, None, 4)
+    model = applications.VGG16(weights=None, include_top=False, input_shape=input_shape)
+    assert model.output_shape == (None, None, None, 512)
 
 
 @keras_test
-@pytest.mark.skipif((K.backend() == 'cntk'),
-                    reason="cntk does not support padding with non-concrete dimension")
 def test_vgg16_pooling():
     model = applications.VGG16(weights=None, include_top=False, pooling='avg')
-    assert model.output_shape == (None, 512)
-
-
-@keras_test
-def test_vgg16_pooling_specified_input_shape():
-    input_shape = (3, 300, 300) if K.image_data_format() == 'channels_first' else (300, 300, 3)
-    model = applications.VGG16(weights=None, include_top=False, pooling='avg', input_shape=input_shape)
     assert model.output_shape == (None, 512)
 
 
@@ -93,10 +75,19 @@ def test_vgg19():
 
 
 @keras_test
-@pytest.mark.skipif((K.backend() == 'cntk'),
-                    reason="cntk does not support padding with non-concrete dimension")
 def test_vgg19_notop():
     model = applications.VGG19(weights=None, include_top=False)
+    assert model.output_shape == (None, None, None, 512)
+
+
+@keras_test
+def test_vgg19_variable_input_channels():
+    input_shape = (1, None, None) if K.image_data_format() == 'channels_first' else (None, None, 1)
+    model = applications.VGG19(weights=None, include_top=False, input_shape=input_shape)
+    assert model.output_shape == (None, None, None, 512)
+
+    input_shape = (4, None, None) if K.image_data_format() == 'channels_first' else (None, None, 4)
+    model = applications.VGG19(weights=None, include_top=False, input_shape=input_shape)
     assert model.output_shape == (None, None, None, 512)
 
 
@@ -109,23 +100,14 @@ def test_vgg19_notop_specified_input_shape():
 
 
 @keras_test
-@pytest.mark.skipif((K.backend() == 'cntk'),
-                    reason="cntk does not support padding with non-concrete dimension")
 def test_vgg19_pooling():
     model = applications.VGG16(weights=None, include_top=False, pooling='avg')
     assert model.output_shape == (None, 512)
 
 
 @keras_test
-def test_vgg19_pooling_specified_input_shape():
-    input_shape = (3, 300, 300) if K.image_data_format() == 'channels_first' else (300, 300, 3)
-    model = applications.VGG16(weights=None, include_top=False, pooling='avg', input_shape=input_shape)
-    assert model.output_shape == (None, 512)
-
-
-@keras_test
 @pytest.mark.skipif((K.backend() != 'tensorflow'),
-                    reason='Requires tensorflow backend')
+                    reason='Requires TensorFlow backend')
 def test_xception():
     model = applications.Xception(weights=None)
     assert model.output_shape == (None, 1000)
@@ -133,7 +115,7 @@ def test_xception():
 
 @keras_test
 @pytest.mark.skipif((K.backend() != 'tensorflow'),
-                    reason='Requires tensorflow backend')
+                    reason='Requires TensorFlow backend')
 def test_xception_notop():
     model = applications.Xception(weights=None, include_top=False)
     assert model.output_shape == (None, None, None, 2048)
@@ -141,10 +123,23 @@ def test_xception_notop():
 
 @keras_test
 @pytest.mark.skipif((K.backend() != 'tensorflow'),
-                    reason='Requires tensorflow backend')
+                    reason='Requires TensorFlow backend')
 def test_xception_pooling():
     model = applications.Xception(weights=None, include_top=False, pooling='avg')
     assert model.output_shape == (None, 2048)
+
+
+@keras_test
+@pytest.mark.skipif((K.backend() != 'tensorflow'),
+                    reason='Requires TensorFlow backend')
+def test_xception_variable_input_channels():
+    input_shape = (1, None, None) if K.image_data_format() == 'channels_first' else (None, None, 1)
+    model = applications.Xception(weights=None, include_top=False, input_shape=input_shape)
+    assert model.output_shape == (None, None, None, 2048)
+
+    input_shape = (4, None, None) if K.image_data_format() == 'channels_first' else (None, None, 4)
+    model = applications.Xception(weights=None, include_top=False, input_shape=input_shape)
+    assert model.output_shape == (None, None, None, 2048)
 
 
 @keras_test
@@ -154,24 +149,118 @@ def test_inceptionv3():
 
 
 @keras_test
-@pytest.mark.skipif((K.backend() == 'cntk'),
-                    reason="cntk does not support padding with non-concrete dimension")
 def test_inceptionv3_notop():
     model = applications.InceptionV3(weights=None, include_top=False)
     assert model.output_shape == (None, None, None, 2048)
 
 
 @keras_test
-@pytest.mark.skipif((K.backend() == 'cntk'),
-                    reason="cntk does not support padding with non-concrete dimension")
 def test_inceptionv3_pooling():
     model = applications.InceptionV3(weights=None, include_top=False, pooling='avg')
     assert model.output_shape == (None, 2048)
 
 
 @keras_test
+@pytest.mark.skipif((K.backend() == 'cntk'),
+                    reason='cntk does not support padding with non-concrete dimension')
+def test_inceptionv3_variable_input_channels():
+    input_shape = (1, None, None) if K.image_data_format() == 'channels_first' else (None, None, 1)
+    model = applications.InceptionV3(weights=None, include_top=False, input_shape=input_shape)
+    assert model.output_shape == (None, None, None, 2048)
+
+    input_shape = (4, None, None) if K.image_data_format() == 'channels_first' else (None, None, 4)
+    model = applications.InceptionV3(weights=None, include_top=False, input_shape=input_shape)
+    assert model.output_shape == (None, None, None, 2048)
+
+
+@keras_test
+def test_inceptionresnetv2():
+    # Create model in a subprocess so that the memory consumed by InceptionResNetV2 will be
+    # released back to the system after this test (to deal with OOM error on CNTK backend)
+    # TODO: remove the use of multiprocessing from these tests once a memory clearing mechanism
+    # is implemented in the CNTK backend
+    def target(queue):
+        model = applications.InceptionResNetV2(weights=None)
+        queue.put(model.output_shape)
+    queue = Queue()
+    p = Process(target=target, args=(queue,))
+    p.start()
+    p.join()
+
+    # The error in a subprocess won't propagate to the main process, so we check if the model
+    # is successfully created by checking if the output shape has been put into the queue
+    assert not queue.empty(), 'Model creation failed.'
+    model_output_shape = queue.get_nowait()
+    assert model_output_shape == (None, 1000)
+
+
+@keras_test
+def test_inceptionresnetv2_notop():
+    def target(queue):
+        model = applications.InceptionResNetV2(weights=None, include_top=False)
+        queue.put(model.output_shape)
+
+    global_image_data_format = K.image_data_format()
+    queue = Queue()
+
+    K.set_image_data_format('channels_first')
+    p = Process(target=target, args=(queue,))
+    p.start()
+    p.join()
+    K.set_image_data_format(global_image_data_format)
+    assert not queue.empty(), 'Model creation failed.'
+    model_output_shape = queue.get_nowait()
+    assert model_output_shape == (None, 1536, None, None)
+
+    K.set_image_data_format('channels_last')
+    p = Process(target=target, args=(queue,))
+    p.start()
+    p.join()
+    K.set_image_data_format(global_image_data_format)
+    assert not queue.empty(), 'Model creation failed.'
+    model_output_shape = queue.get_nowait()
+    assert model_output_shape == (None, None, None, 1536)
+
+
+@keras_test
+def test_inceptionresnetv2_pooling():
+    def target(queue):
+        model = applications.InceptionResNetV2(weights=None, include_top=False, pooling='avg')
+        queue.put(model.output_shape)
+    queue = Queue()
+    p = Process(target=target, args=(queue,))
+    p.start()
+    p.join()
+    assert not queue.empty(), 'Model creation failed.'
+    model_output_shape = queue.get_nowait()
+    assert model_output_shape == (None, 1536)
+
+
+@keras_test
+def test_inceptionresnetv2_variable_input_channels():
+    def target(queue, input_shape):
+        model = applications.InceptionResNetV2(weights=None, include_top=False, input_shape=input_shape)
+        queue.put(model.output_shape)
+
+    queue = Queue()
+    p = Process(target=target, args=(queue, (None, None, 1)))
+    p.start()
+    p.join()
+    assert not queue.empty(), 'Model creation failed.'
+    model_output_shape = queue.get_nowait()
+    assert model_output_shape == (None, None, None, 1536)
+
+    p = Process(target=target, args=(queue, (None, None, 4)))
+    p.start()
+    p.join()
+    assert not queue.empty(), 'Model creation failed.'
+    model_output_shape = queue.get_nowait()
+    assert model_output_shape == (None, None, None, 1536)
+
+
+@keras_test
 @pytest.mark.skipif((K.backend() != 'tensorflow'),
-                    reason="MobileNets are supported only on TensorFlow")
+                    reason='MobileNets are supported only on TensorFlow')
 def test_mobilenet():
     model = applications.MobileNet(weights=None)
     assert model.output_shape == (None, 1000)
@@ -179,7 +268,7 @@ def test_mobilenet():
 
 @keras_test
 @pytest.mark.skipif((K.backend() != 'tensorflow'),
-                    reason="MobileNets are supported only on TensorFlow")
+                    reason='MobileNets are supported only on TensorFlow')
 def test_mobilenet_no_top():
     model = applications.MobileNet(weights=None, include_top=False)
     assert model.output_shape == (None, None, None, 1024)
@@ -187,10 +276,38 @@ def test_mobilenet_no_top():
 
 @keras_test
 @pytest.mark.skipif((K.backend() != 'tensorflow'),
-                    reason="MobileNets are supported only on TensorFlow")
+                    reason='MobileNets are supported only on TensorFlow')
 def test_mobilenet_pooling():
     model = applications.MobileNet(weights=None, include_top=False, pooling='avg')
     assert model.output_shape == (None, 1024)
+
+
+@keras_test
+@pytest.mark.skipif((K.backend() != 'tensorflow'),
+                    reason='MobileNets are supported only on TensorFlow')
+def test_mobilenet_variable_input_channels():
+    input_shape = (1, None, None) if K.image_data_format() == 'channels_first' else (None, None, 1)
+    model = applications.MobileNet(weights=None, include_top=False, input_shape=input_shape)
+    assert model.output_shape == (None, None, None, 1024)
+
+    input_shape = (4, None, None) if K.image_data_format() == 'channels_first' else (None, None, 4)
+    model = applications.MobileNet(weights=None, include_top=False, input_shape=input_shape)
+    assert model.output_shape == (None, None, None, 1024)
+
+
+@keras_test
+@pytest.mark.skipif((K.backend() != 'tensorflow'),
+                    reason='MobileNets are supported only on TensorFlow')
+def test_mobilenet_image_size():
+    valid_image_sizes = [128, 160, 192, 224]
+    for size in valid_image_sizes:
+        input_shape = (size, size, 3) if K.image_data_format() == 'channels_last' else (3, size, size)
+        model = applications.MobileNet(input_shape=input_shape, weights='imagenet', include_top=True)
+        assert model.input_shape == (None,) + input_shape
+
+    invalid_image_shape = (112, 112, 3) if K.image_data_format() == 'channels_last' else (3, 112, 112)
+    with pytest.raises(ValueError):
+        model = applications.MobileNet(input_shape=invalid_image_shape, weights='imagenet', include_top=True)
 
 
 @pytest.mark.skipif(K.backend() != 'tensorflow', reason='Requires TF backend')

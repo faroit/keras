@@ -43,7 +43,7 @@ def identity_block(input_tensor, kernel_size, filters, stage, block):
     # Arguments
         input_tensor: input tensor
         kernel_size: default 3, the kernel size of middle conv layer at main path
-        filters: list of integers, the filterss of 3 conv layer at main path
+        filters: list of integers, the filters of 3 conv layer at main path
         stage: integer, current stage label, used for generating layer names
         block: 'a','b'..., current block label, used for generating layer names
 
@@ -81,7 +81,7 @@ def conv_block(input_tensor, kernel_size, filters, stage, block, strides=(2, 2))
     # Arguments
         input_tensor: input tensor
         kernel_size: default 3, the kernel size of middle conv layer at main path
-        filters: list of integers, the filterss of 3 conv layer at main path
+        filters: list of integers, the filters of 3 conv layer at main path
         stage: integer, current stage label, used for generating layer names
         block: 'a','b'..., current block label, used for generating layer names
 
@@ -130,7 +130,7 @@ def ResNet50(include_top=True, weights='imagenet',
     Optionally loads weights pre-trained
     on ImageNet. Note that when using TensorFlow,
     for best performance you should set
-    `image_data_format="channels_last"` in your Keras config
+    `image_data_format='channels_last'` in your Keras config
     at ~/.keras/keras.json.
 
     The model and the weights are compatible with both
@@ -142,7 +142,7 @@ def ResNet50(include_top=True, weights='imagenet',
         include_top: whether to include the fully-connected
             layer at the top of the network.
         weights: one of `None` (random initialization)
-            or "imagenet" (pre-training on ImageNet).
+            or 'imagenet' (pre-training on ImageNet).
         input_tensor: optional Keras tensor (i.e. output of `layers.Input()`)
             to use as image input for the model.
         input_shape: optional shape tuple, only to be specified
@@ -188,7 +188,8 @@ def ResNet50(include_top=True, weights='imagenet',
                                       default_size=224,
                                       min_size=197,
                                       data_format=K.image_data_format(),
-                                      include_top=include_top)
+                                      require_flatten=include_top,
+                                      weights=weights)
 
     if input_tensor is None:
         img_input = Input(shape=input_shape)

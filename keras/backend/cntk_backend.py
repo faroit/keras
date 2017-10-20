@@ -1,14 +1,13 @@
 from __future__ import print_function
 import cntk as C
 import numpy as np
-from .common import _FLOATX, _EPSILON, image_dim_ordering, image_data_format
+from .common import floatx, epsilon, image_dim_ordering, image_data_format
 from collections import defaultdict
 from contextlib import contextmanager
 import warnings
 
 
 C.set_global_option('align_axis', 1)
-
 
 b_any = any
 
@@ -57,7 +56,7 @@ def set_learning_phase(value):
         raise ValueError('CNTK Backend: Set learning phase '
                          'with value %s is not supported, '
                          'expected 0 or 1.' % value)
-    v = np.float32([value])
+    v = np.asarray(value)
     _LEARNING_PHASE.value = v
 
 
@@ -88,7 +87,7 @@ def in_train_phase(x, alt, training=None):
 
 def in_test_phase(x, alt):
     global _LEARNING_PHASE
-    # Similiar as in_train_phase, use element_select as workaround.
+    # Similar as in_train_phase, use element_select as workaround.
     if callable(x) and isinstance(x, C.cntk_py.Function) is False:
         x = x()
     if callable(alt) and isinstance(alt, C.cntk_py.Function) is False:
@@ -120,7 +119,22 @@ def _convert_dtype_string(dtype):
                          'float64.' % dtype)
 
 
-def variable(value, dtype=_FLOATX, name=None):
+def variable(value, dtype=None, name=None, constraint=None):
+    """Instantiates a variable and returns it.
+
+    # Arguments
+        value: Numpy array, initial value of the tensor.
+        dtype: Tensor type.
+        name: Optional name string for the tensor.
+        constraint: Optional projection function to be
+            applied to the variable after an optimizer update.
+
+    # Returns
+        A variable instance (with Keras metadata included).
+    """
+    if dtype is None:
+        dtype = floatx()
+
     if name is None:
         name = ''
 
@@ -145,6 +159,7 @@ def variable(value, dtype=_FLOATX, name=None):
                     name=_prepare_name(name, 'variable'))
     v._keras_shape = v.shape
     v._uses_learning_phase = False
+    v.constraint = constraint
     return v
 
 
@@ -217,15 +232,18 @@ def eval(x):
 def placeholder(
         shape=None,
         ndim=None,
-        dtype=_FLOATX,
+        dtype=None,
         sparse=False,
         name=None,
         dynamic_axis_num=1):
+    if dtype is None:
+        dtype = floatx()
     if not shape:
         if ndim:
             shape = tuple([None for _ in range(ndim)])
 
-    cntk_shape = [C.InferredDimension if s is None else s for s in shape]
+    dynamic_dimension = C.FreeDimension if _get_cntk_version() >= 2.2 else C.InferredDimension
+    cntk_shape = [dynamic_dimension if s is None else s for s in shape]
     cntk_shape = tuple(cntk_shape)
 
     if dynamic_axis_num > len(cntk_shape):
@@ -246,10 +264,29 @@ def placeholder(
         name=name)
     x._keras_shape = shape
     x._uses_learning_phase = False
+    x._cntk_placeholder = True
     return x
 
 
+def is_placeholder(x):
+    """Returns whether `x` is a placeholder.
+
+    # Arguments
+        x: A candidate placeholder.
+
+    # Returns
+        Boolean.
+    """
+    return hasattr(x, '_cntk_placeholder') and x._cntk_placeholder
+
+
 def is_keras_tensor(x):
+    if not isinstance(x, (C.variables.Constant,
+                          C.variables.Variable,
+                          C.variables.Parameter,
+                          C.ops.functions.Function)):
+        raise ValueError('Unexpectedly found an instance of type `' + str(type(x)) + '`. '
+                         'Expected a symbolic tensor instance.')
     return hasattr(x, '_keras_history')
 
 
@@ -294,7 +331,7 @@ def _prepare_name(name, default):
 
 def constant(value, dtype=None, shape=None, name=None):
     if dtype is None:
-        dtype = _FLOATX
+        dtype = floatx()
     if shape is None:
         shape = ()
     np_value = value * np.ones(shape)
@@ -341,8 +378,10 @@ def random_uniform(shape, minval=0.0, maxval=1.0, dtype=None, seed=None):
     return random_uniform_variable(shape, minval, maxval, dtype, seed)
 
 
-def random_uniform_variable(shape, low, high, dtype=_FLOATX,
-                            name=None, seed=None):
+def random_uniform_variable(shape, low, high,
+                            dtype=None, name=None, seed=None):
+    if dtype is None:
+        dtype = floatx()
     if seed is None:
         # ensure that randomness is conditioned by the Numpy RNG
         seed = np.random.randint(10e3)
@@ -370,9 +409,11 @@ def random_normal_variable(
         shape,
         mean,
         scale,
-        dtype=_FLOATX,
+        dtype=None,
         name=None,
         seed=None):
+    if dtype is None:
+        dtype = floatx()
     if seed is None:
         # ensure that randomness is conditioned by the Numpy RNG
         seed = np.random.randint(10e7)
@@ -393,7 +434,9 @@ def random_normal_variable(
         name=name)
 
 
-def random_normal(shape, mean=0.0, stddev=1.0, dtype=_FLOATX, seed=None):
+def random_normal(shape, mean=0.0, stddev=1.0, dtype=None, seed=None):
+    if dtype is None:
+        dtype = floatx()
     for _ in shape:
         if _ is None:
             raise ValueError('CNTK Backend: randomness op with '
@@ -425,17 +468,23 @@ def dtype(x):
     return _convert_dtype_string(x.dtype)
 
 
-def zeros(shape, dtype=_FLOATX, name=None):
+def zeros(shape, dtype=None, name=None):
+    if dtype is None:
+        dtype = floatx()
     ctype = _convert_string_dtype(dtype)
     return variable(value=np.zeros(shape, ctype), dtype=dtype, name=name)
 
 
-def ones(shape, dtype=_FLOATX, name=None):
+def ones(shape, dtype=None, name=None):
+    if dtype is None:
+        dtype = floatx()
     ctype = _convert_string_dtype(dtype)
     return variable(value=np.ones(shape, ctype), dtype=dtype, name=name)
 
 
-def eye(size, dtype=_FLOATX, name=None):
+def eye(size, dtype=None, name=None):
+    if dtype is None:
+        dtype = floatx()
     return variable(np.eye(size), dtype, name)
 
 
@@ -463,7 +512,7 @@ def dot(x, y):
         y_shape = int_shape(y)
         if len(y_shape) > 2:
             permutation = [len(y_shape) - 2]
-            permutation += list(range(0, len(y_shape) - 2))
+            permutation += list(range(len(y_shape) - 2))
             permutation += [len(y_shape) - 1]
             y = C.transpose(y, perm=permutation)
         return C.times(x, y, len(y_shape) - 1)
@@ -511,7 +560,15 @@ def transpose(x):
 
 
 def gather(reference, indices):
-    return C.ops.gather(reference, indices)
+    # There is a bug in cntk gather op which may cause crash.
+    # We have made a fix but not catched in CNTK 2.1 release.
+    # Will udpate with gather op in next release
+    if _get_cntk_version() >= 2.2:
+        return C.ops.gather(reference, indices)
+    else:
+        num_classes = reference.shape[0]
+        one_hot_matrix = C.ops.one_hot(indices, num_classes)
+        return C.times(one_hot_matrix, reference, output_rank=len(reference.shape) - 1)
 
 
 def _remove_dims(x, axis, keepdims=False):
@@ -580,13 +637,15 @@ def std(x, axis=None, keepdims=False):
 def expand_dims(x, axis=-1):
     shape = list(int_shape(x))
     nones = _get_dynamic_axis_num(x)
-
     index = axis if axis >= 0 else len(shape) + 1
     shape.insert(index, 1)
     new_shape = shape[nones:]
     new_shape = tuple(
         [C.InferredDimension if _ is None else _ for _ in new_shape])
-    return C.reshape(x, new_shape)
+    result = C.reshape(x, new_shape)
+    if index < nones:
+        result._keras_shape = shape
+    return result
 
 
 def squeeze(x, axis):
@@ -609,19 +668,22 @@ def squeeze(x, axis):
     for _ in sorted(_axis, reverse=True):
         del shape[_]
 
-    new_shape = tuple(shape[nones:])
+    new_shape = shape[nones:]
+    new_shape = tuple([C.InferredDimension if _ == C.FreeDimension else _ for _ in new_shape])
     return C.reshape(x, new_shape)
 
 
 def tile(x, n):
-    if isinstance(n, list):
+    if isinstance(n, int):
+        n = (n,)
+    elif isinstance(n, list):
         n = tuple(n)
 
     shape = int_shape(x)
     num_dynamic_axis = _get_dynamic_axis_num(x)
     # Padding the axis
     if len(n) < len(shape):
-        n = tuple([None for _ in range(len(shape) - len(n))]) + n
+        n = tuple([1 for _ in range(len(shape) - len(n))]) + n
 
     if len(n) != len(shape):
         raise NotImplementedError
@@ -642,6 +704,34 @@ def _normalize_axis(axis, x):
 
     nones = _get_dynamic_axis_num(x)
 
+    if nones > ndim:
+        raise ValueError('CNTK Backend: tensor with keras shape: `%s` has '
+                         '%d cntk dynamic axis, this is not expected, please '
+                         'double check the keras shape history.' % (str(shape), nones))
+
+    # Current cntk does not support shape like (1, batch). so using the workaround
+    # here to mapping the correct axis. Will remove this tricky after we add support
+    # in native cntk op
+    cntk_axis = []
+    dynamic_axis_index = 0
+    for i in range(ndim):
+        if shape[i] is None and dynamic_axis_index < nones:
+            cntk_axis.append(x.dynamic_axes[dynamic_axis_index])
+            dynamic_axis_index += 1
+        else:
+            cntk_axis.append(i - dynamic_axis_index)
+
+    if dynamic_axis_index < nones:
+        i = 0
+        while dynamic_axis_index < nones:
+            cntk_axis[i] = x.dynamic_axes[dynamic_axis_index]
+            i += 1
+            dynamic_axis_index += 1
+
+        while i < len(cntk_axis):
+            cntk_axis[i] -= nones
+            i += 1
+
     if isinstance(axis, tuple):
         _axis = list(axis)
     elif isinstance(axis, int):
@@ -656,10 +746,7 @@ def _normalize_axis(axis, x):
             if a is not None and a < 0:
                 _axis[i] = (a % ndim)
             if _axis[i] is not None:
-                if _axis[i] < nones:
-                    _axis[i] = x.dynamic_axes[_axis[i]]
-                else:
-                    _axis[i] -= nones
+                _axis[i] = cntk_axis[_axis[i]]
     else:
         if _axis is None:
             _axis = C.Axis.all_axes()
@@ -672,7 +759,7 @@ def _reshape_dummy_dim(x, axis):
 
     _axis = [_ + len(shape) if _ < 0 else _ for _ in axis]
 
-    if shape.count(C.InferredDimension) > 1:
+    if shape.count(C.InferredDimension) > 1 or shape.count(C.FreeDimension) > 1:
         result = x
         for index in sorted(_axis, reverse=True):
             result = C.reshape(result,
@@ -684,7 +771,7 @@ def _reshape_dummy_dim(x, axis):
         for index in sorted(_axis, reverse=True):
             del shape[index]
 
-        shape = tuple(shape)
+        shape = [C.InferredDimension if _ == C.FreeDimension else _ for _ in shape]
         return C.reshape(x, shape)
 
 
@@ -719,7 +806,7 @@ def all(x, axis=None, keepdims=False):
         return all_matrix
 
 
-def classification_error(output, target, axis=-1):
+def classification_error(target, output, axis=-1):
     return C.ops.reduce_mean(
         C.equal(
             argmax(
@@ -791,10 +878,10 @@ def clip(x, min_value, max_value):
     return C.clip(x, min_value, max_value)
 
 
-def binary_crossentropy(output, target, from_logits=False):
+def binary_crossentropy(target, output, from_logits=False):
     if from_logits:
         output = C.sigmoid(output)
-    output = C.clip(output, _EPSILON, 1.0 - _EPSILON)
+    output = C.clip(output, epsilon(), 1.0 - epsilon())
     output = -target * C.log(output) - (1.0 - target) * C.log(1.0 - output)
     return output
 
@@ -898,6 +985,9 @@ def normalize_batch_in_training(x, gamma, beta,
         for axis in range(1, ndim(x)):
             if axis in reduction_axes:
                 target_shape.append(1)
+                if ndim(gamma) > axis:
+                    gamma = C.reduce_mean(gamma, axis - 1)
+                    beta = C.reduce_mean(beta, axis - 1)
             else:
                 target_shape.append(x_shape[axis])
 
@@ -979,6 +1069,7 @@ def flatten(x):
 
 
 def reshape(x, shape):
+    shape = tuple([C.InferredDimension if _ == C.FreeDimension else _ for _ in shape])
     if isinstance(x, C.variables.Parameter):
         return C.reshape(x, shape)
     else:
@@ -993,9 +1084,9 @@ def reshape(x, shape):
                     'collapse of batch axis with inferred dimension. '
                     'The reshape did not take place.')
                 return x
-            return C.user_function(ReshapeBatch(x, shape[1:]))
+            return _reshape_batch(x, shape)
         else:
-            # no collaps, then first need to padding the shape
+            # no collapse, then first need to padding the shape
             if num_dynamic_axis >= len(shape):
                 i = 0
                 while i < len(shape):
@@ -1028,17 +1119,32 @@ def permute_dimensions(x, pattern):
     return C.transpose(x, axis)
 
 
-def resize_images(X, height_factor, width_factor, data_format):
+def resize_images(x, height_factor, width_factor, data_format):
     if data_format == 'channels_first':
-        output = repeat_elements(X, height_factor, axis=2)
+        output = repeat_elements(x, height_factor, axis=2)
         output = repeat_elements(output, width_factor, axis=3)
         return output
     elif data_format == 'channels_last':
-        output = repeat_elements(X, height_factor, axis=1)
+        output = repeat_elements(x, height_factor, axis=1)
         output = repeat_elements(output, width_factor, axis=2)
         return output
     else:
-        raise ValueError('CNTK Backend: Invalid dim_ordering:', data_format)
+        raise ValueError('CNTK Backend: Invalid data_format:', data_format)
+
+
+def resize_volumes(x, depth_factor, height_factor, width_factor, data_format):
+    if data_format == 'channels_first':
+        output = repeat_elements(x, depth_factor, axis=2)
+        output = repeat_elements(output, height_factor, axis=3)
+        output = repeat_elements(output, width_factor, axis=4)
+        return output
+    elif data_format == 'channels_last':
+        output = repeat_elements(x, depth_factor, axis=1)
+        output = repeat_elements(output, height_factor, axis=2)
+        output = repeat_elements(output, width_factor, axis=3)
+        return output
+    else:
+        raise ValueError('CNTK Backend: Invalid data_format:', data_format)
 
 
 def repeat_elements(x, rep, axis):
@@ -1062,7 +1168,7 @@ def repeat(x, n):
     # return the same x to take cntk broadcast feature
     # to make the recurrent layer work.
     # need to be fixed in GA.
-    if n is C.InferredDimension:
+    if n is C.InferredDimension or n is C.FreeDimension:
         return x
     index = 1 - _get_dynamic_axis_num(x)
     if index < 0 or index > 1:
@@ -1087,6 +1193,8 @@ def _static_rnn(step_function, inputs, initial_states,
     shape = int_shape(inputs)
     dims = len(shape)
 
+    uses_learning_phase = False
+
     if dims < 3:
         raise ValueError('Input should be at least 3D.')
 
@@ -1095,7 +1203,7 @@ def _static_rnn(step_function, inputs, initial_states,
         raise ValueError('CNTK Backend: the input of static rnn '
                          'has shape `%s`, the second axis '
                          'is not static. If you want to run '
-                         'rnn with non-static axis, plesae try '
+                         'rnn with non-static axis, please try '
                          'dynamic rnn with sequence axis.' % shape)
     if constants is None:
         constants = []
@@ -1122,6 +1230,8 @@ def _static_rnn(step_function, inputs, initial_states,
 
             output, new_states = step_function(
                 current, tuple(states) + tuple(constants))
+            if getattr(output, '_uses_learning_phase', False):
+                uses_learning_phase = True
 
             if mask is not None:
                 mask_slice = C.ops.slice(mask, time_axis, i, i + 1)
@@ -1150,6 +1260,8 @@ def _static_rnn(step_function, inputs, initial_states,
 
             output, new_states = step_function(
                 current, tuple(states) + tuple(constants))
+            if getattr(output, '_uses_learning_phase', False):
+                uses_learning_phase = True
 
             if mask is not None:
                 mask_slice = C.ops.slice(mask, time_axis, i, i + 1)
@@ -1181,6 +1293,7 @@ def _static_rnn(step_function, inputs, initial_states,
         last_output = outputs[i]
         i += 1
 
+    last_output._uses_learning_phase = uses_learning_phase
     return last_output, final_output, states
 
 
@@ -1190,6 +1303,9 @@ def rnn(step_function, inputs, initial_states,
 
     shape = int_shape(inputs)
     dims = len(shape)
+
+    global uses_learning_phase
+    uses_learning_phase = False
 
     if dims < 3:
         raise ValueError('CNTK Backend: the input of rnn has only rank %d '
@@ -1206,9 +1322,6 @@ def rnn(step_function, inputs, initial_states,
             unroll,
             input_length)
 
-    if mask is not None:
-        raise ValueError('RNN with mask is not support in CNTK currently.')
-
     if constants is None:
         constants = []
 
@@ -1219,12 +1332,23 @@ def rnn(step_function, inputs, initial_states,
     initial = []
     for s in initial_states:
         if _get_dynamic_axis_num(s) == 0:
-            initial.append(C.user_function(ConvertToBatch(s)))
+            if hasattr(C, 'to_batch'):
+                initial.append(C.to_batch(s))
+            else:
+                initial.append(C.user_function(ConvertToBatch(s)))
         else:
             initial.append(s)
 
     need_convert = not has_seq_axis(inputs)
+    if go_backwards and need_convert is False:
+        raise NotImplementedError('CNTK Backend: `go_backwards` is not supported with '
+                                  'variable-length sequences. Please specify a '
+                                  'static length for your sequences.')
+
     if need_convert:
+        if go_backwards:
+            inputs = reverse(inputs, 1)
+
         inputs = C.to_sequence(inputs)
 
         j = 0
@@ -1240,20 +1364,31 @@ def rnn(step_function, inputs, initial_states,
                     constants[j] = C.sequence.broadcast_as(constants[j], inputs)
             j += 1
 
+    if mask is not None and not has_seq_axis(mask):
+        if go_backwards:
+            mask = reverse(mask, 1)
+        if len(int_shape(mask)) == 2:
+            mask = expand_dims(mask)
+        mask = C.to_sequence_like(mask, inputs)
+
     states = tuple(initial)
 
     with C.default_options(axis_offset=1):
-        def _recurrence(x, states):
+        def _recurrence(x, states, m):
             # create place holder
-            place_holders = [C.placeholder() for _ in states]
+            place_holders = [C.placeholder(dynamic_axes=x.dynamic_axes) for _ in states]
             past_values = []
             for s, p in zip(states, place_holders):
-                past_values.append(
-                    C.sequence.past_value(
-                        p, s) if go_backwards is False else C.sequence.future_value(
-                        p, s))
+                past_values.append(C.sequence.past_value(p, s))
             new_output, new_states = step_function(
                 x, tuple(past_values) + tuple(constants))
+
+            if getattr(new_output, '_uses_learning_phase', False):
+                global uses_learning_phase
+                uses_learning_phase = True
+
+            if m is not None:
+                new_states = [C.element_select(m, n, s) for n, s in zip(new_states, past_values)]
             n_s = []
             for o, p in zip(new_states, place_holders):
                 n_s.append(o.replace_placeholders({p: o.output}))
@@ -1261,7 +1396,7 @@ def rnn(step_function, inputs, initial_states,
                 new_output = n_s[0]
             return new_output, n_s
 
-        final_output, final_states = _recurrence(inputs, states)
+        final_output, final_states = _recurrence(inputs, states, mask)
         last_output = C.sequence.last(final_output)
         last_states = [C.sequence.last(s) for s in final_states]
 
@@ -1273,10 +1408,14 @@ def rnn(step_function, inputs, initial_states,
     f_stats = []
     for l_s, i_s in zip(last_states, initial_states):
         if _get_dynamic_axis_num(i_s) == 0 and _get_dynamic_axis_num(l_s) == 1:
-            f_stats.append(C.user_function(ConvertToStatic(l_s, batch_size=i_s.shape[0])))
+            if hasattr(C, 'unpack_batch'):
+                f_stats.append(C.unpack_batch(l_s))
+            else:
+                f_stats.append(C.user_function(ConvertToStatic(l_s, batch_size=i_s.shape[0])))
         else:
             f_stats.append(l_s)
 
+    last_output._uses_learning_phase = uses_learning_phase
     return last_output, final_output, f_stats
 
 
@@ -1284,7 +1423,7 @@ def has_seq_axis(x):
     return hasattr(x, 'dynamic_axes') and len(x.dynamic_axes) > 1
 
 
-def l2_normalize(x, axis):
+def l2_normalize(x, axis=None):
     axis = [axis]
     axis = _normalize_axis(axis, x)
     norm = C.sqrt(C.reduce_sum(C.square(x), axis=axis[0]))
@@ -1533,7 +1672,7 @@ def softsign(x):
     return x / (1 + C.abs(x))
 
 
-def categorical_crossentropy(output, target, from_logits=False):
+def categorical_crossentropy(target, output, from_logits=False):
     if from_logits:
         result = C.cross_entropy_with_softmax(output, target)
         # cntk's result shape is (batch, 1), while keras expect (batch, )
@@ -1541,18 +1680,19 @@ def categorical_crossentropy(output, target, from_logits=False):
     else:
         # scale preds so that the class probas of each sample sum to 1
         output /= C.reduce_sum(output, axis=-1)
-        # avoid numerical instability with _EPSILON clipping
-        output = C.clip(output, _EPSILON, 1.0 - _EPSILON)
+        # avoid numerical instability with epsilon clipping
+        output = C.clip(output, epsilon(), 1.0 - epsilon())
         return -sum(target * C.log(output), axis=-1)
 
 
-def sparse_categorical_crossentropy(output, target, from_logits=False):
+def sparse_categorical_crossentropy(target, output, from_logits=False):
     target = C.one_hot(target, output.shape[-1])
     target = C.reshape(target, output.shape)
-    return categorical_crossentropy(output, target, from_logits)
+    return categorical_crossentropy(target, output, from_logits)
 
 
 class Function(object):
+
     def __init__(self, inputs, outputs, updates=[], **kwargs):
         self.placeholders = inputs
         self.trainer = None
@@ -1589,11 +1729,12 @@ class Function(object):
                     p_list.append(grad_parameter_dict[g])
                     u_list.append(g)
                 else:
-                    raise ValueError('CNTK backend: when constructing trainer, '
-                                     'found gradient node `%s` which is not '
-                                     'related to any parameters in the model. '
-                                     'Please double check how the gradient node '
-                                     'is constructed.' % g)
+                    raise ValueError(
+                        'CNTK backend: when constructing trainer, '
+                        'found gradient node `%s` which is not '
+                        'related to any parameters in the model. '
+                        'Please double check how the gradient node '
+                        'is constructed.' % g)
 
             if len(u_list) > 0:
                 learner = C.cntk_py.universal_learner(p_list, u_list, update_func)
@@ -1630,13 +1771,13 @@ class Function(object):
             input_shape = input.shape[num_dynamic:]
             placeholder_shape = placeholder.shape
             for i, p in zip(input_shape, placeholder_shape):
-                if i != p and p != C.InferredDimension:
+                if i != p and p != C.InferredDimension and p != C.FreeDimension:
                     return False
         return True
 
     def __call__(self, inputs):
         global _LEARNING_PHASE
-        assert type(inputs) in {list, tuple}
+        assert isinstance(inputs, (list, tuple))
         feed_dict = {}
         for tensor, value in zip(self.placeholders, inputs):
             # cntk only support calculate on float, do auto cast here
@@ -1644,6 +1785,7 @@ class Function(object):
                value.dtype != np.float32 and
                value.dtype != np.float64):
                 value = value.astype(np.float32)
+
             if tensor == _LEARNING_PHASE:
                 _LEARNING_PHASE.value = np.asarray(value)
             else:
@@ -1654,7 +1796,7 @@ class Function(object):
                                      'to shape `%s`, but input shape is `%s`. Currently '
                                      'CNTK can not take variable length inputs. Please '
                                      'pass inputs that have a static shape.'
-                                     % (tensor.shape, value.shape))
+                                     % (str(tensor.shape), str(value.shape)))
             feed_dict[tensor] = value
 
         updated = []
@@ -1664,9 +1806,10 @@ class Function(object):
                 if argument in feed_dict:
                     input_dict[argument] = feed_dict[argument]
                 else:
-                    raise ValueError('CNTK backend: argument %s is not found in inputs. '
-                                     'Please double check the model and inputs in '
-                                     '`train_function`.' % argument.name)
+                    raise ValueError(
+                        'CNTK backend: argument %s is not found in inputs. '
+                        'Please double check the model and inputs in '
+                        '`train_function`.' % argument.name)
 
             result = self.trainer.train_minibatch(
                 input_dict, self.trainer_output)
@@ -1714,9 +1857,10 @@ class Function(object):
                 if argument in feed_dict:
                     input_dict[argument] = feed_dict[argument]
                 else:
-                    raise ValueError('CNTK backend: assign ops argument %s '
-                                     'is not found in inputs. Please double '
-                                     'check the model and inputs.' % argument.name)
+                    raise ValueError(
+                        'CNTK backend: assign ops argument %s '
+                        'is not found in inputs. Please double '
+                        'check the model and inputs.' % argument.name)
             self.unrelated_updates.eval(input_dict, as_numpy=False)
         return updated
 
@@ -1731,10 +1875,16 @@ def temporal_padding(x, padding=(1, 1)):
     base_shape = x.shape
     if num_dynamic_axis > 0:
         assert len(base_shape) == 2
-        x = _padding(x, padding, 0)
+        if hasattr(C, 'pad'):
+            x = C.pad(x, pattern=[padding, (0, 0)])
+        else:
+            x = _padding(x, padding, 0)
     else:
         assert len(base_shape) == 3
-        x = _padding(x, padding, 1)
+        if hasattr(C, 'pad'):
+            x = C.pad(x, pattern=[(0, 0), padding, (0, 0)])
+        else:
+            x = _padding(x, padding, 1)
     return x
 
 
@@ -1751,13 +1901,11 @@ def _padding(x, pattern, axis):
         prefix_shape = tuple(prefix_shape)
         x = C.splice(C.constant(value=0, shape=prefix_shape), x, axis=axis)
         base_shape = x.shape
-
     if pattern[1] > 0:
         postfix_shape = list(base_shape)
         postfix_shape[axis] = pattern[1]
         postfix_shape = tuple(postfix_shape)
         x = C.splice(x, C.constant(value=0, shape=postfix_shape), axis=axis)
-
     return x
 
 
@@ -1775,21 +1923,33 @@ def spatial_2d_padding(x, padding=((1, 1), (1, 1)), data_format=None):
     if data_format == 'channels_first':
         if num_dynamic_axis > 0:
             assert len(base_shape) == 3
-            x = _padding(x, padding[0], 1)
-            x = _padding(x, padding[1], 2)
+            if hasattr(C, 'pad'):
+                x = C.pad(x, pattern=[[0, 0], list(padding[0]), list(padding[1])])
+            else:
+                x = _padding(x, padding[0], 1)
+                x = _padding(x, padding[1], 2)
         else:
             assert len(base_shape) == 4
-            x = _padding(x, padding[0], 2)
-            x = _padding(x, padding[1], 3)
+            if hasattr(C, 'pad'):
+                x = C.pad(x, pattern=[[0, 0], [0, 0], list(padding[0]), list(padding[1])])
+            else:
+                x = _padding(x, padding[0], 2)
+                x = _padding(x, padding[1], 3)
     else:
         if num_dynamic_axis > 0:
             assert len(base_shape) == 3
-            x = _padding(x, padding[0], 0)
-            x = _padding(x, padding[1], 1)
+            if hasattr(C, 'pad'):
+                x = C.pad(x, pattern=[list(padding[0]), list(padding[1]), [0, 0]])
+            else:
+                x = _padding(x, padding[0], 0)
+                x = _padding(x, padding[1], 1)
         else:
             assert len(base_shape) == 4
-            x = _padding(x, padding[0], 1)
-            x = _padding(x, padding[1], 2)
+            if hasattr(C, 'pad'):
+                x = C.pad(x, pattern=[[0, 0], list(padding[0]), list(padding[1]), [0, 0]])
+            else:
+                x = _padding(x, padding[0], 1)
+                x = _padding(x, padding[1], 2)
     return x
 
 
@@ -1808,25 +1968,37 @@ def spatial_3d_padding(x, padding=((1, 1), (1, 1), (1, 1)), data_format=None):
     if data_format == 'channels_first':
         if num_dynamic_axis > 0:
             assert len(base_shape) == 4
-            x = _padding(x, padding[0], 1)
-            x = _padding(x, padding[1], 2)
-            x = _padding(x, padding[2], 3)
+            if hasattr(C, 'pad'):
+                x = C.pad(x, pattern=[[0, 0], list(padding[0]), list(padding[1]), list(padding[2])])
+            else:
+                x = _padding(x, padding[0], 1)
+                x = _padding(x, padding[1], 2)
+                x = _padding(x, padding[2], 3)
         else:
             assert len(base_shape) == 5
-            x = _padding(x, padding[0], 2)
-            x = _padding(x, padding[1], 3)
-            x = _padding(x, padding[2], 4)
+            if hasattr(C, 'pad'):
+                x = C.pad(x, pattern=[[0, 0], [0, 0], list(padding[0]), list(padding[1]), list(padding[2])])
+            else:
+                x = _padding(x, padding[0], 2)
+                x = _padding(x, padding[1], 3)
+                x = _padding(x, padding[2], 4)
     else:
         if num_dynamic_axis > 0:
             assert len(base_shape) == 4
-            x = _padding(x, padding[0], 0)
-            x = _padding(x, padding[1], 1)
-            x = _padding(x, padding[2], 2)
+            if hasattr(C, 'pad'):
+                x = C.pad(x, pattern=[list(padding[0]), list(padding[1]), list(padding[2]), [0, 0]])
+            else:
+                x = _padding(x, padding[0], 0)
+                x = _padding(x, padding[1], 1)
+                x = _padding(x, padding[2], 2)
         else:
             assert len(base_shape) == 5
-            x = _padding(x, padding[0], 1)
-            x = _padding(x, padding[1], 2)
-            x = _padding(x, padding[2], 3)
+            if hasattr(C, 'pad'):
+                x = C.pad(x, pattern=[[0, 0], list(padding[0]), list(padding[1]), list(padding[2]), [0, 0]])
+            else:
+                x = _padding(x, padding[0], 1)
+                x = _padding(x, padding[1], 2)
+                x = _padding(x, padding[2], 3)
     return x
 
 
@@ -1893,6 +2065,20 @@ def stop_gradient(variables):
 
 
 def switch(condition, then_expression, else_expression):
+    ndim_cond = ndim(condition)
+    ndim_expr = ndim(then_expression)
+    if ndim_cond > ndim_expr:
+        raise ValueError('Rank of condition should be less'
+                         ' than or equal to rank of then and'
+                         ' else expressions. ndim(condition)=' +
+                         str(cond_ndim) + ', ndim(then_expression)'
+                         '=' + str(expr_ndim))
+    elif ndim_cond < ndim_expr:
+        shape_expr = int_shape(then_expression)
+        ndim_diff = ndim_expr - ndim_cond
+        for i in range(ndim_diff):
+            condition = expand_dims(condition)
+            condition = tile(condition, shape_expr[ndim_cond + i])
     return C.element_select(condition,
                             then_expression,
                             else_expression)
@@ -2027,7 +2213,9 @@ def get_num_dynamic_axis(x):
 def _reduce_on_axis(x, axis, reduce_fun_name):
     if isinstance(axis, list):
         for a in axis:
-            if isinstance(a, C.Axis) and a != C.Axis.default_batch_axis():
+            if isinstance(a, C.Axis) \
+                    and a != C.Axis.default_batch_axis() \
+                    and hasattr(C.sequence, reduce_fun_name):
                 x = getattr(C.sequence, reduce_fun_name)(x, a)
             else:
                 x = getattr(C, reduce_fun_name)(x, a)
@@ -2114,6 +2302,39 @@ def local_conv2d(inputs,
         output = permute_dimensions(output, (0, 2, 3, 1))
 
     return output
+
+
+def reverse(x, axes):
+    if isinstance(axes, int):
+        axes = [axes]
+    cntk_axes = _normalize_axis(axes, x)
+    begin_index = [0 for _ in cntk_axes]
+    end_index = [0 for _ in cntk_axes]
+    strides = [-1 for _ in cntk_axes]
+    return C.slice(x, cntk_axes, begin_index, end_index, strides)
+
+
+def _reshape_batch(x, shape):
+    # there is a bug in cntk 2.1's unpack_batch implementation
+    if hasattr(C, 'unpack_batch') and _get_cntk_version() >= 2.2:
+        const_a = C.unpack_batch(x)
+        const_a = C.reshape(const_a, shape)
+        return C.to_batch(const_a)
+    else:
+        return C.user_function(ReshapeBatch(x, shape[1:]))
+
+
+def _get_cntk_version():
+    version = C.__version__
+    if version.endswith('+'):
+        version = version[:-1]
+    try:
+        return float(version)
+    except:
+        warnings.warn(
+            'CNTK backend warning: CNTK version not detected. '
+            'Will using CNTK 2.0 GA as default.')
+        return float(2.0)
 
 
 class ReshapeBatch(C.ops.functions.UserFunction):
