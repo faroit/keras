@@ -1,6 +1,6 @@
 # Keras-docs
 
-From the Keras Maintainer:
+[From the Keras Maintainer](https://twitter.com/fchollet/status/778126537824624641):
 
 > versions only exist to force PyPI users to upgrade. They are not meaningful. You should be constantly synced to master.
 
