@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Initializers - Keras 2.1.5 Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Initializers";
+    var mkdocs_page_input_path = "initializers.md";
+    var mkdocs_page_url = "/initializers/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61785484-1', 'keras.io');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Keras 2.1.5 Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../why-use-keras/">Why use Keras</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting started</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../getting-started/sequential-model-guide/">Guide to the Sequential model</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../getting-started/functional-api-guide/">Guide to the Functional API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../getting-started/faq/">FAQ</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Models</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../models/about-keras-models/">About Keras models</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../models/sequential/">Sequential</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../models/model/">Model (functional API)</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Layers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../layers/about-keras-layers/">About Keras layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/core/">Core Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/convolutional/">Convolutional Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/pooling/">Pooling Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/local/">Locally-connected Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/recurrent/">Recurrent Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/embeddings/">Embedding Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/merge/">Merge Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/advanced-activations/">Advanced Activations Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/normalization/">Normalization Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/noise/">Noise layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/wrappers/">Layer wrappers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/writing-your-own-keras-layers/">Writing your own Keras layers</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Preprocessing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../preprocessing/sequence/">Sequence Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../preprocessing/text/">Text Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../preprocessing/image/">Image Preprocessing</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../losses/">Losses</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../metrics/">Metrics</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../optimizers/">Optimizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../activations/">Activations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../callbacks/">Callbacks</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../datasets/">Datasets</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../applications/">Applications</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../backend/">Backend</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Initializers</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#usage-of-initializers">Usage of initializers</a></li>
+    
+
+    <li class="toctree-l2"><a href="#available-initializers">Available initializers</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#initializer">Initializer</a></li>
+        
+            <li><a class="toctree-l3" href="#zeros">Zeros</a></li>
+        
+            <li><a class="toctree-l3" href="#ones">Ones</a></li>
+        
+            <li><a class="toctree-l3" href="#constant">Constant</a></li>
+        
+            <li><a class="toctree-l3" href="#randomnormal">RandomNormal</a></li>
+        
+            <li><a class="toctree-l3" href="#randomuniform">RandomUniform</a></li>
+        
+            <li><a class="toctree-l3" href="#truncatednormal">TruncatedNormal</a></li>
+        
+            <li><a class="toctree-l3" href="#variancescaling">VarianceScaling</a></li>
+        
+            <li><a class="toctree-l3" href="#orthogonal">Orthogonal</a></li>
+        
+            <li><a class="toctree-l3" href="#identity">Identity</a></li>
+        
+            <li><a class="toctree-l3" href="#lecun_uniform">lecun_uniform</a></li>
+        
+            <li><a class="toctree-l3" href="#glorot_normal">glorot_normal</a></li>
+        
+            <li><a class="toctree-l3" href="#glorot_uniform">glorot_uniform</a></li>
+        
+            <li><a class="toctree-l3" href="#he_normal">he_normal</a></li>
+        
+            <li><a class="toctree-l3" href="#lecun_normal">lecun_normal</a></li>
+        
+            <li><a class="toctree-l3" href="#he_uniform">he_uniform</a></li>
+        
+        </ul>
+    
+
+    <li class="toctree-l2"><a href="#using-custom-initializers">Using custom initializers</a></li>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../regularizers/">Regularizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../constraints/">Constraints</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../visualization/">Visualization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../scikit-learn-api/">Scikit-learn API</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../utils/">Utils</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../contributing/">Contributing</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Keras 2.1.5 Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Initializers</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="http://github.com/keras-team/keras/edit/master/docs/initializers.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="usage-of-initializers">Usage of initializers</h2>
+<p>Initializations define the way to set the initial random weights of Keras layers.</p>
+<p>The keyword arguments used for passing initializers to layers will depend on the layer. Usually it is simply <code>kernel_initializer</code> and <code>bias_initializer</code>:</p>
+<pre><code class="python">model.add(Dense(64,
+                kernel_initializer='random_uniform',
+                bias_initializer='zeros'))
+</code></pre>
+
+<h2 id="available-initializers">Available initializers</h2>
+<p>The following built-in initializers are available as part of the <code>keras.initializers</code> module:</p>
+<p><span style="float:right;"><a href="https://github.com/keras-team/keras/blob/master/keras/initializers.py#L14">[source]</a></span></p>
+<h3 id="initializer">Initializer</h3>
+<pre><code class="python">keras.initializers.Initializer()
+</code></pre>
+
+<p>Initializer base class: all initializers inherit from this class.</p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/keras-team/keras/blob/master/keras/initializers.py#L33">[source]</a></span></p>
+<h3 id="zeros">Zeros</h3>
+<pre><code class="python">keras.initializers.Zeros()
+</code></pre>
+
+<p>Initializer that generates tensors initialized to 0.</p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/keras-team/keras/blob/master/keras/initializers.py#L41">[source]</a></span></p>
+<h3 id="ones">Ones</h3>
+<pre><code class="python">keras.initializers.Ones()
+</code></pre>
+
+<p>Initializer that generates tensors initialized to 1.</p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/keras-team/keras/blob/master/keras/initializers.py#L49">[source]</a></span></p>
+<h3 id="constant">Constant</h3>
+<pre><code class="python">keras.initializers.Constant(value=0)
+</code></pre>
+
+<p>Initializer that generates tensors initialized to a constant value.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>value</strong>: float; the value of the generator tensors.</li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/keras-team/keras/blob/master/keras/initializers.py#L66">[source]</a></span></p>
+<h3 id="randomnormal">RandomNormal</h3>
+<pre><code class="python">keras.initializers.RandomNormal(mean=0.0, stddev=0.05, seed=None)
+</code></pre>
+
+<p>Initializer that generates tensors with a normal distribution.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>mean</strong>: a python scalar or a scalar tensor. Mean of the random values
+to generate.</li>
+<li><strong>stddev</strong>: a python scalar or a scalar tensor. Standard deviation of the
+random values to generate.</li>
+<li><strong>seed</strong>: A Python integer. Used to seed the random generator.</li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/keras-team/keras/blob/master/keras/initializers.py#L94">[source]</a></span></p>
+<h3 id="randomuniform">RandomUniform</h3>
+<pre><code class="python">keras.initializers.RandomUniform(minval=-0.05, maxval=0.05, seed=None)
+</code></pre>
+
+<p>Initializer that generates tensors with a uniform distribution.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>minval</strong>: A python scalar or a scalar tensor. Lower bound of the range
+of random values to generate.</li>
+<li><strong>maxval</strong>: A python scalar or a scalar tensor. Upper bound of the range
+of random values to generate.  Defaults to 1 for float types.</li>
+<li><strong>seed</strong>: A Python integer. Used to seed the random generator.</li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/keras-team/keras/blob/master/keras/initializers.py#L122">[source]</a></span></p>
+<h3 id="truncatednormal">TruncatedNormal</h3>
+<pre><code class="python">keras.initializers.TruncatedNormal(mean=0.0, stddev=0.05, seed=None)
+</code></pre>
+
+<p>Initializer that generates a truncated normal distribution.</p>
+<p>These values are similar to values from a <code>RandomNormal</code>
+except that values more than two standard deviations from the mean
+are discarded and re-drawn. This is the recommended initializer for
+neural network weights and filters.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>mean</strong>: a python scalar or a scalar tensor. Mean of the random values
+to generate.</li>
+<li><strong>stddev</strong>: a python scalar or a scalar tensor. Standard deviation of the
+random values to generate.</li>
+<li><strong>seed</strong>: A Python integer. Used to seed the random generator.</li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/keras-team/keras/blob/master/keras/initializers.py#L155">[source]</a></span></p>
+<h3 id="variancescaling">VarianceScaling</h3>
+<pre><code class="python">keras.initializers.VarianceScaling(scale=1.0, mode='fan_in', distribution='normal', seed=None)
+</code></pre>
+
+<p>Initializer capable of adapting its scale to the shape of weights.</p>
+<p>With <code>distribution="normal"</code>, samples are drawn from a truncated normal
+distribution centered on zero, with <code>stddev = sqrt(scale / n)</code> where n is:</p>
+<ul>
+<li>number of input units in the weight tensor, if mode = "fan_in"</li>
+<li>number of output units, if mode = "fan_out"</li>
+<li>average of the numbers of input and output units, if mode = "fan_avg"</li>
+</ul>
+<p>With <code>distribution="uniform"</code>,
+samples are drawn from a uniform distribution
+within [-limit, limit], with <code>limit = sqrt(3 * scale / n)</code>.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>scale</strong>: Scaling factor (positive float).</li>
+<li><strong>mode</strong>: One of "fan_in", "fan_out", "fan_avg".</li>
+<li><strong>distribution</strong>: Random distribution to use. One of "normal", "uniform".</li>
+<li><strong>seed</strong>: A Python integer. Used to seed the random generator.</li>
+</ul>
+<p><strong>Raises</strong></p>
+<ul>
+<li><strong>ValueError</strong>: In case of an invalid value for the "scale", mode" or
+"distribution" arguments.</li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/keras-team/keras/blob/master/keras/initializers.py#L228">[source]</a></span></p>
+<h3 id="orthogonal">Orthogonal</h3>
+<pre><code class="python">keras.initializers.Orthogonal(gain=1.0, seed=None)
+</code></pre>
+
+<p>Initializer that generates a random orthogonal matrix.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>gain</strong>: Multiplicative factor to apply to the orthogonal matrix.</li>
+<li><strong>seed</strong>: A Python integer. Used to seed the random generator.</li>
+</ul>
+<p><strong>References</strong></p>
+<p>Saxe et al., http://arxiv.org/abs/1312.6120</p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/keras-team/keras/blob/master/keras/initializers.py#L265">[source]</a></span></p>
+<h3 id="identity">Identity</h3>
+<pre><code class="python">keras.initializers.Identity(gain=1.0)
+</code></pre>
+
+<p>Initializer that generates the identity matrix.</p>
+<p>Only use for square 2D matrices.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>gain</strong>: Multiplicative factor to apply to the identity matrix.</li>
+</ul>
+<hr />
+<h3 id="lecun_uniform">lecun_uniform</h3>
+<pre><code class="python">lecun_uniform(seed=None)
+</code></pre>
+
+<p>LeCun uniform initializer.</p>
+<p>It draws samples from a uniform distribution within [-limit, limit]
+where <code>limit</code> is <code>sqrt(3 / fan_in)</code>
+where <code>fan_in</code> is the number of input units in the weight tensor.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>seed</strong>: A Python integer. Used to seed the random generator.</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>An initializer.</p>
+<p><strong>References</strong></p>
+<p>LeCun 98, Efficient Backprop,
+- <strong>http</strong>://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf</p>
+<hr />
+<h3 id="glorot_normal">glorot_normal</h3>
+<pre><code class="python">glorot_normal(seed=None)
+</code></pre>
+
+<p>Glorot normal initializer, also called Xavier normal initializer.</p>
+<p>It draws samples from a truncated normal distribution centered on 0
+with <code>stddev = sqrt(2 / (fan_in + fan_out))</code>
+where <code>fan_in</code> is the number of input units in the weight tensor
+and <code>fan_out</code> is the number of output units in the weight tensor.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>seed</strong>: A Python integer. Used to seed the random generator.</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>An initializer.</p>
+<p><strong>References</strong></p>
+<p>Glorot &amp; Bengio, AISTATS 2010
+- <strong>http</strong>://jmlr.org/proceedings/papers/v9/glorot10a/glorot10a.pdf</p>
+<hr />
+<h3 id="glorot_uniform">glorot_uniform</h3>
+<pre><code class="python">glorot_uniform(seed=None)
+</code></pre>
+
+<p>Glorot uniform initializer, also called Xavier uniform initializer.</p>
+<p>It draws samples from a uniform distribution within [-limit, limit]
+where <code>limit</code> is <code>sqrt(6 / (fan_in + fan_out))</code>
+where <code>fan_in</code> is the number of input units in the weight tensor
+and <code>fan_out</code> is the number of output units in the weight tensor.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>seed</strong>: A Python integer. Used to seed the random generator.</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>An initializer.</p>
+<p><strong>References</strong></p>
+<p>Glorot &amp; Bengio, AISTATS 2010
+- <strong>http</strong>://jmlr.org/proceedings/papers/v9/glorot10a/glorot10a.pdf</p>
+<hr />
+<h3 id="he_normal">he_normal</h3>
+<pre><code class="python">he_normal(seed=None)
+</code></pre>
+
+<p>He normal initializer.</p>
+<p>It draws samples from a truncated normal distribution centered on 0
+with <code>stddev = sqrt(2 / fan_in)</code>
+where <code>fan_in</code> is the number of input units in the weight tensor.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>seed</strong>: A Python integer. Used to seed the random generator.</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>An initializer.</p>
+<p><strong>References</strong></p>
+<p>He et al., http://arxiv.org/abs/1502.01852</p>
+<hr />
+<h3 id="lecun_normal">lecun_normal</h3>
+<pre><code class="python">lecun_normal(seed=None)
+</code></pre>
+
+<p>LeCun normal initializer.</p>
+<p>It draws samples from a truncated normal distribution centered on 0
+with <code>stddev = sqrt(1 / fan_in)</code>
+where <code>fan_in</code> is the number of input units in the weight tensor.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>seed</strong>: A Python integer. Used to seed the random generator.</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>An initializer.</p>
+<p><strong>References</strong></p>
+<ul>
+<li><a href="https://arxiv.org/abs/1706.02515">Self-Normalizing Neural Networks</a></li>
+<li><a href="http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf">Efficient Backprop</a></li>
+</ul>
+<hr />
+<h3 id="he_uniform">he_uniform</h3>
+<pre><code class="python">he_uniform(seed=None)
+</code></pre>
+
+<p>He uniform variance scaling initializer.</p>
+<p>It draws samples from a uniform distribution within [-limit, limit]
+where <code>limit</code> is <code>sqrt(6 / fan_in)</code>
+where <code>fan_in</code> is the number of input units in the weight tensor.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>seed</strong>: A Python integer. Used to seed the random generator.</li>
+</ul>
+<p><strong>Returns</strong></p>
+<p>An initializer.</p>
+<p><strong>References</strong></p>
+<p>He et al., http://arxiv.org/abs/1502.01852</p>
+<p>An initializer may be passed as a string (must match one of the available initializers above), or as a callable:</p>
+<pre><code class="python">from keras import initializers
+
+model.add(Dense(64, kernel_initializer=initializers.random_normal(stddev=0.01)))
+
+# also works; will use the default parameters.
+model.add(Dense(64, kernel_initializer='random_normal'))
+</code></pre>
+
+<h2 id="using-custom-initializers">Using custom initializers</h2>
+<p>If passing a custom callable, then it must take the argument <code>shape</code> (shape of the variable to initialize) and <code>dtype</code> (dtype of generated values):</p>
+<pre><code class="python">from keras import backend as K
+
+def my_init(shape, dtype=None):
+    return K.random_normal(shape, dtype=dtype)
+
+model.add(Dense(64, kernel_initializer=my_init))
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../regularizers/" class="btn btn-neutral float-right" title="Regularizers">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../backend/" class="btn btn-neutral" title="Backend"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="http://github.com/keras-team/keras/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../backend/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../regularizers/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/require.js"></script>
+      <script src="../search/search.js"></script>
+
+</body>
+</html>

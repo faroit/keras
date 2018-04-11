@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Sequence Preprocessing - Keras 2.1.1 Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Sequence Preprocessing";
+    var mkdocs_page_input_path = "preprocessing/sequence.md";
+    var mkdocs_page_url = "/preprocessing/sequence/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61785484-1', 'keras.io');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Keras 2.1.1 Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting started</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../getting-started/sequential-model-guide/">Guide to the Sequential model</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../getting-started/functional-api-guide/">Guide to the Functional API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../getting-started/faq/">FAQ</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Models</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../models/about-keras-models/">About Keras models</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../models/sequential/">Sequential</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../models/model/">Model (functional API)</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Layers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../layers/about-keras-layers/">About Keras layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/core/">Core Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/convolutional/">Convolutional Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/pooling/">Pooling Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/local/">Locally-connected Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/recurrent/">Recurrent Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/embeddings/">Embedding Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/merge/">Merge Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/advanced-activations/">Advanced Activations Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/normalization/">Normalization Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/noise/">Noise layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/wrappers/">Layer wrappers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/writing-your-own-keras-layers/">Writing your own Keras layers</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Preprocessing</span>
+    <ul class="subnav">
+                <li class=" current">
+                    
+    <a class="current" href="./">Sequence Preprocessing</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#pad_sequences">pad_sequences</a></li>
+    
+
+    <li class="toctree-l3"><a href="#skipgrams">skipgrams</a></li>
+    
+
+    <li class="toctree-l3"><a href="#make_sampling_table">make_sampling_table</a></li>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../text/">Text Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../image/">Image Preprocessing</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../losses/">Losses</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../metrics/">Metrics</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../optimizers/">Optimizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../activations/">Activations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../callbacks/">Callbacks</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../datasets/">Datasets</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../applications/">Applications</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../backend/">Backend</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../initializers/">Initializers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../regularizers/">Regularizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../constraints/">Constraints</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../visualization/">Visualization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../scikit-learn-api/">Scikit-learn API</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../utils/">Utils</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../contributing/">Contributing</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Keras 2.1.1 Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Preprocessing &raquo;</li>
+        
+      
+    
+    <li>Sequence Preprocessing</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="http://github.com/fchollet/keras/edit/master/docs/preprocessing/sequence.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="pad_sequences">pad_sequences</h2>
+<pre><code class="python">keras.preprocessing.sequence.pad_sequences(sequences, maxlen=None, dtype='int32',
+    padding='pre', truncating='pre', value=0.)
+</code></pre>
+
+<p>Transform a list of <code>num_samples</code> sequences (lists of scalars) into a 2D Numpy array of shape <code>(num_samples, num_timesteps)</code>. <code>num_timesteps</code> is either the <code>maxlen</code> argument if provided, or the length of the longest sequence otherwise. Sequences that are shorter than <code>num_timesteps</code> are padded with <code>value</code> at the end. Sequences longer than <code>num_timesteps</code> are truncated so that it fits the desired length. Position where padding or truncation happens is determined by <code>padding</code> or <code>truncating</code>, respectively.</p>
+<ul>
+<li>
+<p><strong>Return</strong>: 2D Numpy array of shape <code>(num_samples, num_timesteps)</code>.</p>
+</li>
+<li>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><strong>sequences</strong>: List of lists of int or float.</li>
+<li><strong>maxlen</strong>: None or int. Maximum sequence length, longer sequences are truncated and shorter sequences are padded with zeros at the end.</li>
+<li><strong>dtype</strong>: datatype of the Numpy array returned.</li>
+<li><strong>padding</strong>: 'pre' or 'post', pad either before or after each sequence.</li>
+<li><strong>truncating</strong>: 'pre' or 'post', remove values from sequences larger than maxlen either in the beginning or in the end of the sequence</li>
+<li><strong>value</strong>: float, value to pad the sequences to the desired value.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="skipgrams">skipgrams</h2>
+<pre><code class="python">keras.preprocessing.sequence.skipgrams(sequence, vocabulary_size,
+    window_size=4, negative_samples=1., shuffle=True,
+    categorical=False, sampling_table=None)
+</code></pre>
+
+<p>Transforms a sequence of word indexes (list of int) into couples of the form:</p>
+<ul>
+<li>(word, word in the same window), with label 1 (positive samples).</li>
+<li>(word, random word from the vocabulary), with label 0 (negative samples).</li>
+</ul>
+<p>Read more about Skipgram in this gnomic paper by Mikolov et al.: <a href="http://arxiv.org/pdf/1301.3781v3.pdf">Efficient Estimation of Word Representations in
+Vector Space</a></p>
+<ul>
+<li>
+<p><strong>Return</strong>: tuple <code>(couples, labels)</code>.</p>
+<ul>
+<li><code>couples</code> is a list of 2-elements lists of int: <code>[word_index, other_word_index]</code>.</li>
+<li><code>labels</code> is a list of 0 and 1, where 1 indicates that <code>other_word_index</code> was found in the same window as <code>word_index</code>, and 0 indicates that <code>other_word_index</code> was random.</li>
+<li>if categorical is set to True, the labels are categorical, ie. 1 becomes [0,1], and 0 becomes [1, 0].</li>
+</ul>
+</li>
+<li>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><strong>sequence</strong>: list of int indexes. If using a sampling_table, the index of a word should be its the rank in the dataset (starting at 1).</li>
+<li><strong>vocabulary_size</strong>: int.</li>
+<li><strong>window_size</strong>: int. maximum distance between two words in a positive couple.</li>
+<li><strong>negative_samples</strong>: float &gt;= 0. 0 for no negative (=random) samples. 1 for same number as positive samples. etc.</li>
+<li><strong>shuffle</strong>: boolean. Whether to shuffle the samples.</li>
+<li><strong>categorical</strong>: boolean. Whether to make the returned labels categorical.</li>
+<li><strong>sampling_table</strong>: Numpy array of shape <code>(vocabulary_size,)</code> where <code>sampling_table[i]</code> is the probability of sampling the word with index i (assumed to be i-th most common word in the dataset).</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="make_sampling_table">make_sampling_table</h2>
+<pre><code class="python">keras.preprocessing.sequence.make_sampling_table(size, sampling_factor=1e-5)
+</code></pre>
+
+<p>Used for generating the <code>sampling_table</code> argument for <code>skipgrams</code>. <code>sampling_table[i]</code> is the probability of sampling the word i-th most common word in a dataset (more common words should be sampled less frequently, for balance).</p>
+<ul>
+<li>
+<p><strong>Return</strong>: Numpy array of shape <code>(size,)</code>.</p>
+</li>
+<li>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><strong>size</strong>: size of the vocabulary considered.</li>
+<li><strong>sampling_factor</strong>: lower values result in a longer probability decay (common words will be sampled less frequently). If set to 1, no subsampling will be performed (all sampling probabilities will be 1).</li>
+</ul>
+</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../text/" class="btn btn-neutral float-right" title="Text Preprocessing">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../../layers/writing-your-own-keras-layers/" class="btn btn-neutral" title="Writing your own Keras layers"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="http://github.com/fchollet/keras/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../../layers/writing-your-own-keras-layers/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../text/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/require.js"></script>
+      <script src="../../search/search.js"></script>
+
+</body>
+</html>

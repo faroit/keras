@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Guide to the Sequential model - Keras 2.1.5 Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Guide to the Sequential model";
+    var mkdocs_page_input_path = "getting-started/sequential-model-guide.md";
+    var mkdocs_page_url = "/getting-started/sequential-model-guide/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61785484-1', 'keras.io');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Keras 2.1.5 Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../why-use-keras/">Why use Keras</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting started</span>
+    <ul class="subnav">
+                <li class=" current">
+                    
+    <a class="current" href="./">Guide to the Sequential model</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#getting-started-with-the-keras-sequential-model">Getting started with the Keras Sequential model</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#specifying-the-input-shape">Specifying the input shape</a></li>
+        
+            <li><a class="toctree-l4" href="#compilation">Compilation</a></li>
+        
+            <li><a class="toctree-l4" href="#training">Training</a></li>
+        
+            <li><a class="toctree-l4" href="#examples">Examples</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../functional-api-guide/">Guide to the Functional API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../faq/">FAQ</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Models</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../models/about-keras-models/">About Keras models</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../models/sequential/">Sequential</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../models/model/">Model (functional API)</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Layers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../layers/about-keras-layers/">About Keras layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/core/">Core Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/convolutional/">Convolutional Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/pooling/">Pooling Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/local/">Locally-connected Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/recurrent/">Recurrent Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/embeddings/">Embedding Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/merge/">Merge Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/advanced-activations/">Advanced Activations Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/normalization/">Normalization Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/noise/">Noise layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/wrappers/">Layer wrappers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/writing-your-own-keras-layers/">Writing your own Keras layers</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Preprocessing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/sequence/">Sequence Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/text/">Text Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/image/">Image Preprocessing</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../losses/">Losses</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../metrics/">Metrics</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../optimizers/">Optimizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../activations/">Activations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../callbacks/">Callbacks</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../datasets/">Datasets</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../applications/">Applications</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../backend/">Backend</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../initializers/">Initializers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../regularizers/">Regularizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../constraints/">Constraints</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../visualization/">Visualization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../scikit-learn-api/">Scikit-learn API</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../utils/">Utils</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../contributing/">Contributing</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Keras 2.1.5 Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Getting started &raquo;</li>
+        
+      
+    
+    <li>Guide to the Sequential model</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="http://github.com/keras-team/keras/edit/master/docs/getting-started/sequential-model-guide.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="getting-started-with-the-keras-sequential-model">Getting started with the Keras Sequential model</h1>
+<p>The <code>Sequential</code> model is a linear stack of layers.</p>
+<p>You can create a <code>Sequential</code> model by passing a list of layer instances to the constructor:</p>
+<pre><code class="python">from keras.models import Sequential
+from keras.layers import Dense, Activation
+
+model = Sequential([
+    Dense(32, input_shape=(784,)),
+    Activation('relu'),
+    Dense(10),
+    Activation('softmax'),
+])
+</code></pre>
+
+<p>You can also simply add layers via the <code>.add()</code> method:</p>
+<pre><code class="python">model = Sequential()
+model.add(Dense(32, input_dim=784))
+model.add(Activation('relu'))
+</code></pre>
+
+<hr />
+<h2 id="specifying-the-input-shape">Specifying the input shape</h2>
+<p>The model needs to know what input shape it should expect. For this reason, the first layer in a <code>Sequential</code> model (and only the first, because following layers can do automatic shape inference) needs to receive information about its input shape. There are several possible ways to do this:</p>
+<ul>
+<li>Pass an <code>input_shape</code> argument to the first layer. This is a shape tuple (a tuple of integers or <code>None</code> entries, where <code>None</code> indicates that any positive integer may be expected). In <code>input_shape</code>, the batch dimension is not included.</li>
+<li>Some 2D layers, such as <code>Dense</code>, support the specification of their input shape via the argument <code>input_dim</code>, and some 3D temporal layers support the arguments <code>input_dim</code> and <code>input_length</code>.</li>
+<li>If you ever need to specify a fixed batch size for your inputs (this is useful for stateful recurrent networks), you can pass a <code>batch_size</code> argument to a layer. If you pass both <code>batch_size=32</code> and <code>input_shape=(6, 8)</code> to a layer, it will then expect every batch of inputs to have the batch shape <code>(32, 6, 8)</code>.</li>
+</ul>
+<p>As such, the following snippets are strictly equivalent:</p>
+<pre><code class="python">model = Sequential()
+model.add(Dense(32, input_shape=(784,)))
+</code></pre>
+
+<pre><code class="python">model = Sequential()
+model.add(Dense(32, input_dim=784))
+</code></pre>
+
+<hr />
+<h2 id="compilation">Compilation</h2>
+<p>Before training a model, you need to configure the learning process, which is done via the <code>compile</code> method. It receives three arguments:</p>
+<ul>
+<li>An optimizer. This could be the string identifier of an existing optimizer (such as <code>rmsprop</code> or <code>adagrad</code>), or an instance of the <code>Optimizer</code> class. See: <a href="../../optimizers">optimizers</a>.</li>
+<li>A loss function. This is the objective that the model will try to minimize. It can be the string identifier of an existing loss function (such as <code>categorical_crossentropy</code> or <code>mse</code>), or it can be an objective function. See: <a href="../../losses">losses</a>.</li>
+<li>A list of metrics. For any classification problem you will want to set this to <code>metrics=['accuracy']</code>. A metric could be the string identifier of an existing metric or a custom metric function.</li>
+</ul>
+<pre><code class="python"># For a multi-class classification problem
+model.compile(optimizer='rmsprop',
+              loss='categorical_crossentropy',
+              metrics=['accuracy'])
+
+# For a binary classification problem
+model.compile(optimizer='rmsprop',
+              loss='binary_crossentropy',
+              metrics=['accuracy'])
+
+# For a mean squared error regression problem
+model.compile(optimizer='rmsprop',
+              loss='mse')
+
+# For custom metrics
+import keras.backend as K
+
+def mean_pred(y_true, y_pred):
+    return K.mean(y_pred)
+
+model.compile(optimizer='rmsprop',
+              loss='binary_crossentropy',
+              metrics=['accuracy', mean_pred])
+</code></pre>
+
+<hr />
+<h2 id="training">Training</h2>
+<p>Keras models are trained on Numpy arrays of input data and labels. For training a model, you will typically use the <code>fit</code> function. <a href="../../models/sequential">Read its documentation here</a>.</p>
+<pre><code class="python"># For a single-input model with 2 classes (binary classification):
+
+model = Sequential()
+model.add(Dense(32, activation='relu', input_dim=100))
+model.add(Dense(1, activation='sigmoid'))
+model.compile(optimizer='rmsprop',
+              loss='binary_crossentropy',
+              metrics=['accuracy'])
+
+# Generate dummy data
+import numpy as np
+data = np.random.random((1000, 100))
+labels = np.random.randint(2, size=(1000, 1))
+
+# Train the model, iterating on the data in batches of 32 samples
+model.fit(data, labels, epochs=10, batch_size=32)
+</code></pre>
+
+<pre><code class="python"># For a single-input model with 10 classes (categorical classification):
+
+model = Sequential()
+model.add(Dense(32, activation='relu', input_dim=100))
+model.add(Dense(10, activation='softmax'))
+model.compile(optimizer='rmsprop',
+              loss='categorical_crossentropy',
+              metrics=['accuracy'])
+
+# Generate dummy data
+import numpy as np
+data = np.random.random((1000, 100))
+labels = np.random.randint(10, size=(1000, 1))
+
+# Convert labels to categorical one-hot encoding
+one_hot_labels = keras.utils.to_categorical(labels, num_classes=10)
+
+# Train the model, iterating on the data in batches of 32 samples
+model.fit(data, one_hot_labels, epochs=10, batch_size=32)
+</code></pre>
+
+<hr />
+<h2 id="examples">Examples</h2>
+<p>Here are a few examples to get you started!</p>
+<p>In the <a href="https://github.com/keras-team/keras/tree/master/examples">examples folder</a>, you will also find example models for real datasets:</p>
+<ul>
+<li>CIFAR10 small images classification: Convolutional Neural Network (CNN) with realtime data augmentation</li>
+<li>IMDB movie review sentiment classification: LSTM over sequences of words</li>
+<li>Reuters newswires topic classification: Multilayer Perceptron (MLP)</li>
+<li>MNIST handwritten digits classification: MLP &amp; CNN</li>
+<li>Character-level text generation with LSTM</li>
+</ul>
+<p>...and more.</p>
+<h3 id="multilayer-perceptron-mlp-for-multi-class-softmax-classification">Multilayer Perceptron (MLP) for multi-class softmax classification:</h3>
+<pre><code class="python">import keras
+from keras.models import Sequential
+from keras.layers import Dense, Dropout, Activation
+from keras.optimizers import SGD
+
+# Generate dummy data
+import numpy as np
+x_train = np.random.random((1000, 20))
+y_train = keras.utils.to_categorical(np.random.randint(10, size=(1000, 1)), num_classes=10)
+x_test = np.random.random((100, 20))
+y_test = keras.utils.to_categorical(np.random.randint(10, size=(100, 1)), num_classes=10)
+
+model = Sequential()
+# Dense(64) is a fully-connected layer with 64 hidden units.
+# in the first layer, you must specify the expected input data shape:
+# here, 20-dimensional vectors.
+model.add(Dense(64, activation='relu', input_dim=20))
+model.add(Dropout(0.5))
+model.add(Dense(64, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(10, activation='softmax'))
+
+sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+model.compile(loss='categorical_crossentropy',
+              optimizer=sgd,
+              metrics=['accuracy'])
+
+model.fit(x_train, y_train,
+          epochs=20,
+          batch_size=128)
+score = model.evaluate(x_test, y_test, batch_size=128)
+</code></pre>
+
+<h3 id="mlp-for-binary-classification">MLP for binary classification:</h3>
+<pre><code class="python">import numpy as np
+from keras.models import Sequential
+from keras.layers import Dense, Dropout
+
+# Generate dummy data
+x_train = np.random.random((1000, 20))
+y_train = np.random.randint(2, size=(1000, 1))
+x_test = np.random.random((100, 20))
+y_test = np.random.randint(2, size=(100, 1))
+
+model = Sequential()
+model.add(Dense(64, input_dim=20, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(64, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(1, activation='sigmoid'))
+
+model.compile(loss='binary_crossentropy',
+              optimizer='rmsprop',
+              metrics=['accuracy'])
+
+model.fit(x_train, y_train,
+          epochs=20,
+          batch_size=128)
+score = model.evaluate(x_test, y_test, batch_size=128)
+</code></pre>
+
+<h3 id="vgg-like-convnet">VGG-like convnet:</h3>
+<pre><code class="python">import numpy as np
+import keras
+from keras.models import Sequential
+from keras.layers import Dense, Dropout, Flatten
+from keras.layers import Conv2D, MaxPooling2D
+from keras.optimizers import SGD
+
+# Generate dummy data
+x_train = np.random.random((100, 100, 100, 3))
+y_train = keras.utils.to_categorical(np.random.randint(10, size=(100, 1)), num_classes=10)
+x_test = np.random.random((20, 100, 100, 3))
+y_test = keras.utils.to_categorical(np.random.randint(10, size=(20, 1)), num_classes=10)
+
+model = Sequential()
+# input: 100x100 images with 3 channels -&gt; (100, 100, 3) tensors.
+# this applies 32 convolution filters of size 3x3 each.
+model.add(Conv2D(32, (3, 3), activation='relu', input_shape=(100, 100, 3)))
+model.add(Conv2D(32, (3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.25))
+
+model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.25))
+
+model.add(Flatten())
+model.add(Dense(256, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(10, activation='softmax'))
+
+sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+model.compile(loss='categorical_crossentropy', optimizer=sgd)
+
+model.fit(x_train, y_train, batch_size=32, epochs=10)
+score = model.evaluate(x_test, y_test, batch_size=32)
+</code></pre>
+
+<h3 id="sequence-classification-with-lstm">Sequence classification with LSTM:</h3>
+<pre><code class="python">from keras.models import Sequential
+from keras.layers import Dense, Dropout
+from keras.layers import Embedding
+from keras.layers import LSTM
+
+model = Sequential()
+model.add(Embedding(max_features, output_dim=256))
+model.add(LSTM(128))
+model.add(Dropout(0.5))
+model.add(Dense(1, activation='sigmoid'))
+
+model.compile(loss='binary_crossentropy',
+              optimizer='rmsprop',
+              metrics=['accuracy'])
+
+model.fit(x_train, y_train, batch_size=16, epochs=10)
+score = model.evaluate(x_test, y_test, batch_size=16)
+</code></pre>
+
+<h3 id="sequence-classification-with-1d-convolutions">Sequence classification with 1D convolutions:</h3>
+<pre><code class="python">from keras.models import Sequential
+from keras.layers import Dense, Dropout
+from keras.layers import Embedding
+from keras.layers import Conv1D, GlobalAveragePooling1D, MaxPooling1D
+
+model = Sequential()
+model.add(Conv1D(64, 3, activation='relu', input_shape=(seq_length, 100)))
+model.add(Conv1D(64, 3, activation='relu'))
+model.add(MaxPooling1D(3))
+model.add(Conv1D(128, 3, activation='relu'))
+model.add(Conv1D(128, 3, activation='relu'))
+model.add(GlobalAveragePooling1D())
+model.add(Dropout(0.5))
+model.add(Dense(1, activation='sigmoid'))
+
+model.compile(loss='binary_crossentropy',
+              optimizer='rmsprop',
+              metrics=['accuracy'])
+
+model.fit(x_train, y_train, batch_size=16, epochs=10)
+score = model.evaluate(x_test, y_test, batch_size=16)
+</code></pre>
+
+<h3 id="stacked-lstm-for-sequence-classification">Stacked LSTM for sequence classification</h3>
+<p>In this model, we stack 3 LSTM layers on top of each other,
+making the model capable of learning higher-level temporal representations.</p>
+<p>The first two LSTMs return their full output sequences, but the last one only returns
+the last step in its output sequence, thus dropping the temporal dimension
+(i.e. converting the input sequence into a single vector).</p>
+<p><img src="https://keras.io/img/regular_stacked_lstm.png" alt="stacked LSTM" style="width: 300px;"/></p>
+<pre><code class="python">from keras.models import Sequential
+from keras.layers import LSTM, Dense
+import numpy as np
+
+data_dim = 16
+timesteps = 8
+num_classes = 10
+
+# expected input data shape: (batch_size, timesteps, data_dim)
+model = Sequential()
+model.add(LSTM(32, return_sequences=True,
+               input_shape=(timesteps, data_dim)))  # returns a sequence of vectors of dimension 32
+model.add(LSTM(32, return_sequences=True))  # returns a sequence of vectors of dimension 32
+model.add(LSTM(32))  # return a single vector of dimension 32
+model.add(Dense(10, activation='softmax'))
+
+model.compile(loss='categorical_crossentropy',
+              optimizer='rmsprop',
+              metrics=['accuracy'])
+
+# Generate dummy training data
+x_train = np.random.random((1000, timesteps, data_dim))
+y_train = np.random.random((1000, num_classes))
+
+# Generate dummy validation data
+x_val = np.random.random((100, timesteps, data_dim))
+y_val = np.random.random((100, num_classes))
+
+model.fit(x_train, y_train,
+          batch_size=64, epochs=5,
+          validation_data=(x_val, y_val))
+</code></pre>
+
+<h3 id="same-stacked-lstm-model-rendered-stateful">Same stacked LSTM model, rendered "stateful"</h3>
+<p>A stateful recurrent model is one for which the internal states (memories) obtained after processing a batch
+of samples are reused as initial states for the samples of the next batch. This allows to process longer sequences
+while keeping computational complexity manageable.</p>
+<p><a href="../../getting-started/faq/#how-can-i-use-stateful-rnns">You can read more about stateful RNNs in the FAQ.</a></p>
+<pre><code class="python">from keras.models import Sequential
+from keras.layers import LSTM, Dense
+import numpy as np
+
+data_dim = 16
+timesteps = 8
+num_classes = 10
+batch_size = 32
+
+# Expected input batch shape: (batch_size, timesteps, data_dim)
+# Note that we have to provide the full batch_input_shape since the network is stateful.
+# the sample of index i in batch k is the follow-up for the sample i in batch k-1.
+model = Sequential()
+model.add(LSTM(32, return_sequences=True, stateful=True,
+               batch_input_shape=(batch_size, timesteps, data_dim)))
+model.add(LSTM(32, return_sequences=True, stateful=True))
+model.add(LSTM(32, stateful=True))
+model.add(Dense(10, activation='softmax'))
+
+model.compile(loss='categorical_crossentropy',
+              optimizer='rmsprop',
+              metrics=['accuracy'])
+
+# Generate dummy training data
+x_train = np.random.random((batch_size * 10, timesteps, data_dim))
+y_train = np.random.random((batch_size * 10, num_classes))
+
+# Generate dummy validation data
+x_val = np.random.random((batch_size * 3, timesteps, data_dim))
+y_val = np.random.random((batch_size * 3, num_classes))
+
+model.fit(x_train, y_train,
+          batch_size=batch_size, epochs=5, shuffle=False,
+          validation_data=(x_val, y_val))
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../functional-api-guide/" class="btn btn-neutral float-right" title="Guide to the Functional API">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../../why-use-keras/" class="btn btn-neutral" title="Why use Keras"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="http://github.com/keras-team/keras/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../../why-use-keras/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../functional-api-guide/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/require.js"></script>
+      <script src="../../search/search.js"></script>
+
+</body>
+</html>

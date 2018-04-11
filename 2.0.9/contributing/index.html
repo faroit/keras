@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Contributing - Keras 2.0.9 Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Contributing";
+    var mkdocs_page_input_path = "contributing.md";
+    var mkdocs_page_url = "/contributing/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61785484-1', 'keras.io');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Keras 2.0.9 Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting started</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../getting-started/sequential-model-guide/">Guide to the Sequential model</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../getting-started/functional-api-guide/">Guide to the Functional API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../getting-started/faq/">FAQ</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Models</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../models/about-keras-models/">About Keras models</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../models/sequential/">Sequential</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../models/model/">Model (functional API)</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Layers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../layers/about-keras-layers/">About Keras layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/core/">Core Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/convolutional/">Convolutional Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/pooling/">Pooling Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/local/">Locally-connected Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/recurrent/">Recurrent Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/embeddings/">Embedding Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/merge/">Merge Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/advanced-activations/">Advanced Activations Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/normalization/">Normalization Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/noise/">Noise layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/wrappers/">Layer wrappers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../layers/writing-your-own-keras-layers/">Writing your own Keras layers</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Preprocessing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../preprocessing/sequence/">Sequence Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../preprocessing/text/">Text Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../preprocessing/image/">Image Preprocessing</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../losses/">Losses</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../metrics/">Metrics</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../optimizers/">Optimizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../activations/">Activations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../callbacks/">Callbacks</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../datasets/">Datasets</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../applications/">Applications</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../backend/">Backend</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../initializers/">Initializers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../regularizers/">Regularizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../constraints/">Constraints</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../visualization/">Visualization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../scikit-learn-api/">Scikit-learn API</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../utils/">Utils</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Contributing</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#on-github-issues-and-pull-requests">On Github Issues and Pull Requests</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#bug-reporting">Bug reporting</a></li>
+        
+            <li><a class="toctree-l3" href="#requesting-a-feature">Requesting a Feature</a></li>
+        
+            <li><a class="toctree-l3" href="#requests-for-contributions">Requests for Contributions</a></li>
+        
+            <li><a class="toctree-l3" href="#pull-requests">Pull Requests</a></li>
+        
+            <li><a class="toctree-l3" href="#adding-new-examples">Adding new examples</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Keras 2.0.9 Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Contributing</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="http://github.com/fchollet/keras/edit/master/docs/contributing.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="on-github-issues-and-pull-requests">On Github Issues and Pull Requests</h1>
+<p>Found a bug? Have a new feature to suggest? Want to contribute changes to the codebase? Make sure to read this first.</p>
+<h2 id="bug-reporting">Bug reporting</h2>
+<p>Your code doesn't work, and you have determined that the issue lies with Keras? Follow these steps to report a bug.</p>
+<ol>
+<li>
+<p>Your bug may already be fixed. Make sure to update to the current Keras master branch, as well as the latest Theano/TensorFlow/CNTK master branch.
+To easily update Theano: <code>pip install git+git://github.com/Theano/Theano.git --upgrade</code></p>
+</li>
+<li>
+<p>Search for similar issues. Make sure to delete <code>is:open</code> on the issue search to find solved tickets as well. It's possible somebody has encountered this bug already. Also remember to check out Keras' <a href="http://keras.io/faq/">FAQ</a>. Still having a problem? Open an issue on Github to let us know.</p>
+</li>
+<li>
+<p>Make sure you provide us with useful information about your configuration: what OS are you using? What Keras backend are you using? Are you running on GPU? If so, what is your version of Cuda, of cuDNN? What is your GPU?</p>
+</li>
+<li>
+<p>Provide us with a script to reproduce the issue. This script should be runnable as-is and should not require external data download (use randomly generated data if you need to run a model on some test data). We recommend that you use Github Gists to post your code. Any issue that cannot be reproduced is likely to be closed.</p>
+</li>
+<li>
+<p>If possible, take a stab at fixing the bug yourself --if you can!</p>
+</li>
+</ol>
+<p>The more information you provide, the easier it is for us to validate that there is a bug and the faster we'll be able to take action. If you want your issue to be resolved quickly, following the steps above is crucial.</p>
+<hr />
+<h2 id="requesting-a-feature">Requesting a Feature</h2>
+<p>You can also use Github issues to request features you would like to see in Keras, or changes in the Keras API.</p>
+<ol>
+<li>
+<p>Provide a clear and detailed explanation of the feature you want and why it's important to add. Keep in mind that we want features that will be useful to the majority of our users and not just a small subset. If you're just targeting a minority of users, consider writing an add-on library for Keras. It is crucial for Keras to avoid bloating the API and codebase.</p>
+</li>
+<li>
+<p>Provide code snippets demonstrating the API you have in mind and illustrating the use cases of your feature. Of course, you don't need to write any real code at this point!</p>
+</li>
+<li>
+<p>After discussing the feature you may choose to attempt a Pull Request. If you're at all able, start writing some code. We always have more work to do than time to do it. If you can write some code then that will speed the process along.</p>
+</li>
+</ol>
+<hr />
+<h2 id="requests-for-contributions">Requests for Contributions</h2>
+<p><a href="https://github.com/fchollet/keras/projects/1">This is the board</a> where we list current outstanding issues and features to be added. If you want to start contributing to Keras, this is the place to start.</p>
+<hr />
+<h2 id="pull-requests">Pull Requests</h2>
+<p><strong>Where should I submit my pull request?</strong></p>
+<ol>
+<li><strong>Keras improvements and bugfixes</strong> go to the <a href="https://github.com/fchollet/keras/tree/master">Keras <code>master</code> branch</a>.</li>
+<li><strong>Experimental new features</strong> such as layers and datasets go to <a href="https://github.com/farizrahman4u/keras-contrib">keras-contrib</a>. Unless it is a new feature listed in <a href="https://github.com/fchollet/keras/projects/1">Requests for Contributions</a>, in which case it belongs in core Keras. If you think your feature belongs in core Keras, you can submit a design doc to explain your feature and argue for it (see explanations below).</li>
+</ol>
+<p>Here's a quick guide to submitting your improvements:</p>
+<ol>
+<li>
+<p>If your PR introduces a change in functionality, make sure you start by writing a design doc and sending it to the Keras mailing list to discuss whether the change should be made, and how to handle it. This will save you from having your PR closed down the road! Of course, if your PR is a simple bug fix, you don't need to do that. The process for writing and submitting design docs is as follow:</p>
+<ul>
+<li>Start from <a href="https://docs.google.com/document/d/1ZXNfce77LDW9tFAj6U5ctaJmI5mT7CQXOFMEAZo-mAA/edit#">this Google Doc template</a>, and copy it to new Google doc.</li>
+<li>Fill in the content. Note that you will need to insert code examples. To insert code, use a Google Doc extension such as <a href="https://chrome.google.com/webstore/detail/code-pretty/igjbncgfgnfpbnifnnlcmjfbnidkndnh?hl=en">CodePretty</a> (there are several such extensions available).</li>
+<li>Set sharing settings to "everyone with the link is allowed to comment"</li>
+<li>Send the document to <code>keras-users@googlegroups.com</code> with a subject that starts with <code>[API DESIGN REVIEW]</code> (all caps) so that we notice it.</li>
+<li>Wait for comments, and answer them as they come. Edit the proposal as necessary.</li>
+<li>The proposal will finally be approved or rejected. Once approved, you can send out Pull Requests or ask others to write Pull Requests.</li>
+</ul>
+</li>
+<li>
+<p>Write the code (or get others to write it). This is the hard part!</p>
+</li>
+<li>
+<p>Make sure any new function or class you introduce has proper docstrings. Make sure any code you touch still has up-to-date docstrings and documentation. <strong>Docstring style should be respected.</strong> In particular, they should be formatted in MarkDown, and there should be sections for <code>Arguments</code>, <code>Returns</code>, <code>Raises</code> (if applicable). Look at other docstrings in the codebase for examples.</p>
+</li>
+<li>
+<p>Write tests. Your code should have full unit test coverage. If you want to see your PR merged promptly, this is crucial.</p>
+</li>
+<li>
+<p>Run our test suite locally. It's easy: from the Keras folder, simply run: <code>py.test tests/</code>.</p>
+<ul>
+<li>You will need to install the test requirements as well: <code>pip install -e .[tests]</code>.</li>
+</ul>
+</li>
+<li>
+<p>Make sure all tests are passing:</p>
+<ul>
+<li>with the Theano backend, on Python 2.7 and Python 3.5. Make sure you have the development version of Theano.</li>
+<li>with the TensorFlow backend, on Python 2.7 and Python 3.5. Make sure you have the development version of TensorFlow.</li>
+<li>with the CNTK backend, on Python 2.7 and Python 3.5. Make sure you have the development version of CNTK.</li>
+</ul>
+</li>
+<li>
+<p>We use PEP8 syntax conventions, but we aren't dogmatic when it comes to line length. Make sure your lines stay reasonably sized, though. To make your life easier, we recommend running a PEP8 linter:</p>
+<ul>
+<li>Install PEP8 packages: <code>pip install pep8 pytest-pep8 autopep8</code></li>
+<li>Run a standalone PEP8 check: <code>py.test --pep8 -m pep8</code></li>
+<li>You can automatically fix some PEP8 error by running: <code>autopep8 -i --select &lt;errors&gt; &lt;FILENAME&gt;</code> for example: <code>autopep8 -i --select E128 tests/keras/backend/test_backends.py</code></li>
+</ul>
+</li>
+<li>
+<p>When committing, use appropriate, descriptive commit messages.</p>
+</li>
+<li>
+<p>Update the documentation. If introducing new functionality, make sure you include code snippets demonstrating the usage of your new feature.</p>
+</li>
+<li>
+<p>Submit your PR. If your changes have been approved in a previous discussion, and if you have complete (and passing) unit tests as well as proper docstrings/documentation, your PR is likely to be merged promptly. Otherwise, well...</p>
+</li>
+</ol>
+<hr />
+<h2 id="adding-new-examples">Adding new examples</h2>
+<p>Even if you don't contribute to the Keras source code, if you have an application of Keras that is concise and powerful, please consider adding it to our collection of examples. <a href="https://github.com/fchollet/keras/tree/master/examples">Existing examples</a> show idiomatic Keras code: make sure to keep your own script in the same spirit.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../utils/" class="btn btn-neutral" title="Utils"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="http://github.com/fchollet/keras/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../utils/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/require.js"></script>
+      <script src="../search/search.js"></script>
+
+</body>
+</html>

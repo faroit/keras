@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>FAQ - Keras 2.0.9 Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "FAQ";
+    var mkdocs_page_input_path = "getting-started/faq.md";
+    var mkdocs_page_url = "/getting-started/faq/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61785484-1', 'keras.io');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Keras 2.0.9 Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting started</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../sequential-model-guide/">Guide to the Sequential model</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../functional-api-guide/">Guide to the Functional API</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">FAQ</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#keras-faq-frequently-asked-keras-questions">Keras FAQ: Frequently Asked Keras Questions</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#how-should-i-cite-keras">How should I cite Keras?</a></li>
+        
+            <li><a class="toctree-l4" href="#how-can-i-run-keras-on-gpu">How can I run Keras on GPU?</a></li>
+        
+            <li><a class="toctree-l4" href="#how-can-i-run-a-keras-model-on-multiple-gpus">How can I run a Keras model on multiple GPUs?</a></li>
+        
+            <li><a class="toctree-l4" href="#what-does-sample-batch-epoch-mean">What does "sample", "batch", "epoch" mean?</a></li>
+        
+            <li><a class="toctree-l4" href="#how-can-i-save-a-keras-model">How can I save a Keras model?</a></li>
+        
+            <li><a class="toctree-l4" href="#why-is-the-training-loss-much-higher-than-the-testing-loss">Why is the training loss much higher than the testing loss?</a></li>
+        
+            <li><a class="toctree-l4" href="#how-can-i-obtain-the-output-of-an-intermediate-layer">How can I obtain the output of an intermediate layer?</a></li>
+        
+            <li><a class="toctree-l4" href="#how-can-i-use-keras-with-datasets-that-dont-fit-in-memory">How can I use Keras with datasets that don't fit in memory?</a></li>
+        
+            <li><a class="toctree-l4" href="#how-can-i-interrupt-training-when-the-validation-loss-isnt-decreasing-anymore">How can I interrupt training when the validation loss isn't decreasing anymore?</a></li>
+        
+            <li><a class="toctree-l4" href="#how-is-the-validation-split-computed">How is the validation split computed?</a></li>
+        
+            <li><a class="toctree-l4" href="#is-the-data-shuffled-during-training">Is the data shuffled during training?</a></li>
+        
+            <li><a class="toctree-l4" href="#how-can-i-record-the-training-validation-loss-accuracy-at-each-epoch">How can I record the training / validation loss / accuracy at each epoch?</a></li>
+        
+            <li><a class="toctree-l4" href="#how-can-i-freeze-keras-layers">How can I "freeze" Keras layers?</a></li>
+        
+            <li><a class="toctree-l4" href="#how-can-i-use-stateful-rnns">How can I use stateful RNNs?</a></li>
+        
+            <li><a class="toctree-l4" href="#how-can-i-remove-a-layer-from-a-sequential-model">How can I remove a layer from a Sequential model?</a></li>
+        
+            <li><a class="toctree-l4" href="#how-can-i-use-pre-trained-models-in-keras">How can I use pre-trained models in Keras?</a></li>
+        
+            <li><a class="toctree-l4" href="#how-can-i-use-hdf5-inputs-with-keras">How can I use HDF5 inputs with Keras?</a></li>
+        
+            <li><a class="toctree-l4" href="#where-is-the-keras-configuration-file-stored">Where is the Keras configuration file stored?</a></li>
+        
+            <li><a class="toctree-l4" href="#how-can-i-obtain-reproducible-results-using-keras-during-development">How can I obtain reproducible results using Keras during development?</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Models</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../models/about-keras-models/">About Keras models</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../models/sequential/">Sequential</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../models/model/">Model (functional API)</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Layers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../layers/about-keras-layers/">About Keras layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/core/">Core Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/convolutional/">Convolutional Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/pooling/">Pooling Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/local/">Locally-connected Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/recurrent/">Recurrent Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/embeddings/">Embedding Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/merge/">Merge Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/advanced-activations/">Advanced Activations Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/normalization/">Normalization Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/noise/">Noise layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/wrappers/">Layer wrappers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/writing-your-own-keras-layers/">Writing your own Keras layers</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Preprocessing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/sequence/">Sequence Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/text/">Text Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/image/">Image Preprocessing</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../losses/">Losses</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../metrics/">Metrics</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../optimizers/">Optimizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../activations/">Activations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../callbacks/">Callbacks</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../datasets/">Datasets</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../applications/">Applications</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../backend/">Backend</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../initializers/">Initializers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../regularizers/">Regularizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../constraints/">Constraints</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../visualization/">Visualization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../scikit-learn-api/">Scikit-learn API</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../utils/">Utils</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../contributing/">Contributing</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Keras 2.0.9 Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Getting started &raquo;</li>
+        
+      
+    
+    <li>FAQ</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="http://github.com/fchollet/keras/edit/master/docs/getting-started/faq.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="keras-faq-frequently-asked-keras-questions">Keras FAQ: Frequently Asked Keras Questions</h1>
+<ul>
+<li><a href="#how-should-i-cite-keras">How should I cite Keras?</a></li>
+<li><a href="#how-can-i-run-keras-on-gpu">How can I run Keras on GPU?</a></li>
+<li><a href="#how-can-i-run-a-keras-model-on-multiple-gpus">How can I run a Keras model on multiple GPUs?</a></li>
+<li><a href="#what-does-sample-batch-epoch-mean">What does "sample", "batch", "epoch" mean?</a></li>
+<li><a href="#how-can-i-save-a-keras-model">How can I save a Keras model?</a></li>
+<li><a href="#why-is-the-training-loss-much-higher-than-the-testing-loss">Why is the training loss much higher than the testing loss?</a></li>
+<li><a href="#how-can-i-obtain-the-output-of-an-intermediate-layer">How can I obtain the output of an intermediate layer?</a></li>
+<li><a href="#how-can-i-use-keras-with-datasets-that-dont-fit-in-memory">How can I use Keras with datasets that don't fit in memory?</a></li>
+<li><a href="#how-can-i-interrupt-training-when-the-validation-loss-isnt-decreasing-anymore">How can I interrupt training when the validation loss isn't decreasing anymore?</a></li>
+<li><a href="#how-is-the-validation-split-computed">How is the validation split computed?</a></li>
+<li><a href="#is-the-data-shuffled-during-training">Is the data shuffled during training?</a></li>
+<li><a href="#how-can-i-record-the-training-validation-loss-accuracy-at-each-epoch">How can I record the training / validation loss / accuracy at each epoch?</a></li>
+<li><a href="#how-can-i-freeze-keras-layers">How can I "freeze" layers?</a></li>
+<li><a href="#how-can-i-use-stateful-rnns">How can I use stateful RNNs?</a></li>
+<li><a href="#how-can-i-remove-a-layer-from-a-sequential-model">How can I remove a layer from a Sequential model?</a></li>
+<li><a href="#how-can-i-use-pre-trained-models-in-keras">How can I use pre-trained models in Keras?</a></li>
+<li><a href="#how-can-i-use-hdf5-inputs-with-keras">How can I use HDF5 inputs with Keras?</a></li>
+<li><a href="#where-is-the-keras-configuration-file-stored">Where is the Keras configuration file stored?</a></li>
+<li><a href="#how-can-i-obtain-reproducible-results-using-keras-during-development">How can I obtain reproducible results using Keras during development?</a></li>
+</ul>
+<hr />
+<h3 id="how-should-i-cite-keras">How should I cite Keras?</h3>
+<p>Please cite Keras in your publications if it helps your research. Here is an example BibTeX entry:</p>
+<pre><code>@misc{chollet2015keras,
+  title={Keras},
+  author={Chollet, Fran\c{c}ois and others},
+  year={2015},
+  publisher={GitHub},
+  howpublished={\url{https://github.com/fchollet/keras}},
+}
+</code></pre>
+
+<hr />
+<h3 id="how-can-i-run-keras-on-gpu">How can I run Keras on GPU?</h3>
+<p>If you are running on the <strong>TensorFlow</strong> or <strong>CNTK</strong> backends, your code will automatically run on GPU if any available GPU is detected.</p>
+<p>If you are running on the <strong>Theano</strong> backend, you can use one of the following methods:</p>
+<p><strong>Method 1</strong>: use Theano flags.</p>
+<pre><code class="bash">THEANO_FLAGS=device=gpu,floatX=float32 python my_keras_script.py
+</code></pre>
+
+<p>The name 'gpu' might have to be changed depending on your device's identifier (e.g. <code>gpu0</code>, <code>gpu1</code>, etc).</p>
+<p><strong>Method 2</strong>: set up your <code>.theanorc</code>: <a href="http://deeplearning.net/software/theano/library/config.html">Instructions</a></p>
+<p><strong>Method 3</strong>: manually set <code>theano.config.device</code>, <code>theano.config.floatX</code> at the beginning of your code:</p>
+<pre><code class="python">import theano
+theano.config.device = 'gpu'
+theano.config.floatX = 'float32'
+</code></pre>
+
+<hr />
+<h3 id="how-can-i-run-a-keras-model-on-multiple-gpus">How can I run a Keras model on multiple GPUs?</h3>
+<p>We recommend doing so using the <strong>TensorFlow</strong> backend. There are two ways to run a single model on multiple GPUs: <strong>data parallelism</strong> and <strong>device parallelism</strong>.</p>
+<p>In most cases, what you need is most likely data parallelism.</p>
+<h4 id="data-parallelism">Data parallelism</h4>
+<p>Data parallelism consists in replicating the target model once on each device, and using each replica to process a different fraction of the input data.
+Keras has a built-in utility, <code>keras.utils.multi_gpu_model</code>, which can produce a data-parallel version of any model, and achieves quasi-linear speedup on up to 8 GPUs.</p>
+<p>For more information, see the documentation for <a href="../../utils/#multi_gpu_model">multi_gpu_model</a>. Here is a quick example:</p>
+<pre><code class="python">from keras.utils import multi_gpu_model
+
+# Replicates `model` on 8 GPUs.
+# This assumes that your machine has 8 available GPUs.
+parallel_model = multi_gpu_model(model, gpus=8)
+parallel_model.compile(loss='categorical_crossentropy',
+                       optimizer='rmsprop')
+
+# This `fit` call will be distributed on 8 GPUs.
+# Since the batch size is 256, each GPU will process 32 samples.
+parallel_model.fit(x, y, epochs=20, batch_size=256)
+</code></pre>
+
+<h4 id="device-parallelism">Device parallelism</h4>
+<p>Device parallelism consists in running different parts of a same model on different devices. It works best for models that have a parallel architecture, e.g. a model with two branches.</p>
+<p>This can be achieved by using TensorFlow device scopes. Here is a quick example:</p>
+<pre><code class="python"># Model where a shared LSTM is used to encode two different sequences in parallel
+input_a = keras.Input(shape=(140, 256))
+input_b = keras.Input(shape=(140, 256))
+
+shared_lstm = keras.layers.LSTM(64)
+
+# Process the first sequence on one GPU
+with tf.device_scope('/gpu:0'):
+    encoded_a = shared_lstm(tweet_a)
+# Process the next sequence on another GPU
+with tf.device_scope('/gpu:1'):
+    encoded_b = shared_lstm(tweet_b)
+
+# Concatenate results on CPU
+with tf.device_scope('/cpu:0'):
+    merged_vector = keras.layers.concatenate([encoded_a, encoded_b],
+                                             axis=-1)
+</code></pre>
+
+<hr />
+<h3 id="what-does-sample-batch-epoch-mean">What does "sample", "batch", "epoch" mean?</h3>
+<p>Below are some common definitions that are necessary to know and understand to correctly utilize Keras:</p>
+<ul>
+<li><strong>Sample</strong>: one element of a dataset.</li>
+<li><em>Example:</em> one image is a <strong>sample</strong> in a convolutional network</li>
+<li><em>Example:</em> one audio file is a <strong>sample</strong> for a speech recognition model</li>
+<li><strong>Batch</strong>: a set of <em>N</em> samples. The samples in a <strong>batch</strong> are processed independently, in parallel. If training, a batch results in only one update to the model.</li>
+<li>A <strong>batch</strong> generally approximates the distribution of the input data better than a single input. The larger the batch, the better the approximation; however, it is also true that the batch will take longer to processes and will still result in only one update. For inference (evaluate/predict), it is recommended to pick a batch size that is as large as you can afford without going out of memory (since larger batches will usually result in faster evaluating/prediction).</li>
+<li><strong>Epoch</strong>: an arbitrary cutoff, generally defined as "one pass over the entire dataset", used to separate training into distinct phases, which is useful for logging and periodic evaluation.</li>
+<li>When using <code>evaluation_data</code> or <code>evaluation_split</code> with the <code>fit</code> method of Keras models, evaluation will be run at the end of every <strong>epoch</strong>.</li>
+<li>Within Keras, there is the ability to add <a href="https://keras.io/callbacks/">callbacks</a> specifically designed to be run at the end of an <strong>epoch</strong>. Examples of these are learning rate changes and model checkpointing (saving).</li>
+</ul>
+<hr />
+<h3 id="how-can-i-save-a-keras-model">How can I save a Keras model?</h3>
+<h4 id="savingloading-whole-models-architecture-weights-optimizer-state">Saving/loading whole models (architecture + weights + optimizer state)</h4>
+<p><em>It is not recommended to use pickle or cPickle to save a Keras model.</em></p>
+<p>You can use <code>model.save(filepath)</code> to save a Keras model into a single HDF5 file which will contain:</p>
+<ul>
+<li>the architecture of the model, allowing to re-create the model</li>
+<li>the weights of the model</li>
+<li>the training configuration (loss, optimizer)</li>
+<li>the state of the optimizer, allowing to resume training exactly where you left off.</li>
+</ul>
+<p>You can then use <code>keras.models.load_model(filepath)</code> to reinstantiate your model.
+<code>load_model</code> will also take care of compiling the model using the saved training configuration
+(unless the model was never compiled in the first place).</p>
+<p>Example:</p>
+<pre><code class="python">from keras.models import load_model
+
+model.save('my_model.h5')  # creates a HDF5 file 'my_model.h5'
+del model  # deletes the existing model
+
+# returns a compiled model
+# identical to the previous one
+model = load_model('my_model.h5')
+</code></pre>
+
+<h4 id="savingloading-only-a-models-architecture">Saving/loading only a model's architecture</h4>
+<p>If you only need to save the <strong>architecture of a model</strong>, and not its weights or its training configuration, you can do:</p>
+<pre><code class="python"># save as JSON
+json_string = model.to_json()
+
+# save as YAML
+yaml_string = model.to_yaml()
+</code></pre>
+
+<p>The generated JSON / YAML files are human-readable and can be manually edited if needed.</p>
+<p>You can then build a fresh model from this data:</p>
+<pre><code class="python"># model reconstruction from JSON:
+from keras.models import model_from_json
+model = model_from_json(json_string)
+
+# model reconstruction from YAML
+from keras.models import model_from_yaml
+model = model_from_yaml(yaml_string)
+</code></pre>
+
+<h4 id="savingloading-only-a-models-weights">Saving/loading only a model's weights</h4>
+<p>If you need to save the <strong>weights of a model</strong>, you can do so in HDF5 with the code below.</p>
+<p>Note that you will first need to install HDF5 and the Python library h5py, which do not come bundled with Keras.</p>
+<pre><code class="python">model.save_weights('my_model_weights.h5')
+</code></pre>
+
+<p>Assuming you have code for instantiating your model, you can then load the weights you saved into a model with the <em>same</em> architecture:</p>
+<pre><code class="python">model.load_weights('my_model_weights.h5')
+</code></pre>
+
+<p>If you need to load weights into a <em>different</em> architecture (with some layers in common), for instance for fine-tuning or transfer-learning, you can load weights by <em>layer name</em>:</p>
+<pre><code class="python">model.load_weights('my_model_weights.h5', by_name=True)
+</code></pre>
+
+<p>For example:</p>
+<pre><code class="python">&quot;&quot;&quot;
+Assuming the original model looks like this:
+    model = Sequential()
+    model.add(Dense(2, input_dim=3, name='dense_1'))
+    model.add(Dense(3, name='dense_2'))
+    ...
+    model.save_weights(fname)
+&quot;&quot;&quot;
+
+# new model
+model = Sequential()
+model.add(Dense(2, input_dim=3, name='dense_1'))  # will be loaded
+model.add(Dense(10, name='new_dense'))  # will not be loaded
+
+# load weights from first model; will only affect the first layer, dense_1.
+model.load_weights(fname, by_name=True)
+</code></pre>
+
+<h4 id="handling-custom-layers-or-other-custom-objects-in-saved-models">Handling custom layers (or other custom objects) in saved models</h4>
+<p>If the model you want to load includes custom layers or other custom classes or functions, 
+you can pass them to the loading mechanism via the <code>custom_objects</code> argument: </p>
+<pre><code class="python">from keras.models import load_model
+# Assuming your model includes instance of an &quot;AttentionLayer&quot; class
+model = load_model('my_model.h5', custom_objects={'AttentionLayer': AttentionLayer})
+</code></pre>
+
+<p>Alternatively, you can use a <a href="https://keras.io/utils/#customobjectscope">custom object scope</a>:</p>
+<pre><code class="python">from keras.utils import CustomObjectScope
+
+with CustomObjectScope({'AttentionLayer': AttentionLayer}):
+    model = load_model('my_model.h5')
+</code></pre>
+
+<p>Custom objects handling works the same way for <code>load_model</code>, <code>model_from_json</code>, <code>model_from_yaml</code>:</p>
+<pre><code class="python">from keras.models import model_from_json
+model = model_from_json(json_string, custom_objects={'AttentionLayer': AttentionLayer})
+</code></pre>
+
+<hr />
+<h3 id="why-is-the-training-loss-much-higher-than-the-testing-loss">Why is the training loss much higher than the testing loss?</h3>
+<p>A Keras model has two modes: training and testing. Regularization mechanisms, such as Dropout and L1/L2 weight regularization, are turned off at testing time.</p>
+<p>Besides, the training loss is the average of the losses over each batch of training data. Because your model is changing over time, the loss over the first batches of an epoch is generally higher than over the last batches. On the other hand, the testing loss for an epoch is computed using the model as it is at the end of the epoch, resulting in a lower loss.</p>
+<hr />
+<h3 id="how-can-i-obtain-the-output-of-an-intermediate-layer">How can I obtain the output of an intermediate layer?</h3>
+<p>One simple way is to create a new <code>Model</code> that will output the layers that you are interested in:</p>
+<pre><code class="python">from keras.models import Model
+
+model = ...  # create the original model
+
+layer_name = 'my_layer'
+intermediate_layer_model = Model(inputs=model.input,
+                                 outputs=model.get_layer(layer_name).output)
+intermediate_output = intermediate_layer_model.predict(data)
+</code></pre>
+
+<p>Alternatively, you can build a Keras function that will return the output of a certain layer given a certain input, for example:</p>
+<pre><code class="python">from keras import backend as K
+
+# with a Sequential model
+get_3rd_layer_output = K.function([model.layers[0].input],
+                                  [model.layers[3].output])
+layer_output = get_3rd_layer_output([x])[0]
+</code></pre>
+
+<p>Similarly, you could build a Theano and TensorFlow function directly.</p>
+<p>Note that if your model has a different behavior in training and testing phase (e.g. if it uses <code>Dropout</code>, <code>BatchNormalization</code>, etc.), you will need
+to pass the learning phase flag to your function:</p>
+<pre><code class="python">get_3rd_layer_output = K.function([model.layers[0].input, K.learning_phase()],
+                                  [model.layers[3].output])
+
+# output in test mode = 0
+layer_output = get_3rd_layer_output([x, 0])[0]
+
+# output in train mode = 1
+layer_output = get_3rd_layer_output([x, 1])[0]
+</code></pre>
+
+<hr />
+<h3 id="how-can-i-use-keras-with-datasets-that-dont-fit-in-memory">How can I use Keras with datasets that don't fit in memory?</h3>
+<p>You can do batch training using <code>model.train_on_batch(x, y)</code> and <code>model.test_on_batch(x, y)</code>. See the <a href="../../models/sequential">models documentation</a>.</p>
+<p>Alternatively, you can write a generator that yields batches of training data and use the method <code>model.fit_generator(data_generator, steps_per_epoch, epochs)</code>.</p>
+<p>You can see batch training in action in our <a href="https://github.com/fchollet/keras/blob/master/examples/cifar10_cnn.py">CIFAR10 example</a>.</p>
+<hr />
+<h3 id="how-can-i-interrupt-training-when-the-validation-loss-isnt-decreasing-anymore">How can I interrupt training when the validation loss isn't decreasing anymore?</h3>
+<p>You can use an <code>EarlyStopping</code> callback:</p>
+<pre><code class="python">from keras.callbacks import EarlyStopping
+early_stopping = EarlyStopping(monitor='val_loss', patience=2)
+model.fit(x, y, validation_split=0.2, callbacks=[early_stopping])
+</code></pre>
+
+<p>Find out more in the <a href="../../callbacks">callbacks documentation</a>.</p>
+<hr />
+<h3 id="how-is-the-validation-split-computed">How is the validation split computed?</h3>
+<p>If you set the <code>validation_split</code> argument in <code>model.fit</code> to e.g. 0.1, then the validation data used will be the <em>last 10%</em> of the data. If you set it to 0.25, it will be the last 25% of the data, etc. Note that the data isn't shuffled before extracting the validation split, so the validation is literally just the <em>last</em> x% of samples in the input you passed.</p>
+<p>The same validation set is used for all epochs (within a same call to <code>fit</code>).</p>
+<hr />
+<h3 id="is-the-data-shuffled-during-training">Is the data shuffled during training?</h3>
+<p>Yes, if the <code>shuffle</code> argument in <code>model.fit</code> is set to <code>True</code> (which is the default), the training data will be randomly shuffled at each epoch.</p>
+<p>Validation data is never shuffled.</p>
+<hr />
+<h3 id="how-can-i-record-the-training-validation-loss-accuracy-at-each-epoch">How can I record the training / validation loss / accuracy at each epoch?</h3>
+<p>The <code>model.fit</code> method returns an <code>History</code> callback, which has a <code>history</code> attribute containing the lists of successive losses and other metrics.</p>
+<pre><code class="python">hist = model.fit(x, y, validation_split=0.2)
+print(hist.history)
+</code></pre>
+
+<hr />
+<h3 id="how-can-i-freeze-keras-layers">How can I "freeze" Keras layers?</h3>
+<p>To "freeze" a layer means to exclude it from training, i.e. its weights will never be updated. This is useful in the context of fine-tuning a model, or using fixed embeddings for a text input.</p>
+<p>You can pass a <code>trainable</code> argument (boolean) to a layer constructor to set a layer to be non-trainable:</p>
+<pre><code class="python">frozen_layer = Dense(32, trainable=False)
+</code></pre>
+
+<p>Additionally, you can set the <code>trainable</code> property of a layer to <code>True</code> or <code>False</code> after instantiation. For this to take effect, you will need to call <code>compile()</code> on your model after modifying the <code>trainable</code> property. Here's an example:</p>
+<pre><code class="python">x = Input(shape=(32,))
+layer = Dense(32)
+layer.trainable = False
+y = layer(x)
+
+frozen_model = Model(x, y)
+# in the model below, the weights of `layer` will not be updated during training
+frozen_model.compile(optimizer='rmsprop', loss='mse')
+
+layer.trainable = True
+trainable_model = Model(x, y)
+# with this model the weights of the layer will be updated during training
+# (which will also affect the above model since it uses the same layer instance)
+trainable_model.compile(optimizer='rmsprop', loss='mse')
+
+frozen_model.fit(data, labels)  # this does NOT update the weights of `layer`
+trainable_model.fit(data, labels)  # this updates the weights of `layer`
+</code></pre>
+
+<hr />
+<h3 id="how-can-i-use-stateful-rnns">How can I use stateful RNNs?</h3>
+<p>Making a RNN stateful means that the states for the samples of each batch will be reused as initial states for the samples in the next batch.</p>
+<p>When using stateful RNNs, it is therefore assumed that:</p>
+<ul>
+<li>all batches have the same number of samples</li>
+<li>If <code>x1</code> and <code>x2</code> are successive batches of samples, then <code>x2[i]</code> is the follow-up sequence to <code>x1[i]</code>, for every <code>i</code>.</li>
+</ul>
+<p>To use statefulness in RNNs, you need to:</p>
+<ul>
+<li>explicitly specify the batch size you are using, by passing a <code>batch_size</code> argument to the first layer in your model. E.g. <code>batch_size=32</code> for a 32-samples batch of sequences of 10 timesteps with 16 features per timestep.</li>
+<li>set <code>stateful=True</code> in your RNN layer(s).</li>
+<li>specify <code>shuffle=False</code> when calling fit().</li>
+</ul>
+<p>To reset the states accumulated:</p>
+<ul>
+<li>use <code>model.reset_states()</code> to reset the states of all layers in the model</li>
+<li>use <code>layer.reset_states()</code> to reset the states of a specific stateful RNN layer</li>
+</ul>
+<p>Example:</p>
+<pre><code class="python">
+x  # this is our input data, of shape (32, 21, 16)
+# we will feed it to our model in sequences of length 10
+
+model = Sequential()
+model.add(LSTM(32, input_shape=(10, 16), batch_size=32, stateful=True))
+model.add(Dense(16, activation='softmax'))
+
+model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
+
+# we train the network to predict the 11th timestep given the first 10:
+model.train_on_batch(x[:, :10, :], np.reshape(x[:, 10, :], (32, 16)))
+
+# the state of the network has changed. We can feed the follow-up sequences:
+model.train_on_batch(x[:, 10:20, :], np.reshape(x[:, 20, :], (32, 16)))
+
+# let's reset the states of the LSTM layer:
+model.reset_states()
+
+# another way to do it in this case:
+model.layers[0].reset_states()
+</code></pre>
+
+<p>Notes that the methods <code>predict</code>, <code>fit</code>, <code>train_on_batch</code>, <code>predict_classes</code>, etc. will <em>all</em> update the states of the stateful layers in a model. This allows you to do not only stateful training, but also stateful prediction.</p>
+<hr />
+<h3 id="how-can-i-remove-a-layer-from-a-sequential-model">How can I remove a layer from a Sequential model?</h3>
+<p>You can remove the last added layer in a Sequential model by calling <code>.pop()</code>:</p>
+<pre><code class="python">model = Sequential()
+model.add(Dense(32, activation='relu', input_dim=784))
+model.add(Dense(32, activation='relu'))
+
+print(len(model.layers))  # &quot;2&quot;
+
+model.pop()
+print(len(model.layers))  # &quot;1&quot;
+</code></pre>
+
+<hr />
+<h3 id="how-can-i-use-pre-trained-models-in-keras">How can I use pre-trained models in Keras?</h3>
+<p>Code and pre-trained weights are available for the following image classification models:</p>
+<ul>
+<li>Xception</li>
+<li>VGG16</li>
+<li>VGG19</li>
+<li>ResNet50</li>
+<li>Inception v3</li>
+<li>Inception-ResNet v2</li>
+<li>MobileNet v1</li>
+</ul>
+<p>They can be imported from the module <code>keras.applications</code>:</p>
+<pre><code class="python">from keras.applications.xception import Xception
+from keras.applications.vgg16 import VGG16
+from keras.applications.vgg19 import VGG19
+from keras.applications.resnet50 import ResNet50
+from keras.applications.inception_v3 import InceptionV3
+from keras.applications.inception_resnet_v2 import InceptionResNetV2
+from keras.applications.mobilenet import MobileNet
+
+model = VGG16(weights='imagenet', include_top=True)
+</code></pre>
+
+<p>For a few simple usage examples, see <a href="../../applications">the documentation for the Applications module</a>.</p>
+<p>For a detailed example of how to use such a pre-trained model for feature extraction or for fine-tuning, see <a href="http://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html">this blog post</a>.</p>
+<p>The VGG16 model is also the basis for several Keras example scripts:</p>
+<ul>
+<li><a href="https://github.com/fchollet/keras/blob/master/examples/neural_style_transfer.py">Style transfer</a></li>
+<li><a href="https://github.com/fchollet/keras/blob/master/examples/conv_filter_visualization.py">Feature visualization</a></li>
+<li><a href="https://github.com/fchollet/keras/blob/master/examples/deep_dream.py">Deep dream</a></li>
+</ul>
+<hr />
+<h3 id="how-can-i-use-hdf5-inputs-with-keras">How can I use HDF5 inputs with Keras?</h3>
+<p>You can use the <code>HDF5Matrix</code> class from <code>keras.utils.io_utils</code>. See <a href="../../utils/#hdf5matrix">the HDF5Matrix documentation</a> for details.</p>
+<p>You can also directly use a HDF5 dataset:</p>
+<pre><code class="python">import h5py
+with h5py.File('input/file.hdf5', 'r') as f:
+    x_data = f['x_data']
+    model.predict(x_data)
+</code></pre>
+
+<hr />
+<h3 id="where-is-the-keras-configuration-file-stored">Where is the Keras configuration file stored?</h3>
+<p>The default directory where all Keras data is stored is:</p>
+<pre><code class="bash">$HOME/.keras/
+</code></pre>
+
+<p>Note that Windows users should replace <code>$HOME</code> with <code>%USERPROFILE%</code>.
+In case Keras cannot create the above directory (e.g. due to permission issues), <code>/tmp/.keras/</code> is used as a backup.</p>
+<p>The Keras configuration file is a JSON file stored at <code>$HOME/.keras/keras.json</code>. The default configuration file looks like this:</p>
+<pre><code>{
+    &quot;image_data_format&quot;: &quot;channels_last&quot;,
+    &quot;epsilon&quot;: 1e-07,
+    &quot;floatx&quot;: &quot;float32&quot;,
+    &quot;backend&quot;: &quot;tensorflow&quot;
+}
+</code></pre>
+
+<p>It contains the following fields:</p>
+<ul>
+<li>The image data format to be used as default by image processing layers and utilities (either <code>channels_last</code> or <code>channels_first</code>).</li>
+<li>The <code>epsilon</code> numerical fuzz factor to be used to prevent division by zero in some operations.</li>
+<li>The default float data type.</li>
+<li>The default backend. See the <a href="../../backend">backend documentation</a>.</li>
+</ul>
+<p>Likewise, cached dataset files, such as those downloaded with <a href="../../utils/#get_file"><code>get_file()</code></a>, are stored by default in <code>$HOME/.keras/datasets/</code>.</p>
+<hr />
+<h3 id="how-can-i-obtain-reproducible-results-using-keras-during-development">How can I obtain reproducible results using Keras during development?</h3>
+<p>During development of a model, sometimes it is useful to be able to obtain reproducible results from run to run in order to determine if a change in performance is due to an actual model or data modification, or merely a result of a new random sample.  The below snippet of code provides an example of how to obtain reproducible results - this is geared towards a TensorFlow backend for a Python 3 environment.</p>
+<pre><code class="python">import numpy as np
+import tensorflow as tf
+import random as rn
+
+# The below is necessary in Python 3.2.3 onwards to
+# have reproducible behavior for certain hash-based operations.
+# See these references for further details:
+# https://docs.python.org/3.4/using/cmdline.html#envvar-PYTHONHASHSEED
+# https://github.com/fchollet/keras/issues/2280#issuecomment-306959926
+
+import os
+os.environ['PYTHONHASHSEED'] = '0'
+
+# The below is necessary for starting Numpy generated random numbers
+# in a well-defined initial state.
+
+np.random.seed(42)
+
+# The below is necessary for starting core Python generated random numbers
+# in a well-defined state.
+
+rn.seed(12345)
+
+# Force TensorFlow to use single thread.
+# Multiple threads are a potential source of
+# non-reproducible results.
+# For further details, see: https://stackoverflow.com/questions/42022950/which-seeds-have-to-be-set-where-to-realize-100-reproducibility-of-training-res
+
+session_conf = tf.ConfigProto(intra_op_parallelism_threads=1, inter_op_parallelism_threads=1)
+
+from keras import backend as K
+
+# The below tf.set_random_seed() will make random number generation
+# in the TensorFlow backend have a well-defined initial state.
+# For further details, see: https://www.tensorflow.org/api_docs/python/tf/set_random_seed
+
+tf.set_random_seed(1234)
+
+sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
+K.set_session(sess)
+
+# Rest of code follows ...
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../models/about-keras-models/" class="btn btn-neutral float-right" title="About Keras models">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../functional-api-guide/" class="btn btn-neutral" title="Guide to the Functional API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="http://github.com/fchollet/keras/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../functional-api-guide/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../models/about-keras-models/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/require.js"></script>
+      <script src="../../search/search.js"></script>
+
+</body>
+</html>

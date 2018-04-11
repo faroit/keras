@@ -6,6 +6,13 @@
 
 If this is not how you work, you will find this repository useful. It hosts older versions of [keras](http://keras.io) documentations useful if you need to look up the API for an specfific version:
 
+* [2.1.5](https://faroit.github.io/keras-docs/2.0.5/)
+* [2.1.4](https://faroit.github.io/keras-docs/2.1.4/)
+* [2.1.3](https://faroit.github.io/keras-docs/2.1.3/)
+* [2.1.2](https://faroit.github.io/keras-docs/2.1.2/)
+* [2.1.1](https://faroit.github.io/keras-docs/2.1.1/)
+* [2.1.0](https://faroit.github.io/keras-docs/2.1.0/)
+* [2.0.9](https://faroit.github.io/keras-docs/2.0.9/)
 * [2.0.8](https://faroit.github.io/keras-docs/2.0.8/)
 * [2.0.7](https://faroit.github.io/keras-docs/2.0.7/)
 * [2.0.6](https://faroit.github.io/keras-docs/2.0.6/)

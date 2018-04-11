@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Text Preprocessing - Keras 2.1.1 Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Text Preprocessing";
+    var mkdocs_page_input_path = "preprocessing/text.md";
+    var mkdocs_page_url = "/preprocessing/text/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61785484-1', 'keras.io');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Keras 2.1.1 Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting started</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../getting-started/sequential-model-guide/">Guide to the Sequential model</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../getting-started/functional-api-guide/">Guide to the Functional API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../getting-started/faq/">FAQ</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Models</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../models/about-keras-models/">About Keras models</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../models/sequential/">Sequential</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../models/model/">Model (functional API)</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Layers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../layers/about-keras-layers/">About Keras layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/core/">Core Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/convolutional/">Convolutional Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/pooling/">Pooling Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/local/">Locally-connected Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/recurrent/">Recurrent Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/embeddings/">Embedding Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/merge/">Merge Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/advanced-activations/">Advanced Activations Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/normalization/">Normalization Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/noise/">Noise layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/wrappers/">Layer wrappers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../layers/writing-your-own-keras-layers/">Writing your own Keras layers</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Preprocessing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../sequence/">Sequence Preprocessing</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Text Preprocessing</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#text_to_word_sequence">text_to_word_sequence</a></li>
+    
+
+    <li class="toctree-l3"><a href="#one_hot">one_hot</a></li>
+    
+
+    <li class="toctree-l3"><a href="#hashing_trick">hashing_trick</a></li>
+    
+
+    <li class="toctree-l3"><a href="#tokenizer">Tokenizer</a></li>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../image/">Image Preprocessing</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../losses/">Losses</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../metrics/">Metrics</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../optimizers/">Optimizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../activations/">Activations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../callbacks/">Callbacks</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../datasets/">Datasets</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../applications/">Applications</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../backend/">Backend</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../initializers/">Initializers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../regularizers/">Regularizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../constraints/">Constraints</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../visualization/">Visualization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../scikit-learn-api/">Scikit-learn API</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../utils/">Utils</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../contributing/">Contributing</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Keras 2.1.1 Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Preprocessing &raquo;</li>
+        
+      
+    
+    <li>Text Preprocessing</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="http://github.com/fchollet/keras/edit/master/docs/preprocessing/text.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="text_to_word_sequence">text_to_word_sequence</h2>
+<pre><code class="python">keras.preprocessing.text.text_to_word_sequence(text,
+                                               filters='!&quot;#$%&amp;()*+,-./:;&lt;=&gt;?@[\\]^_`{|}~\t\n',
+                                               lower=True,
+                                               split=&quot; &quot;)
+</code></pre>
+
+<p>Split a sentence into a list of words.</p>
+<ul>
+<li>
+<p><strong>Return</strong>: List of words (str).</p>
+</li>
+<li>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><strong>text</strong>: str.</li>
+<li><strong>filters</strong>: list (or concatenation) of characters to filter out, such as
+     punctuation. Default: '!"#$%&amp;()*+,-./:;&lt;=&gt;?@[\]^_`{|}~\t\n' , includes
+     basic punctuation, tabs, and newlines.</li>
+<li><strong>lower</strong>: boolean. Whether to set the text to lowercase.</li>
+<li><strong>split</strong>: str. Separator for word splitting.</li>
+</ul>
+</li>
+</ul>
+<h2 id="one_hot">one_hot</h2>
+<pre><code class="python">keras.preprocessing.text.one_hot(text,
+                                 n,
+                                 filters='!&quot;#$%&amp;()*+,-./:;&lt;=&gt;?@[\\]^_`{|}~\t\n',
+                                 lower=True,
+                                 split=&quot; &quot;)
+</code></pre>
+
+<p>One-hot encodes a text into a list of word indexes in a vocabulary of size n.</p>
+<p>This is a wrapper to the <code>hashing_trick</code> function using <code>hash</code> as the hashing function.</p>
+<ul>
+<li>
+<p><strong>Return</strong>: List of integers in [1, n]. Each integer encodes a word (unicity non-guaranteed).</p>
+</li>
+<li>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><strong>text</strong>: str.</li>
+<li><strong>n</strong>: int. Size of vocabulary.</li>
+<li><strong>filters</strong>: list (or concatenation) of characters to filter out, such as
+     punctuation. Default: '!"#$%&amp;()*+,-./:;&lt;=&gt;?@[\]^_`{|}~\t\n' , includes
+     basic punctuation, tabs, and newlines.</li>
+<li><strong>lower</strong>: boolean. Whether to set the text to lowercase.</li>
+<li><strong>split</strong>: str. Separator for word splitting.</li>
+</ul>
+</li>
+</ul>
+<h2 id="hashing_trick">hashing_trick</h2>
+<pre><code class="python">keras.preprocessing.text.hashing_trick(text, 
+                                       n,
+                                       hash_function=None,
+                                       filters='!&quot;#$%&amp;()*+,-./:;&lt;=&gt;?@[\\]^_`{|}~\t\n',
+                                       lower=True,
+                                       split=' ')
+</code></pre>
+
+<p>Converts a text to a sequence of indices in a fixed-size hashing space</p>
+<ul>
+<li><strong>Return</strong>:
+        A list of integer word indices (unicity non-guaranteed).</li>
+<li><strong>Arguments</strong>:<ul>
+<li><strong>text</strong>: str.</li>
+<li><strong>n</strong>: Dimension of the hashing space.</li>
+<li><strong>hash_function</strong>: defaults to python <code>hash</code> function, can be 'md5' or
+        any function that takes in input a string and returns a int.
+        Note that 'hash' is not a stable hashing function, so
+        it is not consistent across different runs, while 'md5'
+        is a stable hashing function.</li>
+<li><strong>filters</strong>: list (or concatenation) of characters to filter out, such as
+     punctuation. Default: '!"#$%&amp;()*+,-./:;&lt;=&gt;?@[\]^_`{|}~\t\n' , includes
+     basic punctuation, tabs, and newlines.</li>
+<li><strong>lower</strong>: boolean. Whether to set the text to lowercase.</li>
+<li><strong>split</strong>: str. Separator for word splitting.</li>
+</ul>
+</li>
+</ul>
+<h2 id="tokenizer">Tokenizer</h2>
+<pre><code class="python">keras.preprocessing.text.Tokenizer(num_words=None,
+                                   filters='!&quot;#$%&amp;()*+,-./:;&lt;=&gt;?@[\\]^_`{|}~\t\n',
+                                   lower=True,
+                                   split=&quot; &quot;,
+                                   char_level=False)
+</code></pre>
+
+<p>Class for vectorizing texts, or/and turning texts into sequences (=list of word indexes, where the word of rank i in the dataset (starting at 1) has index i).</p>
+<ul>
+<li>
+<p><strong>Arguments</strong>: Same as <code>text_to_word_sequence</code> above.</p>
+<ul>
+<li><strong>num_words</strong>: None or int. Maximum number of words to work with (if set, tokenization will be restricted to the top num_words most common words in the dataset).</li>
+<li><strong>char_level</strong>: if True, every character will be treated as a token.</li>
+</ul>
+</li>
+<li>
+<p><strong>Methods</strong>:</p>
+<ul>
+<li>
+<p><strong>fit_on_texts(texts)</strong>: </p>
+<ul>
+<li><strong>Arguments</strong>:<ul>
+<li><strong>texts</strong>: list of texts to train on.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>texts_to_sequences(texts)</strong></p>
+<ul>
+<li><strong>Arguments</strong>: <ul>
+<li><strong>texts</strong>: list of texts to turn to sequences.</li>
+</ul>
+</li>
+<li><strong>Return</strong>: list of sequences (one per text input).</li>
+</ul>
+</li>
+<li>
+<p><strong>texts_to_sequences_generator(texts)</strong>: generator version of the above. </p>
+<ul>
+<li><strong>Return</strong>: yield one sequence per input text.</li>
+</ul>
+</li>
+<li>
+<p><strong>texts_to_matrix(texts)</strong>:</p>
+<ul>
+<li><strong>Return</strong>: numpy array of shape <code>(len(texts), num_words)</code>.</li>
+<li><strong>Arguments</strong>:<ul>
+<li><strong>texts</strong>: list of texts to vectorize.</li>
+<li><strong>mode</strong>: one of "binary", "count", "tfidf", "freq" (default: "binary").</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>fit_on_sequences(sequences)</strong>: </p>
+<ul>
+<li><strong>Arguments</strong>:<ul>
+<li><strong>sequences</strong>: list of sequences to train on. </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>sequences_to_matrix(sequences)</strong>:</p>
+<ul>
+<li><strong>Return</strong>: numpy array of shape <code>(len(sequences), num_words)</code>.</li>
+<li><strong>Arguments</strong>:<ul>
+<li><strong>sequences</strong>: list of sequences to vectorize.</li>
+<li><strong>mode</strong>: one of "binary", "count", "tfidf", "freq" (default: "binary").</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Attributes</strong>:</p>
+<ul>
+<li><strong>word_counts</strong>: dictionary mapping words (str) to the number of times they appeared on during fit. Only set after fit_on_texts was called. </li>
+<li><strong>word_docs</strong>: dictionary mapping words (str) to the number of documents/texts they appeared on during fit. Only set after fit_on_texts was called.</li>
+<li><strong>word_index</strong>: dictionary mapping words (str) to their rank/index (int). Only set after fit_on_texts was called.</li>
+<li><strong>document_count</strong>: int. Number of documents (texts/sequences) the tokenizer was trained on. Only set after fit_on_texts or fit_on_sequences was called.</li>
+</ul>
+</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../image/" class="btn btn-neutral float-right" title="Image Preprocessing">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../sequence/" class="btn btn-neutral" title="Sequence Preprocessing"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="http://github.com/fchollet/keras/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../sequence/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../image/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/require.js"></script>
+      <script src="../../search/search.js"></script>
+
+</body>
+</html>

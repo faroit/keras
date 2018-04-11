@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Pooling Layers - Keras 2.0.9 Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Pooling Layers";
+    var mkdocs_page_input_path = "layers/pooling.md";
+    var mkdocs_page_url = "/layers/pooling/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61785484-1', 'keras.io');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Keras 2.0.9 Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting started</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../getting-started/sequential-model-guide/">Guide to the Sequential model</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../getting-started/functional-api-guide/">Guide to the Functional API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../getting-started/faq/">FAQ</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Models</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../models/about-keras-models/">About Keras models</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../models/sequential/">Sequential</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../models/model/">Model (functional API)</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Layers</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../about-keras-layers/">About Keras layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../core/">Core Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../convolutional/">Convolutional Layers</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Pooling Layers</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#maxpooling1d">MaxPooling1D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#maxpooling2d">MaxPooling2D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#maxpooling3d">MaxPooling3D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#averagepooling1d">AveragePooling1D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#averagepooling2d">AveragePooling2D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#averagepooling3d">AveragePooling3D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#globalmaxpooling1d">GlobalMaxPooling1D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#globalaveragepooling1d">GlobalAveragePooling1D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#globalmaxpooling2d">GlobalMaxPooling2D</a></li>
+    
+
+    <li class="toctree-l3"><a href="#globalaveragepooling2d">GlobalAveragePooling2D</a></li>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../local/">Locally-connected Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../recurrent/">Recurrent Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../embeddings/">Embedding Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../merge/">Merge Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../advanced-activations/">Advanced Activations Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../normalization/">Normalization Layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../noise/">Noise layers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../wrappers/">Layer wrappers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../writing-your-own-keras-layers/">Writing your own Keras layers</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Preprocessing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/sequence/">Sequence Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/text/">Text Preprocessing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../preprocessing/image/">Image Preprocessing</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../losses/">Losses</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../metrics/">Metrics</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../optimizers/">Optimizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../activations/">Activations</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../callbacks/">Callbacks</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../datasets/">Datasets</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../applications/">Applications</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../backend/">Backend</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../initializers/">Initializers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../regularizers/">Regularizers</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../constraints/">Constraints</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../visualization/">Visualization</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../scikit-learn-api/">Scikit-learn API</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../utils/">Utils</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../contributing/">Contributing</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Keras 2.0.9 Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Layers &raquo;</li>
+        
+      
+    
+    <li>Pooling Layers</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="http://github.com/fchollet/keras/edit/master/docs/layers/pooling.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/pooling.py#L53">[source]</a></span></p>
+<h3 id="maxpooling1d">MaxPooling1D</h3>
+<pre><code class="python">keras.layers.MaxPooling1D(pool_size=2, strides=None, padding='valid')
+</code></pre>
+
+<p>Max pooling operation for temporal data.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>pool_size</strong>: Integer, size of the max pooling windows.</li>
+<li><strong>strides</strong>: Integer, or None. Factor by which to downscale.
+E.g. 2 will halve the input.
+If None, it will default to <code>pool_size</code>.</li>
+<li><strong>padding</strong>: One of <code>"valid"</code> or <code>"same"</code> (case-insensitive).</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<p>3D tensor with shape: <code>(batch_size, steps, features)</code>.</p>
+<p><strong>Output shape</strong></p>
+<p>3D tensor with shape: <code>(batch_size, downsampled_steps, features)</code>.</p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/pooling.py#L166">[source]</a></span></p>
+<h3 id="maxpooling2d">MaxPooling2D</h3>
+<pre><code class="python">keras.layers.MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None)
+</code></pre>
+
+<p>Max pooling operation for spatial data.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>pool_size</strong>: integer or tuple of 2 integers,
+factors by which to downscale (vertical, horizontal).
+(2, 2) will halve the input in both spatial dimension.
+If only one integer is specified, the same window length
+will be used for both dimensions.</li>
+<li><strong>strides</strong>: Integer, tuple of 2 integers, or None.
+Strides values.
+If None, it will default to <code>pool_size</code>.</li>
+<li><strong>padding</strong>: One of <code>"valid"</code> or <code>"same"</code> (case-insensitive).</li>
+<li><strong>data_format</strong>: A string,
+one of <code>channels_last</code> (default) or <code>channels_first</code>.
+The ordering of the dimensions in the inputs.
+<code>channels_last</code> corresponds to inputs with shape
+<code>(batch, height, width, channels)</code> while <code>channels_first</code>
+corresponds to inputs with shape
+<code>(batch, channels, height, width)</code>.
+It defaults to the <code>image_data_format</code> value found in your
+Keras config file at <code>~/.keras/keras.json</code>.
+If you never set it, then it will be "channels_last".</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<ul>
+<li>If <code>data_format='channels_last'</code>:
+4D tensor with shape:
+<code>(batch_size, rows, cols, channels)</code></li>
+<li>If <code>data_format='channels_first'</code>:
+4D tensor with shape:
+<code>(batch_size, channels, rows, cols)</code></li>
+</ul>
+<p><strong>Output shape</strong></p>
+<ul>
+<li>If <code>data_format='channels_last'</code>:
+4D tensor with shape:
+<code>(batch_size, pooled_rows, pooled_cols, channels)</code></li>
+<li>If <code>data_format='channels_first'</code>:
+4D tensor with shape:
+<code>(batch_size, channels, pooled_rows, pooled_cols)</code></li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/pooling.py#L335">[source]</a></span></p>
+<h3 id="maxpooling3d">MaxPooling3D</h3>
+<pre><code class="python">keras.layers.MaxPooling3D(pool_size=(2, 2, 2), strides=None, padding='valid', data_format=None)
+</code></pre>
+
+<p>Max pooling operation for 3D data (spatial or spatio-temporal).</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>pool_size</strong>: tuple of 3 integers,
+factors by which to downscale (dim1, dim2, dim3).
+(2, 2, 2) will halve the size of the 3D input in each dimension.</li>
+<li><strong>strides</strong>: tuple of 3 integers, or None. Strides values.</li>
+<li><strong>padding</strong>: One of <code>"valid"</code> or <code>"same"</code> (case-insensitive).</li>
+<li><strong>data_format</strong>: A string,
+one of <code>channels_last</code> (default) or <code>channels_first</code>.
+The ordering of the dimensions in the inputs.
+<code>channels_last</code> corresponds to inputs with shape
+<code>(batch, spatial_dim1, spatial_dim2, spatial_dim3, channels)</code>
+while <code>channels_first</code> corresponds to inputs with shape
+<code>(batch, channels, spatial_dim1, spatial_dim2, spatial_dim3)</code>.
+It defaults to the <code>image_data_format</code> value found in your
+Keras config file at <code>~/.keras/keras.json</code>.
+If you never set it, then it will be "channels_last".</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<ul>
+<li>If <code>data_format='channels_last'</code>:
+5D tensor with shape:
+<code>(batch_size, spatial_dim1, spatial_dim2, spatial_dim3, channels)</code></li>
+<li>If <code>data_format='channels_first'</code>:
+5D tensor with shape:
+<code>(batch_size, channels, spatial_dim1, spatial_dim2, spatial_dim3)</code></li>
+</ul>
+<p><strong>Output shape</strong></p>
+<ul>
+<li>If <code>data_format='channels_last'</code>:
+5D tensor with shape:
+<code>(batch_size, pooled_dim1, pooled_dim2, pooled_dim3, channels)</code></li>
+<li>If <code>data_format='channels_first'</code>:
+5D tensor with shape:
+<code>(batch_size, channels, pooled_dim1, pooled_dim2, pooled_dim3)</code></li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/pooling.py#L83">[source]</a></span></p>
+<h3 id="averagepooling1d">AveragePooling1D</h3>
+<pre><code class="python">keras.layers.AveragePooling1D(pool_size=2, strides=None, padding='valid')
+</code></pre>
+
+<p>Average pooling for temporal data.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>pool_size</strong>: Integer, size of the max pooling windows.</li>
+<li><strong>strides</strong>: Integer, or None. Factor by which to downscale.
+E.g. 2 will halve the input.
+If None, it will default to <code>pool_size</code>.</li>
+<li><strong>padding</strong>: One of <code>"valid"</code> or <code>"same"</code> (case-insensitive).</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<p>3D tensor with shape: <code>(batch_size, steps, features)</code>.</p>
+<p><strong>Output shape</strong></p>
+<p>3D tensor with shape: <code>(batch_size, downsampled_steps, features)</code>.</p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/pooling.py#L221">[source]</a></span></p>
+<h3 id="averagepooling2d">AveragePooling2D</h3>
+<pre><code class="python">keras.layers.AveragePooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None)
+</code></pre>
+
+<p>Average pooling operation for spatial data.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>pool_size</strong>: integer or tuple of 2 integers,
+factors by which to downscale (vertical, horizontal).
+(2, 2) will halve the input in both spatial dimension.
+If only one integer is specified, the same window length
+will be used for both dimensions.</li>
+<li><strong>strides</strong>: Integer, tuple of 2 integers, or None.
+Strides values.
+If None, it will default to <code>pool_size</code>.</li>
+<li><strong>padding</strong>: One of <code>"valid"</code> or <code>"same"</code> (case-insensitive).</li>
+<li><strong>data_format</strong>: A string,
+one of <code>channels_last</code> (default) or <code>channels_first</code>.
+The ordering of the dimensions in the inputs.
+<code>channels_last</code> corresponds to inputs with shape
+<code>(batch, height, width, channels)</code> while <code>channels_first</code>
+corresponds to inputs with shape
+<code>(batch, channels, height, width)</code>.
+It defaults to the <code>image_data_format</code> value found in your
+Keras config file at <code>~/.keras/keras.json</code>.
+If you never set it, then it will be "channels_last".</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<ul>
+<li>If <code>data_format='channels_last'</code>:
+4D tensor with shape:
+<code>(batch_size, rows, cols, channels)</code></li>
+<li>If <code>data_format='channels_first'</code>:
+4D tensor with shape:
+<code>(batch_size, channels, rows, cols)</code></li>
+</ul>
+<p><strong>Output shape</strong></p>
+<ul>
+<li>If <code>data_format='channels_last'</code>:
+4D tensor with shape:
+<code>(batch_size, pooled_rows, pooled_cols, channels)</code></li>
+<li>If <code>data_format='channels_first'</code>:
+4D tensor with shape:
+<code>(batch_size, channels, pooled_rows, pooled_cols)</code></li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/pooling.py#L385">[source]</a></span></p>
+<h3 id="averagepooling3d">AveragePooling3D</h3>
+<pre><code class="python">keras.layers.AveragePooling3D(pool_size=(2, 2, 2), strides=None, padding='valid', data_format=None)
+</code></pre>
+
+<p>Average pooling operation for 3D data (spatial or spatio-temporal).</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>pool_size</strong>: tuple of 3 integers,
+factors by which to downscale (dim1, dim2, dim3).
+(2, 2, 2) will halve the size of the 3D input in each dimension.</li>
+<li><strong>strides</strong>: tuple of 3 integers, or None. Strides values.</li>
+<li><strong>padding</strong>: One of <code>"valid"</code> or <code>"same"</code> (case-insensitive).</li>
+<li><strong>data_format</strong>: A string,
+one of <code>channels_last</code> (default) or <code>channels_first</code>.
+The ordering of the dimensions in the inputs.
+<code>channels_last</code> corresponds to inputs with shape
+<code>(batch, spatial_dim1, spatial_dim2, spatial_dim3, channels)</code>
+while <code>channels_first</code> corresponds to inputs with shape
+<code>(batch, channels, spatial_dim1, spatial_dim2, spatial_dim3)</code>.
+It defaults to the <code>image_data_format</code> value found in your
+Keras config file at <code>~/.keras/keras.json</code>.
+If you never set it, then it will be "channels_last".</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<ul>
+<li>If <code>data_format='channels_last'</code>:
+5D tensor with shape:
+<code>(batch_size, spatial_dim1, spatial_dim2, spatial_dim3, channels)</code></li>
+<li>If <code>data_format='channels_first'</code>:
+5D tensor with shape:
+<code>(batch_size, channels, spatial_dim1, spatial_dim2, spatial_dim3)</code></li>
+</ul>
+<p><strong>Output shape</strong></p>
+<ul>
+<li>If <code>data_format='channels_last'</code>:
+5D tensor with shape:
+<code>(batch_size, pooled_dim1, pooled_dim2, pooled_dim3, channels)</code></li>
+<li>If <code>data_format='channels_first'</code>:
+5D tensor with shape:
+<code>(batch_size, channels, pooled_dim1, pooled_dim2, pooled_dim3)</code></li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/pooling.py#L466">[source]</a></span></p>
+<h3 id="globalmaxpooling1d">GlobalMaxPooling1D</h3>
+<pre><code class="python">keras.layers.GlobalMaxPooling1D()
+</code></pre>
+
+<p>Global max pooling operation for temporal data.</p>
+<p><strong>Input shape</strong></p>
+<p>3D tensor with shape: <code>(batch_size, steps, features)</code>.</p>
+<p><strong>Output shape</strong></p>
+<p>2D tensor with shape:
+<code>(batch_size, features)</code></p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/pooling.py#L451">[source]</a></span></p>
+<h3 id="globalaveragepooling1d">GlobalAveragePooling1D</h3>
+<pre><code class="python">keras.layers.GlobalAveragePooling1D()
+</code></pre>
+
+<p>Global average pooling operation for temporal data.</p>
+<p><strong>Input shape</strong></p>
+<p>3D tensor with shape: <code>(batch_size, steps, features)</code>.</p>
+<p><strong>Output shape</strong></p>
+<p>2D tensor with shape:
+<code>(batch_size, features)</code></p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/pooling.py#L541">[source]</a></span></p>
+<h3 id="globalmaxpooling2d">GlobalMaxPooling2D</h3>
+<pre><code class="python">keras.layers.GlobalMaxPooling2D(data_format=None)
+</code></pre>
+
+<p>Global max pooling operation for spatial data.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>data_format</strong>: A string,
+one of <code>channels_last</code> (default) or <code>channels_first</code>.
+The ordering of the dimensions in the inputs.
+<code>channels_last</code> corresponds to inputs with shape
+<code>(batch, height, width, channels)</code> while <code>channels_first</code>
+corresponds to inputs with shape
+<code>(batch, channels, height, width)</code>.
+It defaults to the <code>image_data_format</code> value found in your
+Keras config file at <code>~/.keras/keras.json</code>.
+If you never set it, then it will be "channels_last".</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<ul>
+<li>If <code>data_format='channels_last'</code>:
+4D tensor with shape:
+<code>(batch_size, rows, cols, channels)</code></li>
+<li>If <code>data_format='channels_first'</code>:
+4D tensor with shape:
+<code>(batch_size, channels, rows, cols)</code></li>
+</ul>
+<p><strong>Output shape</strong></p>
+<p>2D tensor with shape:
+<code>(batch_size, channels)</code></p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/fchollet/keras/blob/master/keras/layers/pooling.py#L506">[source]</a></span></p>
+<h3 id="globalaveragepooling2d">GlobalAveragePooling2D</h3>
+<pre><code class="python">keras.layers.GlobalAveragePooling2D(data_format=None)
+</code></pre>
+
+<p>Global average pooling operation for spatial data.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>data_format</strong>: A string,
+one of <code>channels_last</code> (default) or <code>channels_first</code>.
+The ordering of the dimensions in the inputs.
+<code>channels_last</code> corresponds to inputs with shape
+<code>(batch, height, width, channels)</code> while <code>channels_first</code>
+corresponds to inputs with shape
+<code>(batch, channels, height, width)</code>.
+It defaults to the <code>image_data_format</code> value found in your
+Keras config file at <code>~/.keras/keras.json</code>.
+If you never set it, then it will be "channels_last".</li>
+</ul>
+<p><strong>Input shape</strong></p>
+<ul>
+<li>If <code>data_format='channels_last'</code>:
+4D tensor with shape:
+<code>(batch_size, rows, cols, channels)</code></li>
+<li>If <code>data_format='channels_first'</code>:
+4D tensor with shape:
+<code>(batch_size, channels, rows, cols)</code></li>
+</ul>
+<p><strong>Output shape</strong></p>
+<p>2D tensor with shape:
+<code>(batch_size, channels)</code></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../local/" class="btn btn-neutral float-right" title="Locally-connected Layers">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../convolutional/" class="btn btn-neutral" title="Convolutional Layers"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="http://github.com/fchollet/keras/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../convolutional/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../local/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/require.js"></script>
+      <script src="../../search/search.js"></script>
+
+</body>
+</html>
